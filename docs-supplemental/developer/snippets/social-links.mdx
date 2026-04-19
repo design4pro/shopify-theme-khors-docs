@@ -1,0 +1,107 @@
+---
+title: "Social Links Snippet"
+description: "Technical documentation for social-links.liquid snippet"
+icon: "share-2"
+---
+
+## Location
+
+`snippets/social-links.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders social media links with icons for configured platforms.
+  Only displays platforms that have URLs configured in theme settings.
+
+  @param {string} [variant] - Display variant: 'icon-only' or 'icon-text' (default: 'icon-only')
+  @param {string} [layout] - Layout direction: 'horizontal' or 'vertical' (default: 'horizontal')
+  @param {string} [icon_size] - Icon size modifier: 'icon--16', 'icon--20', 'icon--24', 'icon--32', 'icon--48' (default: 'icon--24')
+  @param {string} [gap] - Spacing between links: 'xs', 'sm', 'md', 'lg', 'xl' (default: 'md')
+  @param {string} [class] - Additional CSS classes to append
+
+  @example Basic usage (icon-only, horizontal)
+    {% render 'social-links' %}
+
+  @example With text labels, vertical layout
+    {% render 'social-links', variant: 'icon-text', layout: 'vertical' %}
+
+  @example Large icons with custom spacing
+    {% render 'social-links', icon_size: 'icon--32', gap: 'lg' %}
+
+  @example With additional CSS class
+    {% render 'social-links', class: 'footer__social' %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic usage with defaults (icon-only, horizontal) {% endcomment %}
+{% render 'social-links' %}
+
+{% comment %} With text labels in vertical layout {% endcomment %}
+{% render 'social-links',
+  variant: 'icon-text',
+  layout: 'vertical'
+%}
+
+{% comment %} Large icons with custom spacing for footer {% endcomment %}
+{% render 'social-links',
+  icon_size: 'icon--32',
+  gap: 'lg',
+  class: 'footer__social'
+%}
+```
+
+## Generated Output
+
+```html
+<nav class="social-links social-links--horizontal social-links--gap-md" aria-label="Social media">
+  <a href="https://facebook.com/..." class="social-links__link" target="_blank" rel="noopener noreferrer" aria-label="Facebook (opens in new window)">
+    <span class="social-links__icon">
+      <!-- facebook SVG -->
+    </span>
+    <span class="social-links__text visually-hidden">Facebook</span>
+  </a>
+  <a href="https://instagram.com/..." class="social-links__link" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in new window)">
+    <span class="social-links__icon">
+      <!-- instagram SVG -->
+    </span>
+    <span class="social-links__text visually-hidden">Instagram</span>
+  </a>
+  <!-- more platform links -->
+</nav>
+```
+
+## CSS Classes
+
+| Class | Description |
+|---|---|
+| `.social-links` | Base container (flex) |
+| `.social-links--horizontal` | Horizontal layout (row) |
+| `.social-links--vertical` | Vertical layout (column) |
+| `.social-links--gap-xs` | Extra small gap (4px) |
+| `.social-links--gap-sm` | Small gap (8px) |
+| `.social-links--gap-md` | Medium gap (12px, default) |
+| `.social-links--gap-lg` | Large gap (16px) |
+| `.social-links--gap-xl` | Extra large gap (24px) |
+| `.social-links__link` | Individual link |
+| `.social-links__icon` | Icon wrapper |
+| `.social-links__text` | Platform name (visible or visually-hidden) |
+
+8 supported platforms: Facebook, Twitter/X, Instagram, TikTok, YouTube, Pinterest, LinkedIn, Snapchat. Reads URLs from theme settings (`settings.social_{platform}_link`). Only platforms with configured URLs are rendered.
+
+## Accessibility
+
+- `<nav>` with `aria-label` identifies the social links as a navigation landmark
+- Each link has `aria-label` with the platform name and "opens in new window" notice
+- `target="_blank"` paired with `rel="noopener noreferrer"` for security
+- Icon-only mode uses `.visually-hidden` text on each platform name for screen readers
+- `icon-text` variant displays platform names visually alongside icons
+- Focus-visible outlines on all links for keyboard navigation
+
+## Related
+
+Used by footer section typically. Reads platform URLs from global theme settings configured in the Shopify theme editor.

@@ -1,0 +1,438 @@
+---
+title: "Accessibility"
+description: "Accessibility features in the Khors theme - skip-to-content, ARIA landmarks and testing"
+---
+
+## Overview
+
+The Khors theme is built with accessibility (a11y) in mind, ensuring that all users, regardless of their abilities, can effectively navigate the store.
+
+## Skip-to-Content Link
+
+### What is Skip-to-Content?
+
+The skip-to-content link is a special link that allows keyboard and screen reader users to bypass repetitive navigation elements and jump directly to the main page content.
+
+<Info>
+  The skip-to-content link is **hidden by default** and only appears when the user presses the Tab key at the beginning of the page.
+</Info>
+
+### Implementation
+
+**In `layout/theme.liquid`:**
+
+```liquid
+<body>
+  <a href="#main-content" class="skip-to-content">
+    {{ 'accessibility.skip_to_content' | t }}
+  </a>
+
+  {% sections 'header-group' %}
+
+  <main id="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+</body>
+```
+
+**Key elements:**
+1. The link is the **first focusable element** in `<body>`
+2. It points to `#main-content` (main landmark)
+3. Uses translation from `locales/en.default.json`
+
+### Styling
+
+**In `assets/critical.css` (@layer base):**
+
+```css
+.skip-to-content {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-accent);
+  color: var(--color-background);
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--style-border-radius-inputs);
+  z-index: 9999;
+  transition: transform 0.2s ease-in-out;
+}
+
+.skip-to-content:focus {
+  transform: translateX(-50%) translateY(var(--space-2));
+}
+```
+
+**Key properties:**
+- `position: absolute` - doesn't take up layout space
+- `transform: translateY(-100%)` - hidden outside viewport
+- `:focus` - appears 8px from the top of the screen
+- `z-index: 9999` - always on top
+- High contrast: accent background + white text
+
+### Localization
+
+**In `locales/en.default.json`:**
+
+```json
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  }
+}
+```
+
+Add translations in other languages (`locales/pl.default.json`, etc.):
+
+```json
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  }
+}
+```
+
+## ARIA Landmarks
+
+### Main Content Landmark
+
+The main page content is marked semantically using `<main>` with an ID:
+
+```liquid
+<main id="main-content">
+  {{ content_for_layout }}
+</main>
+```
+
+**Significance:**
+- `<main>` landmark informs screen readers about the main content
+- `id="main-content"` is the target for the skip-to-content link
+- Only **one** `<main>` element per page
+
+### Header & Footer Landmarks
+
+```liquid
+{% # Header group %}
+<header>
+  {% sections 'header-group' %}
+</header>
+
+{% # Footer group %}
+<footer>
+  {% sections 'footer-group' %}
+</footer>
+```
+
+### Sections with Landmarks
+
+In sections, use semantic HTML5 elements:
+
+```liquid
+{% # Navigation section %}
+<nav aria-label="Main navigation">
+  <!-- Links -->
+</nav>
+
+{% # Section with form %}
+<section aria-labelledby="newsletter-heading">
+  <h2 id="newsletter-heading">Newsletter</h2>
+  <form><!-- Form fields --></form>
+</section>
+
+{% # Aside for related content %}
+<aside aria-label="Related products">
+  <!-- Products -->
+</aside>
+```
+
+## Keyboard Navigation
+
+### Focus Management
+
+Ensure that all interactive elements are keyboard accessible:
+
+```css
+/* Clear focus indicator */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Never remove outline without an alternative */
+/* ❌ Bad */
+*:focus {
+  outline: none;
+}
+```
+
+### Focus Trap for Modals
+
+For modals/dialogs, use the `scroll-lock` attribute:
+
+```liquid
+<dialog scroll-lock>
+  <button aria-label="Close">×</button>
+  <!-- Modal content -->
+</dialog>
+```
+
+CSS in `critical.css` automatically locks scroll:
+
+```css
+html:has(dialog[scroll-lock][open]) {
+  overflow: hidden;
+}
+```
+
+## Forms
+
+### Labels
+
+**Always** use `<label>` for inputs:
+
+```liquid
+{% # ✅ Good %}
+<label for="email">Email address</label>
+<input type="email" id="email" name="email" required>
+
+{% # ❌ Bad - no label %}
+<input type="email" name="email" placeholder="Email">
+```
+
+### Error Messages
+
+Connect error messages to inputs using `aria-describedby`:
+
+```liquid
+<label for="email">Email</label>
+<input
+  type="email"
+  id="email"
+  aria-describedby="email-error"
+  aria-invalid="true"
+>
+<span id="email-error" role="alert">
+  Please enter a valid email address
+</span>
+```
+
+### Required Fields
+
+Mark required fields semantically:
+
+```liquid
+<label for="name">
+  Name <span aria-label="required">*</span>
+</label>
+<input type="text" id="name" required>
+```
+
+## Images and Media
+
+### Alt Text
+
+**Always** add descriptive alt text:
+
+```liquid
+{% # ✅ Good %}
+{{ product.featured_image | image_url: width: 800 | image_tag:
+   alt: product.featured_image.alt | default: product.title }}
+
+{% # Decorative images %}
+<img src="..." alt="" role="presentation">
+```
+
+### Responsive Images
+
+Use `loading="lazy"` for images below the fold:
+
+```liquid
+{{ product.featured_image | image_url: width: 800 | image_tag:
+   loading: 'lazy' }}
+```
+
+## Accessibility Testing
+
+### 1. Keyboard Navigation Test
+
+**Steps:**
+1. Load the page
+2. Press `Tab` - skip-to-content link should appear
+3. Press `Enter` - navigate to main content
+4. Continue `Tab` - check if focus order is logical
+5. Verify that focus indicator is visible
+
+### 2. Screen Reader Test
+
+**Tools:**
+- **NVDA** (Windows, free)
+- **JAWS** (Windows, commercial)
+- **VoiceOver** (macOS/iOS, built-in)
+- **TalkBack** (Android, built-in)
+
+**VoiceOver Test (macOS):**
+```bash
+# Enable VoiceOver
+Cmd + F5
+
+# Basic commands
+Control + Option + Right Arrow  # Next element
+Control + Option + Cmd + H      # Next heading
+Control + Option + U            # Rotor (landmark navigation)
+```
+
+### 3. Automated Testing
+
+#### Shopify Theme Check
+
+```bash
+shopify theme check
+```
+
+Automatically checks for accessibility issues.
+
+#### axe DevTools
+
+1. Install [axe DevTools extension](https://www.deque.com/axe/devtools/)
+2. Open DevTools → axe tab
+3. Click "Scan" - you'll receive a report of accessibility issues
+
+#### Lighthouse
+
+```bash
+# In Chrome DevTools
+1. Open DevTools (F12)
+2. Lighthouse tab
+3. Accessibility checkbox
+4. Generate report
+```
+
+### 4. Manual Checklist
+
+<Warning>
+  Automated tools detect only ~30% of accessibility issues. Manual testing is crucial.
+</Warning>
+
+**Basic Checklist:**
+
+- [ ] Skip-to-content link works (Tab → Enter)
+- [ ] All images have alt text
+- [ ] All form inputs have labels
+- [ ] Focus indicator is visible
+- [ ] Keyboard navigation works in all sections
+- [ ] Headings are in logical order (h1 → h2 → h3)
+- [ ] Color contrast meets WCAG AA (4.5:1 for normal text)
+- [ ] Text can be enlarged to 200% without loss of functionality
+- [ ] No autoplay for video/audio
+- [ ] Animations respect `prefers-reduced-motion`
+
+## WCAG 2.1 Guidelines
+
+The Khors theme aims for **WCAG 2.1 Level AA** compliance.
+
+### Key Principles
+
+**1. Perceivable** - Information must be available to users' senses
+- ✅ Alt text for images
+- ✅ Captions for video
+- ✅ Proper color contrast
+
+**2. Operable** - UI components must be operable
+- ✅ Keyboard navigation
+- ✅ Skip-to-content link
+- ✅ No keyboard traps
+
+**3. Understandable** - Information and UI must be understandable
+- ✅ Clear labels
+- ✅ Error messages
+- ✅ Consistent navigation
+
+**4. Robust** - Content must be accessible to different technologies
+- ✅ Semantic HTML
+- ✅ ARIA landmarks
+- ✅ Valid HTML
+
+## Reduced Motion
+
+Respect user preferences for animations:
+
+```css
+/* Normal animations */
+.element {
+  transition: transform 0.3s ease;
+}
+
+/* Disable for users with prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .element {
+    transition: none;
+  }
+}
+```
+
+In the Khors theme:
+
+```css
+.skip-to-content {
+  transition: transform 0.2s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-to-content {
+    transition: none;
+  }
+}
+```
+
+## Color Contrast
+
+### WCAG AA Requirements
+
+- **Normal text** (< 18.5px): min. **4.5:1** contrast ratio
+- **Large text** (≥ 18.5px or bold ≥ 14px): min. **3:1** contrast ratio
+
+### Tools
+
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- [Colour Contrast Analyser](https://www.tpgi.com/color-contrast-checker/)
+
+### Example
+
+```css
+/* ✅ Good - high contrast */
+.text {
+  color: #121212; /* Dark text */
+  background: #FFFFFF; /* White background */
+  /* Contrast: 17.8:1 */
+}
+
+/* ❌ Bad - low contrast */
+.text-low-contrast {
+  color: #999999; /* Light gray text */
+  background: #FFFFFF; /* White background */
+  /* Contrast: 2.8:1 - fails WCAG AA */
+}
+```
+
+## More Information
+
+### Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [WebAIM Resources](https://webaim.org/resources/)
+- [A11y Project](https://www.a11yproject.com/)
+- [Shopify Accessibility Guide](https://help.shopify.com/en/manual/online-store/themes/theme-structure/theme-accessibility)
+
+### Tools
+
+- [axe DevTools](https://www.deque.com/axe/devtools/)
+- [WAVE Browser Extension](https://wave.webaim.org/extension/)
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse)
+- [Pa11y](https://pa11y.org/) (CLI testing)

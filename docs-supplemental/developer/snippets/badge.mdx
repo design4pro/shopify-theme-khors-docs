@@ -1,0 +1,111 @@
+---
+title: "Badge Snippet"
+description: "Technical documentation for badge.liquid snippet"
+icon: "tag"
+---
+
+## Location
+
+`snippets/badge.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a badge component for product status indicators (sale, sold-out, new) or custom labels.
+  Supports automatic product state detection and multiple positioning options.
+
+  @param {string} type - Badge type: 'sale', 'sold-out', 'new', 'custom' (default: 'sale')
+  @param {string} [custom_text] - Custom badge text (required when type is 'custom')
+  @param {product} [product] - Product object for automatic state detection (sale/sold-out)
+  @param {string} [size] - Size modifier: 'badge--small', 'badge--medium' (default: 'badge--small')
+  @param {string} [position] - Position: 'static', 'top-left', 'top-right', 'bottom-left', 'bottom-right' (default: 'static')
+  @param {string} [background_color] - Custom background color (CSS color value)
+  @param {string} [text_color] - Custom text color (CSS color value)
+  @param {string} [class] - Additional CSS classes to append
+  @param {string} [aria_label] - Custom ARIA label for accessibility
+
+  @example Sale badge with automatic detection
+    {% render 'badge', type: 'sale', product: product %}
+
+  @example Sold out badge
+    {% render 'badge', type: 'sold-out', product: product %}
+
+  @example New badge positioned top-right
+    {% render 'badge', type: 'new', position: 'top-right' %}
+
+  @example Custom badge with custom colors
+    {% render 'badge', type: 'custom', custom_text: 'Limited', background_color: '#ff0000', text_color: '#ffffff' %}
+
+  @example Medium-sized badge
+    {% render 'badge', type: 'sale', size: 'badge--medium', product: product %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Sale badge with automatic product detection {% endcomment %}
+{% render 'badge', type: 'sale', product: product %}
+
+{% comment %} New badge positioned on product card {% endcomment %}
+{% render 'badge', type: 'new', position: 'top-right' %}
+
+{% comment %} Custom badge with branding colors {% endcomment %}
+{% render 'badge',
+  type: 'custom',
+  custom_text: 'Limited',
+  background_color: '#ff0000',
+  text_color: '#ffffff'
+%}
+
+{% comment %} Medium sold-out badge {% endcomment %}
+{% render 'badge', type: 'sold-out', size: 'badge--medium', product: product %}
+```
+
+## Generated Output
+
+```html
+<span class="badge badge--sale badge--small" aria-label="Sale">
+  Sale
+</span>
+```
+
+Positioned badge with custom colors:
+
+```html
+<span
+  class="badge badge--custom badge--small badge--positioned badge--top-right"
+  style="--badge-bg: #ff0000;--badge-color: #ffffff;"
+  aria-label="Limited"
+>
+  Limited
+</span>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.badge` | Base component (inline-flex, uppercase, semibold) |
+| `.badge--sale` | Sale type (accent background) |
+| `.badge--sold-out` | Sold out type (foreground-2 background) |
+| `.badge--new` | New type (foreground background) |
+| `.badge--custom` | Custom type (background-2 default, overridable) |
+| `.badge--small` | Small size (20px min-height, xs font) |
+| `.badge--medium` | Medium size (28px min-height, sm font) |
+| `.badge--positioned` | Enables absolute positioning |
+| `.badge--top-left` | Positions at top-left corner |
+| `.badge--top-right` | Positions at top-right corner |
+| `.badge--bottom-left` | Positions at bottom-left corner |
+| `.badge--bottom-right` | Positions at bottom-right corner |
+
+## Accessibility
+
+- `aria-label` attribute applied to all badges with the badge text as default
+- Custom `aria-label` override via the `aria_label` parameter
+- Badge visibility is conditional based on product state (sale requires `compare_at_price > price`, sold-out requires `available == false`)
+
+## Related
+
+- [Badge Block](/developer/blocks/badge) -- Theme Editor wrapper

@@ -1,0 +1,445 @@
+---
+title: "CSS Architecture"
+description: "CSS architecture in the Khors theme - organization, cascade layers, and best practices"
+---
+
+## Overview
+
+The Khors theme uses a modern CSS architecture based on CSS Cascade Layers for predictable specificity and a performance-optimized style loading strategy.
+
+## CSS Cascade Layers
+
+### What are CSS Layers?
+
+CSS Cascade Layers (`@layer`) allow explicit control over the cascade order of styles, ensuring predictable specificity regardless of the order in which CSS rules are defined.
+
+### Layer Declaration
+
+All layers are declared at the beginning of `assets/critical.css`:
+
+```css
+/**
+ * CSS Cascade Layers
+ *
+ * Defines cascade layer order for predictable specificity.
+ * Layers are applied in declaration order - later layers
+ * take precedence over earlier ones.
+ *
+ * Order: reset → base → components → utilities
+ */
+@layer reset, base, components, utilities;
+```
+
+### Layer Hierarchy
+
+| Layer | Priority | Purpose | Example |
+|---------|-----------|-----|----------|
+| **reset** | 1 (lowest) | Removes default browser styles | Reset margin/padding |
+| **base** | 2 | Basic HTML element styles | Typography, colors, skip link |
+| **components** | 3 | Component styles from sections/blocks | Product cards, buttons |
+| **utilities** | 4 (highest) | Single-purpose utility classes | `.mt-4`, `.p-6` |
+
+<Info>
+  Styles in later layers **always** override styles from earlier layers, regardless of selector specificity.
+</Info>
+
+### Layer: Reset
+
+**Purpose:** Remove default browser styles and establish a consistent base across all browsers.
+
+```css
+@layer reset {
+  /* Inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100svh;
+  }
+
+  html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
+    overflow: hidden;
+  }
+}
+```
+
+**When to use:**
+- Resetting margin/padding
+- Setting `box-sizing`
+- Controlling scroll lock for modals
+
+### Layer: Base
+
+**Purpose:** Default styles for HTML elements - typography, colors, basic appearance.
+
+```css
+@layer base {
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  body {
+    font-family: var(--font-primary--family);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin-block-end: var(--space-4);
+  }
+
+  /* Skip-to-content link */
+  .skip-to-content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    /* ... */
+  }
+}
+```
+
+**When to use:**
+- Typographic styles (body, headings)
+- Responsive images/media
+- Form inputs
+- Accessibility features (skip link)
+
+### Layer: Components
+
+**Purpose:** Component-specific styles defined in sections, blocks, and snippets.
+
+```css
+@layer components {
+  /* Components are defined in sections, blocks, and snippets */
+}
+```
+
+**In a Liquid section:**
+
+```liquid
+{% stylesheet %}
+  .product-card {
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: 8px;
+  }
+
+  .product-card__title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+  }
+{% endstylesheet %}
+```
+
+<Warning>
+  Styles in `{% stylesheet %}` are output **outside** layers. If you need to place them in a specific layer, use `@layer components` inside the stylesheet block.
+</Warning>
+
+**When to use:**
+- Component-specific styles
+- BEM classes (`.block__element--modifier`)
+- Component layouts
+- Component hover/focus states
+
+### Layer: Utilities
+
+**Purpose:** Single-purpose utility classes that should have the highest priority.
+
+```css
+@layer utilities {
+  /* Spacing utilities */
+  .m-4 { margin: var(--space-4); }
+  .mt-4 { margin-top: var(--space-4); }
+  .p-4 { padding: var(--space-4); }
+
+  /* Section layout utilities */
+  .shopify-section {
+    display: grid;
+    grid-template-columns: var(--content-grid);
+  }
+
+  .shopify-section > .full-width {
+    grid-column: 1 / -1;
+  }
+}
+```
+
+**When to use:**
+- Spacing utilities (margin, padding)
+- Layout utilities (grid, flex)
+- Single-purpose classes
+- Overrides (only when absolutely necessary)
+
+## File Organization
+
+### Critical CSS
+
+**File:** `assets/critical.css`
+
+**Loading:** Inline in `<head>` for fastest above-the-fold content rendering.
+
+```liquid
+{% # In layout/theme.liquid %}
+<head>
+  {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+</head>
+```
+
+**Contains:**
+- CSS layers declaration
+- Reset styles (@layer reset)
+- Base styles (@layer base)
+- Spacing utilities (@layer utilities)
+- Section layout utilities (@layer utilities)
+
+<Warning>
+  **DO NOT** add styles to `critical.css` unless they are absolutely essential for rendering above-the-fold content. This increases HTML size and slows down initial load.
+</Warning>
+
+### Section Styles
+
+Styles defined directly in sections using `{% stylesheet %}`:
+
+```liquid
+{% # In sections/product-card.liquid %}
+{% stylesheet %}
+  .product-card {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .product-card__image {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+{% endstylesheet %}
+```
+
+**Advantages:**
+- Styles are loaded only when the section is used
+- Colocation - styles next to markup
+- Automatic scoping (if using unique class names)
+
+### Block Styles
+
+Similar to sections, blocks can define their own styles:
+
+```liquid
+{% # In blocks/text-block.liquid %}
+{% stylesheet %}
+  .text-block {
+    padding: var(--space-6);
+  }
+{% endstylesheet %}
+```
+
+### Snippet Styles
+
+Snippets can also contain styles:
+
+```liquid
+{% # In snippets/icon.liquid %}
+{% stylesheet %}
+  .icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
+{% endstylesheet %}
+```
+
+## CSS Loading Strategy
+
+### 1. Critical CSS (Inline)
+
+```liquid
+{{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+```
+
+- Loaded immediately in `<head>`
+- Preload hint for faster parsing
+- ~15-20KB (max)
+
+### 2. Section CSS (Lazy)
+
+```liquid
+{% stylesheet %}
+  /* Section styles */
+{% endstylesheet %}
+```
+
+- Loaded automatically by Shopify
+- Only when the section is on the page
+- Does not block rendering
+
+### 3. Component CSS (On-Demand)
+
+For large components, optionally:
+
+```liquid
+{{ 'component-name.css' | asset_url | stylesheet_tag }}
+```
+
+## Best Practices
+
+### ✅ Good Practices
+
+1. **Use CSS Layers for predictable specificity**
+   ```css
+   @layer base {
+     button { padding: var(--space-3); }
+   }
+
+   @layer utilities {
+     .p-0 { padding: 0 !important; } /* Always overrides base */
+   }
+   ```
+
+2. **Keep styles with components**
+   ```liquid
+   {% # Section with its own styles %}
+   <div class="my-section">...</div>
+   {% stylesheet %}
+     .my-section { /* ... */ }
+   {% endstylesheet %}
+   ```
+
+3. **Use CSS custom properties for theming**
+   ```css
+   .product-card {
+     background: var(--color-background);
+     color: var(--color-foreground);
+   }
+   ```
+
+4. **Mobile-first media queries**
+   ```css
+   .element {
+     font-size: var(--font-size-base);
+   }
+
+   @media (min-width: 768px) {
+     .element {
+       font-size: var(--font-size-lg);
+     }
+   }
+   ```
+
+5. **BEM naming for components**
+   ```css
+   .product-card { }
+   .product-card__image { }
+   .product-card__title { }
+   .product-card--featured { }
+   ```
+
+### ❌ Bad Practices
+
+1. **DO NOT add everything to critical.css**
+   ```css
+   /* ❌ Bad - section-specific styles in critical.css */
+   .footer-newsletter { }
+   .product-gallery { }
+   ```
+
+2. **DO NOT use IDs as selectors**
+   ```css
+   /* ❌ Bad */
+   #product-title { }
+
+   /* ✅ Good */
+   .product-title { }
+   ```
+
+3. **AVOID !important (unless in utilities)**
+   ```css
+   /* ❌ Bad */
+   .product-card {
+     padding: 20px !important;
+   }
+
+   /* ✅ Good - use the appropriate layer */
+   @layer utilities {
+     .p-5 { padding: var(--space-5) !important; }
+   }
+   ```
+
+4. **DO NOT nest deeply (max 1 level)**
+   ```css
+   /* ❌ Bad */
+   .product-card .content .title .text { }
+
+   /* ✅ Good - BEM flat structure */
+   .product-card__title-text { }
+   ```
+
+5. **AVOID preprocessors (&)**
+   ```css
+   /* ❌ Not supported in Liquid */
+   .button {
+     &:hover { }
+   }
+
+   /* ✅ Good */
+   .button:hover { }
+   ```
+
+## Debugging Layers
+
+### Check Layer Assignment
+
+In DevTools, in the Styles panel, you'll see which layer a style belongs to:
+
+```
+element.style { }
+
+@layer base
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+@layer utilities
+  .mt-4 {
+    margin-top: var(--space-4);
+  }
+```
+
+### Layer Priority
+
+Styles from later layers **always** win:
+
+```css
+@layer base {
+  .button {
+    padding: var(--space-4); /* 16px */
+  }
+}
+
+@layer utilities {
+  .p-2 {
+    padding: var(--space-2); /* 8px - wins despite lower specificity */
+  }
+}
+```
+
+```html
+<!-- Padding will be 8px, not 16px -->
+<button class="button p-2">Click me</button>
+```
+
+## More Information
+
+- [CSS Cascade Layers (MDN)](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer)
+- [CSS Variables Guide](/developer/styling/css-variables)
+- [BEM Naming Conventions](/developer/styling/bem-naming)

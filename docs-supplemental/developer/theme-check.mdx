@@ -1,0 +1,55 @@
+---
+title: "Theme Check"
+description: "Linting and validation for Shopify themes"
+---
+
+## Running Theme Check
+
+```bash
+# Run all checks
+shopify theme check
+
+# Auto-fix issues
+shopify theme check --auto-correct
+```
+
+## Common Checks
+
+### Required Checks
+- Valid JSON in schema blocks
+- Translation key existence
+- Asset file references
+- Liquid syntax validation
+
+### Performance Checks
+- Image size optimization
+- Unused CSS/JS detection
+- Render-blocking resources
+
+### Accessibility Checks
+- Alt text for images
+- Form labels
+- Color contrast
+
+## Configuration
+
+Theme check configuration can be customized in `.theme-check.yml`:
+
+```yaml
+# Disable specific checks
+RemoteAsset:
+  enabled: false
+
+# Configure severity
+MissingTemplate:
+  severity: error
+```
+
+## Pre-commit Hook
+
+Run theme check before commits:
+
+```bash
+# In package.json scripts
+"lint": "shopify theme check"
+```

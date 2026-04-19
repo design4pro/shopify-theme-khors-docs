@@ -1,0 +1,59 @@
+---
+title: "Collection Section"
+description: "Technical documentation for main-collection.liquid"
+icon: "code"
+---
+
+## Location
+
+`sections/main-collection.liquid`
+
+## Preview
+
+<Frame caption="Collection Page - Desktop View">
+  <img src="/images/sections/collection-page-desktop.png" alt="Collection page showing product grid with filtering options on desktop" />
+</Frame>
+
+<Frame caption="Collection Page - Mobile View">
+  <img src="/images/sections/collection-page-mobile.png" alt="Collection page with mobile-optimized product grid layout" />
+</Frame>
+
+## Schema
+
+```json
+{
+  "name": "t:sections.collection.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 2,
+      "max": 5,
+      "default": 4,
+      "label": "t:labels.products_per_row"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "label": "t:labels.products_per_page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:labels.enable_filtering"
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.collection` - Main container
+- `.collection__grid` - Product grid
+- `.collection__filters` - Filter sidebar
+- `.collection__pagination` - Pagination

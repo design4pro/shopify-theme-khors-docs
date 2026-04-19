@@ -1,0 +1,57 @@
+---
+title: "Footer Payment Icons"
+description: "Payment method SVG icons from shop's enabled payment types"
+icon: "credit-card"
+---
+
+## Location
+
+`snippets/footer-payment.liquid` (44 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders payment method icons from the shop's enabled payment types.
+  Only renders when payment types are available.
+
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'footer-payment' %}
+```
+
+## Generated Output
+
+```html
+<ul class="footer-payment" role="list" aria-label="Accepted payment methods">
+  <li class="footer-payment__item">
+    <!-- Shopify payment_type_svg_tag output -->
+  </li>
+</ul>
+```
+
+The component uses Shopify's `{{ type | payment_type_svg_tag }}` filter which outputs brand-standard SVG icons for each enabled payment method (Visa, Mastercard, PayPal, etc.).
+
+Only renders when `shop.enabled_payment_types.size > 0`.
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.footer-payment` | Flex-wrap list container |
+| `.footer-payment__item` | Inline-flex item |
+| `.footer-payment__item svg` | Fixed size (38×24px) |
+
+## Accessibility
+
+- `role="list"` with `aria-label` translation key
+- SVG icons from Shopify include built-in accessible labels
+
+## Related
+
+- [Footer Section](/developer/sections/footer) — Parent section

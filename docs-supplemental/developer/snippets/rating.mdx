@@ -1,0 +1,115 @@
+---
+title: "Rating Snippet"
+description: "Technical documentation for rating.liquid snippet"
+icon: "star"
+---
+
+## Location
+
+`snippets/rating.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a star rating component with support for partial stars, review count, and multiple sizes.
+  Uses inline SVG stars with fill for color control (not the icon system which uses stroke).
+
+  @param {number} rating - Rating value from 0 to 5, supports decimals (default: 0)
+  @param {number} [max_rating] - Maximum rating value (default: 5)
+  @param {number} [review_count] - Number of reviews; hidden if empty
+  @param {boolean} [show_value] - Show numeric rating value beside stars (default: false)
+  @param {string} [size] - Size modifier: 'rating--small', 'rating--medium', 'rating--large' (default: 'rating--medium')
+  @param {string} [star_color] - Custom star color as CSS value; defaults to gold (#D4A017)
+  @param {string} [class] - Additional CSS classes
+
+  @example Basic rating
+    {% render 'rating', rating: 4.5 %}
+
+  @example Rating with review count
+    {% render 'rating', rating: 4.5, review_count: 128 %}
+
+  @example Small rating with numeric value
+    {% render 'rating', rating: 3.0, show_value: true, size: 'rating--small' %}
+
+  @example Custom star color
+    {% render 'rating', rating: 5, star_color: '#ff6600' %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic rating {% endcomment %}
+{% render 'rating', rating: 4.5 %}
+
+{% comment %} Rating with review count {% endcomment %}
+{% render 'rating', rating: 4.5, review_count: 128 %}
+
+{% comment %} Small rating with numeric value {% endcomment %}
+{% render 'rating', rating: 3.0, show_value: true, size: 'rating--small' %}
+
+{% comment %} Custom star color {% endcomment %}
+{% render 'rating', rating: 5, star_color: '#ff6600' %}
+```
+
+## Generated Output
+
+```html
+<div class="rating rating--medium" role="img" aria-label="4.5 out of 5 stars">
+  <div class="rating__stars" aria-hidden="true">
+    <span class="rating__star rating__star--full">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+        <path d="m10 2.5 2.472 5.008 5.528.804-4 3.899.944 5.514L10 15.192l-4.944 2.533.944-5.514-4-3.9 5.528-.803z"/>
+      </svg>
+    </span>
+    <!-- ... more full stars -->
+    <span class="rating__star rating__star--half">
+      <svg class="rating__star-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+        <path d="m10 2.5 2.472 5.008 5.528.804-4 3.899.944 5.514L10 15.192l-4.944 2.533.944-5.514-4-3.9 5.528-.803z"/>
+      </svg>
+      <span class="rating__star-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+          <path d="m10 2.5 2.472 5.008 5.528.804-4 3.899.944 5.514L10 15.192l-4.944 2.533.944-5.514-4-3.9 5.528-.803z"/>
+        </svg>
+      </span>
+    </span>
+    <span class="rating__star rating__star--empty">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+        <path d="m10 2.5 2.472 5.008 5.528.804-4 3.899.944 5.514L10 15.192l-4.944 2.533.944-5.514-4-3.9 5.528-.803z"/>
+      </svg>
+    </span>
+  </div>
+  <span class="rating__count">(128 reviews)</span>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.rating` | Base component (inline-flex, default gold star color) |
+| `.rating--small` | Small size (14px stars, xs font) |
+| `.rating--medium` | Medium size (18px stars, sm font, default) |
+| `.rating--large` | Large size (24px stars, base font) |
+| `.rating__stars` | Stars container (flex row with 1px gap) |
+| `.rating__star` | Individual star wrapper |
+| `.rating__star--full` | Filled star (uses `--rating-star-color`) |
+| `.rating__star--half` | Half-filled star (relative positioned container) |
+| `.rating__star--empty` | Empty star (uses `--rating-star-empty` border color) |
+| `.rating__star-bg` | Half star background layer (empty color) |
+| `.rating__star-fill` | Half star fill layer (50% width, overflow hidden) |
+| `.rating__value` | Numeric rating display (semibold) |
+| `.rating__count` | Review count display (muted color) |
+
+## Accessibility
+
+- `role="img"` on the container element for semantic meaning
+- `aria-label` with full rating text (e.g., "4.5 out of 5 stars" or "4.5 out of 5 stars, 128 reviews")
+- Stars container marked `aria-hidden="true"` to prevent individual star announcement
+- Partial stars rendered with 50% clip technique (overflow hidden on `.rating__star-fill`)
+- Rating value rounded to nearest 0.5 for consistent star display
+
+## Related
+
+- [Rating Block](/developer/blocks/rating) -- Theme Editor wrapper

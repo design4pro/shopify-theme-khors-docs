@@ -1,0 +1,222 @@
+---
+title: "Heading Block"
+description: "Technical documentation for heading.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/heading.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Heading block for Shopify Theme Editor.
+  Provides semantic HTML headings (h1-h6 + display variant) with flexible styling options.
+
+  Features:
+  - 7 heading levels (h1-h6 + display) mapped to typography scale
+  - Optional subheading text
+  - Text alignment (left, center, right)
+  - Visual decorations (underline, accent border)
+  - Color scheme override
+  - Configurable spacing (margin top/bottom)
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.heading.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:components.heading.headers.content"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:components.heading.settings.text.label",
+      "default": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "t:components.heading.settings.subheading.label",
+      "info": "t:components.heading.settings.subheading.info"
+    },
+    {
+      "type": "header",
+      "content": "t:components.heading.headers.style"
+    },
+    {
+      "type": "select",
+      "id": "level",
+      "label": "t:components.heading.settings.level.label",
+      "options": [
+        {
+          "value": "display",
+          "label": "t:components.heading.options.level.display"
+        },
+        {
+          "value": "h1",
+          "label": "t:components.heading.options.level.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:components.heading.options.level.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:components.heading.options.level.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:components.heading.options.level.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:components.heading.options.level.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:components.heading.options.level.h6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:components.heading.settings.alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "decoration",
+      "label": "t:components.heading.settings.decoration.label",
+      "info": "t:components.heading.settings.decoration.info",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:components.heading.options.decoration.none"
+        },
+        {
+          "value": "underline",
+          "label": "t:components.heading.options.decoration.underline"
+        },
+        {
+          "value": "accent",
+          "label": "t:components.heading.options.decoration.accent"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.color_scheme.inherit"
+        },
+        {
+          "value": "light",
+          "label": "t:options.color_scheme.light"
+        },
+        {
+          "value": "dark",
+          "label": "t:options.color_scheme.dark"
+        },
+        {
+          "value": "accent",
+          "label": "t:options.color_scheme.accent"
+        }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "header",
+      "content": "t:components.heading.headers.spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "t:general.spacing_unit",
+      "label": "t:general.margin_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "t:general.spacing_unit",
+      "label": "t:general.margin_bottom",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.heading.presets.default",
+      "settings": {
+        "text": "Heading",
+        "level": "h2",
+        "alignment": "left"
+      }
+    },
+    {
+      "name": "t:components.heading.presets.hero",
+      "settings": {
+        "text": "Hero Heading",
+        "level": "display",
+        "alignment": "center",
+        "decoration": "underline"
+      }
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.heading` - Main container
+- `.heading__title` - Title element
+- `.heading__title--display` - Display level modifier
+- `.heading__title--h1` - H1 level modifier
+- `.heading__title--h2` - H2 level modifier
+- `.heading__title--h3` - H3 level modifier
+- `.heading__title--h4` - H4 level modifier
+- `.heading__title--h5` - H5 level modifier
+- `.heading__title--h6` - H6 level modifier
+- `.heading__subheading` - Subheading element
+- `.heading--left` - Left alignment modifier
+- `.heading--center` - Center alignment modifier
+- `.heading--right` - Right alignment modifier
+- `.heading--underline` - Underline decoration modifier
+- `.heading--accent` - Accent border decoration modifier
+- `.color-scheme--{scheme}` - Color scheme overrides (light, dark, accent)

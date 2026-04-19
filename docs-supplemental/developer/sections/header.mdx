@@ -1,0 +1,132 @@
+---
+title: "Header Section"
+description: "Full-width site header with logo, 3-level navigation, search, account, and cart icon"
+icon: "panel-top"
+---
+
+## Location
+
+`sections/header.liquid`
+
+## Preview
+
+<Frame caption="Header Section - Desktop View">
+  <img src="/images/sections/header-desktop.png" alt="Header section showing logo, navigation menu, and utility icons on desktop viewport" />
+</Frame>
+
+<Frame caption="Header Section - Mobile View">
+  <img src="/images/sections/header-mobile.png" alt="Header section with mobile-optimized layout showing hamburger menu and logo" />
+</Frame>
+
+## Architecture
+
+The header section orchestrates seven sub-components via `{% render %}` plus a shared JavaScript module:
+
+| Component | File | Role |
+|-----------|------|------|
+| [Logo](/developer/snippets/header-logo) | `header-logo.liquid` | Responsive logo with retina support |
+| [Navigation](/developer/snippets/header-nav) | `header-nav.liquid` | 3-level desktop menubar + mobile accordion |
+| [Mega Menu](/developer/snippets/header-mega-menu) | `header-mega-menu.liquid` | Full-width dropdown with featured image |
+| [Dropdown](/developer/snippets/header-nav-dropdown) | `header-nav-dropdown.liquid` | Recursive L2/L3 narrow dropdown |
+| [Drawer](/developer/snippets/header-drawer) | `header-drawer.liquid` | Mobile slide-in dialog |
+| [Search](/developer/snippets/header-search) | `header-search.liquid` | Predictive search overlay |
+| [Cart Icon](/developer/snippets/header-cart-icon) | `header-cart-icon.liquid` | Dynamic badge with live count |
+| Sticky + Cart JS | `assets/header.js` | StickyHeader + CartCount classes |
+
+The section is included in `sections/header-group.json` alongside the [Announcement Bar](/developer/sections/announcement-bar).
+
+## Layout Variants
+
+Three layout modes controlled by `section.settings.layout`:
+
+| Value | Description |
+|-------|-------------|
+| `logo-left-nav-center` | Logo left, nav centered, icons right (default) |
+| `logo-center-nav-below` | Logo centered on full row, nav below, icons absolute-right |
+| `logo-left-nav-left` | Logo and nav left-aligned, icons right |
+
+Each layout variant applies CSS via `.header--{layout}` modifier classes on the root `<header>` element.
+
+## Schema Settings
+
+### Logo Group
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `logo_desktop` | `image_picker` | — | Desktop logo image |
+| `logo_mobile` | `image_picker` | — | Optional mobile logo (falls back to desktop) |
+| `logo_width_desktop` | `range` | `150` | Desktop width 80–300px, step 10 |
+| `logo_width_mobile` | `range` | `100` | Mobile width 60–200px, step 10 |
+| `logo_alignment` | `select` | `left` | `left`, `center`, `right` |
+| `logo_alt` | `text` | — | Custom alt text (falls back to shop name) |
+
+### Navigation
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `menu` | `link_list` | — | Main navigation menu |
+
+### Layout & Behavior
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `layout` | `select` | `logo-left-nav-center` | Layout variant (see above) |
+| `sticky_header` | `checkbox` | `true` | Enable sticky header on scroll |
+| `transparent_header` | `checkbox` | `false` | Transparent header mode |
+| `show_search` | `checkbox` | `true` | Show search icon |
+| `show_account` | `checkbox` | `true` | Show account icon (requires customer accounts) |
+
+### Style
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `color_scheme` | `select` | `light` | `light`, `dark`, `accent` |
+| `show_border` | `checkbox` | `true` | Bottom border line |
+| `padding_top` | `range` | `16` | Top padding 0–40px, step 4 |
+| `padding_bottom` | `range` | `16` | Bottom padding 0–40px, step 4 |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header` | Root element |
+| `.header--{layout}` | Layout variant modifier |
+| `.header--border` | Bottom border |
+| `.header--stuck` | Applied by JS when sticky header is active |
+| `.header__inner` | Flex container (`page-width`) |
+| `.header__left` | Logo + hamburger slot |
+| `.header__center` | Navigation slot (hidden on mobile) |
+| `.header__right` | Icons (search, account, cart) |
+| `.header__icon` | 44×44px icon button/link |
+| `.header__icon--menu` | Hamburger button (mobile only) |
+| `.color-scheme--{scheme}` | Color scheme modifier |
+
+## JavaScript
+
+The `assets/header.js` file (≤2KB gzipped) provides two classes:
+
+### StickyHeader
+
+Uses `IntersectionObserver` on a sentinel element to toggle `.header--stuck` class and apply `position: fixed` without scroll event listeners. Opt-in via `data-sticky="true"` attribute.
+
+### CartCount
+
+Listens for `shopify:section:load` and cart form submissions, fetches `/cart.json`, and dispatches `khors:cart:updated` custom event with `{ count, cart }` detail.
+
+Snippet-specific JS (drawer, navigation, mega menu, search, cart icon, announcement bar) is embedded inline via `{% javascript %}` for Shopify's lazy-loading optimization.
+
+## Accessibility
+
+- Mobile hamburger button uses `aria-label` with translation key
+- Desktop navigation follows ARIA menubar pattern
+- Noscript fallback renders flat link list for no-JS
+- All icon buttons have 44×44px minimum touch target
+- `focus-visible` outlines on all interactive elements
+- `prefers-reduced-motion` disables transitions
+
+## Related
+
+- [Announcement Bar](/developer/sections/announcement-bar) — Part of header-group.json
+- [Footer](/developer/sections/footer) — Site footer section
+- [Header Logo](/developer/snippets/header-logo) — Logo sub-component
+- [Header Nav](/developer/snippets/header-nav) — Navigation sub-component

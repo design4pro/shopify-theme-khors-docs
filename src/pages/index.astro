@@ -1,17 +1,17 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import { Button } from '~/components/ui/button';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="khors-docs">
+  <main class="container mx-auto py-16 px-4">
+    <h1 class="text-4xl font-bold mb-4">Welcome to khors-docs</h1>
+    <p class="text-muted-foreground mb-8">
+      Built with Astro + Tailwind CSS v4 + shadcn/ui v4 + Cloudflare Workers
+    </p>
+    <div class="flex gap-4">
+      <Button>Get Started</Button>
+      <Button variant="secondary">Learn More</Button>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,266 @@
+---
+title: "Typography"
+description: "Configure fonts and text styles"
+---
+
+<Info>
+  Access: **Shopify Admin > Online Store > Themes > Customize > Theme Settings > Typography**
+</Info>
+
+## Font Settings
+
+### Primary Font
+
+The main font used throughout the store for headings and body text.
+
+**Default font:** Work Sans
+
+**Where it's used:**
+- All headings (H1-H6)
+- Paragraph text
+- Buttons and forms
+- Navigation
+
+### How to Change Font
+
+1. Open **Shopify Admin > Online Store > Themes**
+2. Click **Customize** on your theme
+3. Click **Theme Settings** (gear icon)
+4. Go to the **Typography** section
+5. Click **Change** next to "Primary font"
+6. Select a font from Shopify's library or upload your own
+7. Click **Save**
+
+<Info>
+  Shopify offers **over 50 fonts** from Google Fonts, Adobe Fonts, and other sources, all optimized for web.
+</Info>
+
+## Font Size Scale
+
+The Khors theme uses an **11-step typography scale** from 12px to 72px, ensuring harmonious text hierarchy.
+
+### Available Sizes
+
+| Size | Value | Default usage |
+|---------|---------|-----------------|
+| **Extra Small** | 12px | Fine print, disclaimers, legal notes |
+| **Small** | 14px | Helper text, form labels |
+| **Base** | 16px | Body text, product descriptions |
+| **Medium** | 18px | Emphasized text, lead paragraphs |
+| **Large** | 20px | Small headings (H5), subheadings |
+| **Extra Large** | 24px | H4 headings, card headings |
+| **2XL** | 30px | H3 headings |
+| **3XL** | 36px | H2 headings, section headings |
+| **4XL** | 48px | H1 headings, main page headings |
+| **5XL** | 60px | Hero headings on banners |
+| **6XL** | 72px | Display headings for larger screens |
+
+### Automatic Scaling
+
+All font sizes scale responsively:
+- **Mobile** - smaller sizes for better readability
+- **Tablet** - medium sizes
+- **Desktop** - full sizes according to the table above
+
+## Line Height
+
+Line height affects readability and text spacing.
+
+| Height | Value | When to use |
+|----------|---------|--------------|
+| **Tight** | 1.2 | Headings and display text |
+| **Base** | 1.5 | Body text, product descriptions |
+| **Loose** | 1.8 | Long paragraphs, blog articles |
+
+**Default settings in theme:**
+- Headings (H1-H6): `Tight` (1.2)
+- Body text: `Base` (1.5)
+- Long-form text: `Loose` (1.8)
+
+## Font Weights
+
+| Weight | Value | When to use |
+|---------|---------|--------------|
+| **Light** | 300 | Long texts, quotes, alternative style |
+| **Normal** | 400 | Body text (default) |
+| **Medium** | 500 | Text emphasis, subheadings |
+| **Semibold** | 600 | Secondary headings, buttons |
+| **Bold** | 700 | Main headings (H1-H6), CTAs |
+
+<Info>
+  Not all fonts have all weights available. Choose a font that offers the variants you need.
+</Info>
+
+## Letter Spacing
+
+Affects letter spread and overall readability.
+
+| Spacing | Value | When to use |
+|---------|---------|--------------|
+| **Tight** | -0.02em | Large headings (H1-H2) for better optics |
+| **Normal** | 0 | Body text (default) |
+| **Wide** | 0.05em | Uppercase text, labels, buttons |
+
+**Usage examples:**
+- Hero heading (H1): `Tight` spacing
+- Product text: `Normal` spacing
+- "ADD TO CART" button: `Wide` spacing
+
+## Best Practices
+
+### Typography Hierarchy
+
+Maintain clear hierarchy between text levels:
+
+```
+H1 (48px) - Main page heading
+  ↓
+H2 (36px) - Section headings
+  ↓
+H3 (30px) - Sub-sections
+  ↓
+Body (16px) - Main text
+  ↓
+Small (14px) - Helper text
+```
+
+### Font Limitation
+
+<Warning>
+  Use **maximum 1-2 fonts** throughout the store for consistency. More fonts slow down page loading and look unprofessional.
+</Warning>
+
+**Recommended combinations:**
+- **Single font:** One font for everything (best for performance)
+- **Duo:** Serif for headings + Sans-serif for body (elegant, classic)
+
+### Readability
+
+- **Minimum for body text:** 16px (current web standard)
+- **Line length:** 50-75 characters for optimal readability
+- **Contrast:** Min. 4.5:1 between text and background (WCAG AA)
+
+### Performance
+
+- Limit the number of font variants (weights/styles)
+- Shopify automatically optimizes fonts with `font-display: swap`
+- Font loading doesn't block page rendering
+
+## Industry Tips
+
+<Tabs>
+  <Tab title="Fashion">
+    **Style:** Elegant, sophisticated fonts
+
+    **Recommended fonts:**
+    - **Serif:** Playfair Display, Libre Baskerville, Lora
+    - **Sans-serif:** Montserrat, Raleway, Poppins
+
+    **Configuration:**
+    - H1-H2: Serif, Light/Normal weight
+    - Body: Sans-serif, Normal weight (16-18px)
+    - Buttons: Sans-serif, Semibold, Wide letter spacing
+
+    **Tip:** Use Light or Normal weight for sophisticated look. Avoid Bold in headings (too aggressive).
+  </Tab>
+  <Tab title="Beauty">
+    **Style:** Light, modern, feminine
+
+    **Recommended fonts:**
+    - **Primary:** Inter, Nunito Sans, DM Sans
+    - **Accent:** Cormorant Garamond (for elegance)
+
+    **Configuration:**
+    - H1-H2: Light weight (300), larger sizes (60-72px)
+    - Body: Normal weight (400), 16-17px
+    - Generous line height (1.6-1.8) for airiness
+
+    **Tip:** Light weights and larger letter-spacing create airiness. Use pastels and large whitespace.
+  </Tab>
+  <Tab title="Electro">
+    **Style:** Bold, technical, modern
+
+    **Recommended fonts:**
+    - **Primary:** Inter, Roboto, Space Grotesk
+    - **Accent:** JetBrains Mono (for tech specs)
+
+    **Configuration:**
+    - H1-H2: Bold weight (700), tight letter-spacing
+    - Body: Normal/Medium (400-500), 16px
+    - All-caps for labels with wide letter-spacing
+
+    **Tip:** Use Bold weights and strong accents. Monospace fonts for product specs add tech credibility.
+  </Tab>
+</Tabs>
+
+## Example Configurations
+
+### Configuration 1: Minimalist Modern (Fashion)
+```
+Primary Font: Montserrat (Sans-serif)
+
+H1: 48px, Light (300), Tight line-height
+H2: 36px, Normal (400), Tight line-height
+Body: 16px, Normal (400), Base line-height
+Buttons: 14px, Semibold (600), Wide letter-spacing, UPPERCASE
+```
+
+### Configuration 2: Soft Elegant (Beauty)
+```
+Primary Font: Nunito Sans (Sans-serif)
+
+H1: 60px, Light (300), Tight line-height, Tight letter-spacing
+H2: 36px, Normal (400), Base line-height
+Body: 17px, Normal (400), Loose line-height (1.7)
+Buttons: 14px, Medium (500), Normal letter-spacing
+```
+
+### Configuration 3: Tech Bold (Electro)
+```
+Primary Font: Inter (Sans-serif)
+
+H1: 48px, Bold (700), Tight line-height, Tight letter-spacing
+H2: 36px, Semibold (600), Tight line-height
+Body: 16px, Normal (400), Base line-height
+Buttons: 13px, Bold (700), Wide letter-spacing, UPPERCASE
+Specs: 14px, Monospace (JetBrains Mono)
+```
+
+## Testing Typography
+
+Before finalizing typography settings:
+
+1. **Read long text** - check if it's readable for 2-3 minutes
+2. **Mobile test** - are sizes appropriate on small screens?
+3. **Large screen test** - are headings not too small on 27"?
+4. **Different browsers** - font rendering differs (Chrome vs Safari vs Firefox)
+5. **Print test** - print a product page and assess readability
+
+## Helpful Tools
+
+### Google Fonts Pairing
+[Google Font Combinations](https://fonts.google.com/) - Inspiration for font pairs
+
+### Type Scale Calculator
+[Type-Scale.com](https://type-scale.com/) - Generate harmonious typography scale
+
+### Font Testing
+[FontPair](https://fontpair.co/) - See font pairs in action
+
+## Accessibility
+
+<Warning>
+  Ensure that font sizes are large enough and contrasty for users with visual impairments.
+</Warning>
+
+**Minimum requirements:**
+- Body text: **minimum 16px**
+- Text contrast: **4.5:1** (normal text), **3:1** (large text 18px+)
+- Line height: **minimum 1.5** for body text
+- Paragraph spacing: **minimum 1.5em** between paragraphs
+
+## More Information
+
+- [CSS Variables Guide](/developer/styling/css-variables) - Technical details of typography tokens
+- [Colors](/merchant/settings/colors) - Match typography to color scheme
+- [Presets](/merchant/presets) - See examples of industry configurations

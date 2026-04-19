@@ -1,0 +1,147 @@
+---
+title: "Breadcrumb Snippet"
+description: "Technical documentation for breadcrumb.liquid snippet"
+icon: "navigation"
+---
+
+## Location
+
+`snippets/breadcrumb.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a breadcrumb navigation component with Schema.org structured data and mobile-friendly truncation.
+  Displays the navigation path with separators, home link, and current page indicator.
+
+  @param {object} items - Array of breadcrumb items (required). Format: [{"title": "...", "url": "..."}]
+  @param {string} [separator] - Separator character or icon name (default: '/')
+  @param {boolean} [show_home] - Display home link as first item (default: true)
+  @param {string} [home_url] - URL for home link (default: '/')
+  @param {string} [home_label] - Label for home link (default: t'breadcrumb.home')
+  @param {boolean} [show_schema] - Include Schema.org JSON-LD markup (default: true)
+  @param {boolean} [truncate_mobile] - Show truncated dropdown on mobile (default: true)
+  @param {string} [class] - Additional CSS classes to append
+
+  @example Basic breadcrumb
+    {% liquid
+      assign breadcrumb_items = '[{"title": "Products", "url": "/products"}, {"title": "Shoes", "url": "/collections/shoes"}, {"title": "Red Sneakers", "url": ""}]' | parse_json
+    %}
+    {% render 'breadcrumb', items: breadcrumb_items %}
+
+  @example Breadcrumb without home link
+    {% render 'breadcrumb', items: breadcrumb_items, show_home: false %}
+
+  @example Breadcrumb with icon separator
+    {% render 'breadcrumb', items: breadcrumb_items, separator: 'chevron-right' %}
+
+  @example Breadcrumb with custom class
+    {% render 'breadcrumb', items: breadcrumb_items, class: 'breadcrumb--minimal' %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic breadcrumb {% endcomment %}
+{% liquid
+  assign breadcrumb_items = '[{"title": "Products", "url": "/products"}, {"title": "Shoes", "url": "/collections/shoes"}, {"title": "Red Sneakers", "url": ""}]' | parse_json
+%}
+{% render 'breadcrumb', items: breadcrumb_items %}
+
+{% comment %} Breadcrumb without home link {% endcomment %}
+{% render 'breadcrumb', items: breadcrumb_items, show_home: false %}
+
+{% comment %} Breadcrumb with icon separator {% endcomment %}
+{% render 'breadcrumb', items: breadcrumb_items, separator: 'chevron-right' %}
+
+{% comment %} Breadcrumb with custom class {% endcomment %}
+{% render 'breadcrumb', items: breadcrumb_items, class: 'breadcrumb--minimal' %}
+```
+
+## Generated Output
+
+Desktop list with Schema.org JSON-LD:
+
+```html
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://example.myshopify.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Products",
+        "item": "https://example.myshopify.com/products"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Red Sneakers"
+      }
+    ]
+  }
+  </script>
+
+  <ul class="breadcrumb__list breadcrumb__list--desktop">
+    <li class="breadcrumb__item">
+      <a href="/" class="breadcrumb__link">Home</a>
+    </li>
+    <li class="breadcrumb__separator" aria-hidden="true">/</li>
+    <li class="breadcrumb__item">
+      <a href="/products" class="breadcrumb__link">Products</a>
+    </li>
+    <li class="breadcrumb__separator" aria-hidden="true">/</li>
+    <li class="breadcrumb__item">
+      <span class="breadcrumb__link breadcrumb__link--current" aria-current="page">
+        Red Sneakers
+      </span>
+    </li>
+  </ul>
+
+  <!-- Mobile truncated version also rendered -->
+</nav>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.breadcrumb` | Main `<nav>` container |
+| `.breadcrumb__list` | `<ul>` list (flex, wrapping) |
+| `.breadcrumb__list--desktop` | Desktop variant (hidden on mobile, visible at 640px+) |
+| `.breadcrumb__list--mobile` | Mobile variant with truncation (visible on mobile, hidden at 640px+) |
+| `.breadcrumb__item` | List item (flex, centered) |
+| `.breadcrumb__item--dropdown` | Dropdown container item on mobile |
+| `.breadcrumb__link` | Link or text element (sm font, muted color) |
+| `.breadcrumb__link--current` | Current page indicator (foreground color, medium weight, no hover underline) |
+| `.breadcrumb__separator` | Separator element (`aria-hidden`, muted color) |
+| `.breadcrumb__details` | `<details>` element for mobile dropdown |
+| `.breadcrumb__summary` | `<summary>` trigger (no list marker) |
+| `.breadcrumb__summary-label` | Visually hidden label for screen readers |
+| `.breadcrumb__ellipsis` | Ellipsis text ("...") |
+| `.breadcrumb__dropdown` | Dropdown list (absolute positioned, bordered, shadowed) |
+| `.breadcrumb__dropdown-item` | Dropdown list item |
+| `.breadcrumb__dropdown-link` | Dropdown link (block display, hover background) |
+
+## Accessibility
+
+- `<nav>` element with `aria-label` for landmark identification
+- `aria-current="page"` on the current (last) breadcrumb item
+- Separators marked with `aria-hidden="true"` to prevent screen reader announcement
+- Schema.org `BreadcrumbList` JSON-LD structured data for search engine understanding
+- Mobile truncation uses native `<details>/<summary>` with a visually hidden label for the summary trigger
+- All links have `focus-visible` outline styling with accent color
+
+## Related
+
+No blocks use this snippet directly. It is rendered by section-level templates for page navigation.

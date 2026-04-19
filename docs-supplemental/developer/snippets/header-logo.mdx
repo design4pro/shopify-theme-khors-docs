@@ -1,0 +1,107 @@
+---
+title: "Header Logo"
+description: "Responsive logo with desktop/mobile variants and retina support"
+icon: "image"
+---
+
+## Location
+
+`snippets/header-logo.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a responsive logo component for the header with desktop/mobile variants.
+  Supports multiple aspect ratios through configurable width settings.
+  Falls back to shop name with store icon when no logo is provided.
+
+  @param {image} logo_desktop - Desktop logo image object (can be blank)
+  @param {image} [logo_mobile] - Optional mobile logo image (falls back to logo_desktop)
+  @param {number} [logo_width_desktop] - Desktop logo width in pixels (default: 150)
+  @param {number} [logo_width_mobile] - Mobile logo width in pixels (default: 100)
+  @param {string} [logo_alignment] - Logo alignment: 'left', 'center', 'right' (default: 'left')
+  @param {string} [logo_alt] - Custom alt text (default: shop.name)
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic: desktop logo only {% endcomment %}
+{% render 'header-logo',
+  logo_desktop: section.settings.logo_desktop,
+  logo_width_desktop: 180
+%}
+
+{% comment %} Full configuration with mobile variant {% endcomment %}
+{% render 'header-logo',
+  logo_desktop: section.settings.logo_desktop,
+  logo_mobile: section.settings.logo_mobile,
+  logo_width_desktop: 200,
+  logo_width_mobile: 120,
+  logo_alignment: 'center',
+  logo_alt: 'Brand Name Logo'
+%}
+
+{% comment %} Fallback to shop name (no logo uploaded) {% endcomment %}
+{% render 'header-logo' %}
+```
+
+## Generated Output
+
+With logo uploaded:
+
+```html
+<div class="header-logo header-logo--left">
+  <a href="/" class="header-logo__link" aria-label="Return to home">
+    <picture>
+      <source media="(max-width: 749px)" srcset="...mobile.jpg 1x, ...mobile@2x.jpg 2x">
+      <img src="...desktop.jpg" srcset="...desktop.jpg 1x, ...desktop@2x.jpg 2x"
+        alt="Shop Name" loading="eager" class="header-logo__image"
+        width="150" height="auto"
+        style="--logo-width-desktop: 150px; --logo-width-mobile: 100px;">
+    </picture>
+  </a>
+</div>
+```
+
+Without logo (fallback):
+
+```html
+<div class="header-logo header-logo--left">
+  <a href="/" class="header-logo__link" aria-label="Return to home">
+    <div class="header-logo__fallback">
+      <span class="header-logo__icon"><!-- store icon --></span>
+      <span class="header-logo__text">Shop Name</span>
+    </div>
+  </a>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header-logo` | Root flex container |
+| `.header-logo--left` | Left alignment (default) |
+| `.header-logo--center` | Center alignment |
+| `.header-logo--right` | Right alignment |
+| `.header-logo__link` | Anchor to root URL (44×44px min touch target) |
+| `.header-logo__image` | Logo image (responsive width via CSS variables) |
+| `.header-logo__fallback` | Shop name + icon container |
+| `.header-logo__icon` | Store icon wrapper |
+| `.header-logo__text` | Shop name text (bold, nowrap) |
+
+## Accessibility
+
+- Link uses `aria-label` with `accessibility.return_home` translation
+- `loading="eager"` for above-the-fold performance
+- Alt text from `logo_alt` param or `shop.name` fallback
+- `focus-visible` outline with accent color and 4px offset
+- Minimum 44×44px touch target on link
+
+## Related
+
+- [Header Section](/developer/sections/header) — Parent section
+- [Icon Snippet](/developer/snippets/icon) — Used for store fallback icon

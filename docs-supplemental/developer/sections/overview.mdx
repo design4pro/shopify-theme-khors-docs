@@ -1,0 +1,48 @@
+---
+title: "Sections Overview"
+description: "Technical guide to Khors Theme sections"
+---
+
+## What are Sections?
+
+Sections are full-width, customizable modules that make up your theme pages. Each section has a `{% schema %}` block defining its settings.
+
+## Section Structure
+
+```liquid
+{% comment %} Section HTML/Liquid {% endcomment %}
+<section class="section-name">
+  {{ section.settings.heading }}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.section_name.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading"
+    }
+  ],
+  "blocks": [{ "type": "@theme" }],
+  "presets": [
+    {
+      "name": "t:sections.section_name.presets.default"
+    }
+  ]
+}
+{% endschema %}
+```
+
+## Available Sections
+
+| Section | File | Description |
+|---------|------|-------------|
+| [Header](/developer/sections/header) | `header.liquid` | Site header with logo, 3-level nav, search, and cart |
+| [Announcement Bar](/developer/sections/announcement-bar) | `announcement-bar.liquid` | Dismissible promotional banner |
+| [Footer](/developer/sections/footer) | `footer.liquid` | Site footer with columns, newsletter, social, payment |
+| [Product](/developer/sections/product) | `product.liquid` | Product page display |
+| [Collection](/developer/sections/collection) | `collection.liquid` | Collection grid |
+| [Cart](/developer/sections/cart) | `cart.liquid` | Shopping cart |
+| [Custom Section](/developer/sections/custom-section) | `custom-section.liquid` | Flexible section with @theme blocks |

@@ -1,0 +1,55 @@
+---
+title: "Blocks Overview"
+description: "Technical guide to Khors Theme blocks"
+---
+
+## What are Blocks?
+
+Blocks are nestable components that can be added within sections. They allow merchants to build flexible layouts with reusable content elements.
+
+## Block Structure
+
+```liquid
+{% comment %} blocks/text.liquid {% endcomment %}
+<div class="block-text">
+  {{ block.settings.content }}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.text.name",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:labels.content"
+    }
+  ]
+}
+{% endschema %}
+```
+
+## Using @theme Blocks
+
+Sections can accept theme blocks using the `@theme` type:
+
+```json
+{
+  "blocks": [{ "type": "@theme" }]
+}
+```
+
+## Available Blocks
+
+| Block | File | Description |
+|-------|------|-------------|
+| [Heading](/developer/blocks/heading) | `heading.liquid` | Semantic headings h1–h6 + display |
+| [Text](/developer/blocks/text) | `text.liquid` | Rich text content |
+| [Button](/developer/blocks/button) | `button.liquid` | Configurable button with variants |
+| [Image](/developer/blocks/image-block) | `image-block.liquid` | Responsive image with overlay |
+| [Badge](/developer/blocks/badge) | `badge.liquid` | Product status indicator |
+| [Icon](/developer/blocks/icon) | `icon.liquid` | SVG icon from library |
+| [Rating](/developer/blocks/rating) | `rating.liquid` | Star rating display |
+| [Group](/developer/blocks/group) | `group.liquid` | Container for nested blocks |
+| [Accordion](/developer/blocks/accordion) | `accordion.liquid` | Collapsible content panels |
+| [Tabs](/developer/blocks/tabs) | `tabs.liquid` | Tabbed content with ARIA |

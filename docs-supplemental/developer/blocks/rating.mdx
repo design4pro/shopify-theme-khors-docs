@@ -1,0 +1,98 @@
+---
+title: "Rating Block"
+description: "Technical documentation for rating.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/rating.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Rating block wrapper for Shopify Theme Editor.
+  Delegates rendering to the rating snippet while providing merchant-friendly UI controls.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.rating.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "rating",
+      "label": "t:components.rating.settings.rating.label",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "review_count",
+      "label": "t:components.rating.settings.review_count.label",
+      "info": "t:components.rating.settings.review_count.info"
+    },
+    {
+      "type": "header",
+      "content": "t:components.rating.headers.display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_value",
+      "label": "t:components.rating.settings.show_value.label",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:components.rating.settings.size.label",
+      "options": [
+        {
+          "value": "rating--small",
+          "label": "t:components.rating.options.size.small"
+        },
+        {
+          "value": "rating--medium",
+          "label": "t:components.rating.options.size.medium"
+        },
+        {
+          "value": "rating--large",
+          "label": "t:components.rating.options.size.large"
+        }
+      ],
+      "default": "rating--medium"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "t:components.rating.settings.star_color.label",
+      "info": "t:components.rating.settings.star_color.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.rating.presets.default",
+      "settings": {
+        "rating": 4
+      }
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+No block-specific CSS. All styling is delegated to the rating snippet.
+
+## Related
+
+- [Rating Snippet](/developer/snippets/rating) — Handles star rendering with partial fill

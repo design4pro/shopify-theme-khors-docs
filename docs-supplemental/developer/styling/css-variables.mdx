@@ -1,0 +1,359 @@
+---
+title: "CSS Variables"
+description: "Design token system in the Khors theme - CSS variables for colors, typography, and spacing"
+---
+
+## Overview
+
+The Khors theme uses a comprehensive system of CSS variables (custom properties) to manage design tokens. All variables are defined in the `css-variables.liquid` snippet and rendered in the `<head>` of every page.
+
+```liquid
+{% # In layout/theme.liquid %}
+<head>
+  {% render 'css-variables' %}
+</head>
+```
+
+## Color Schemes
+
+The theme supports three color schemes that can be applied to different sections using CSS classes.
+
+### Available Schemes
+
+<Tabs>
+  <Tab title="Light">
+    Light color scheme for standard sections with light backgrounds.
+
+    **CSS Class:** `.color-scheme--light`
+  </Tab>
+  <Tab title="Dark">
+    Dark color scheme for sections with dark backgrounds, ideal for contrast areas.
+
+    **CSS Class:** `.color-scheme--dark`
+  </Tab>
+  <Tab title="Accent">
+    Accent scheme for highlighted sections, such as promotional banners or CTAs.
+
+    **CSS Class:** `.color-scheme--accent`
+  </Tab>
+</Tabs>
+
+### Color Variables
+
+Each color scheme defines 6 CSS variables:
+
+| Variable | Description | Default value (Light) |
+|---------|------|--------------------------|
+| `--color-background` | Primary background | `#FFFFFF` |
+| `--color-foreground` | Primary text | `#121212` |
+| `--color-background-2` | Secondary background | `#F5F5F5` |
+| `--color-foreground-2` | Secondary text | `#666666` |
+| `--color-accent` | Accent color | `#0066CC` |
+| `--color-border` | Border color | `#E5E5E5` |
+
+<Info>
+  Color variables are also available in `:root` as a fallback (defaults to Light scheme).
+</Info>
+
+### Implementation in Liquid
+
+```liquid
+{% # In snippets/css-variables.liquid %}
+{% style %}
+  .color-scheme--light {
+    --color-background: {{ settings.color_scheme_light_background }};
+    --color-foreground: {{ settings.color_scheme_light_foreground }};
+    --color-background-2: {{ settings.color_scheme_light_background_2 }};
+    --color-foreground-2: {{ settings.color_scheme_light_foreground_2 }};
+    --color-accent: {{ settings.color_scheme_light_accent }};
+    --color-border: {{ settings.color_scheme_light_border }};
+  }
+
+  .color-scheme--dark {
+    --color-background: {{ settings.color_scheme_dark_background }};
+    --color-foreground: {{ settings.color_scheme_dark_foreground }};
+    /* ... other variables ... */
+  }
+{% endstyle %}
+```
+
+### Usage in Sections
+
+```liquid
+{% # In a Liquid section %}
+<div class="my-section color-scheme--{{ section.settings.color_scheme }}">
+  <h2 style="color: var(--color-foreground)">Heading</h2>
+  <p style="color: var(--color-foreground-2)">Secondary text</p>
+</div>
+```
+
+```liquid
+{% # Section schema %}
+{
+  "name": "My Section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "light"
+    }
+  ]
+}
+```
+
+## Spacing Tokens
+
+The spacing system based on a **4px** base unit ensures consistent spacing throughout the theme.
+
+### Spacing Scale
+
+| Token | Value | Description | Example usage |
+|-------|---------|------|-----------------|
+| `--space-0` | `0` | No spacing | Reset margins |
+| `--space-1` | `4px` | Minimal spacing | Internal spacing for small elements |
+| `--space-2` | `8px` | Very small | Spacing between icons |
+| `--space-3` | `12px` | Small | Button padding |
+| `--space-4` | `16px` | Base | Paragraph spacing |
+| `--space-5` | `20px` | Medium | Spacing between elements |
+| `--space-6` | `24px` | Medium-large | Card padding |
+| `--space-8` | `32px` | Large | Section spacing (small) |
+| `--space-10` | `40px` | Very large | Section spacing (medium) |
+| `--space-12` | `48px` | Extra large | Section spacing (large) |
+| `--space-16` | `64px` | 2XL | Large vertical spacing |
+| `--space-20` | `80px` | 3XL | Very large vertical spacing |
+| `--space-24` | `96px` | 4XL | Maximum vertical spacing |
+
+### Utility Classes
+
+The theme includes a complete set of utility classes for margin and padding in `assets/critical.css`:
+
+```css
+/* Margin */
+.m-4 { margin: var(--space-4); }
+.mt-4 { margin-top: var(--space-4); }
+.mb-4 { margin-bottom: var(--space-4); }
+.ml-4 { margin-left: var(--space-4); }
+.mr-4 { margin-right: var(--space-4); }
+.mx-4 { margin-left: var(--space-4); margin-right: var(--space-4); }
+.my-4 { margin-top: var(--space-4); margin-bottom: var(--space-4); }
+
+/* Padding */
+.p-4 { padding: var(--space-4); }
+.pt-4 { padding-top: var(--space-4); }
+/* ... all other variants ... */
+```
+
+<Info>
+  Utility classes are available for all spacing tokens (0-24).
+</Info>
+
+### Usage in CSS
+
+```css
+.my-component {
+  padding: var(--space-4);
+  margin-bottom: var(--space-8);
+  gap: var(--space-3);
+}
+
+.my-section {
+  padding-block: var(--space-16);
+}
+```
+
+## Typography Tokens
+
+A complete typography system including font sizes, line heights, weights, and letter spacing.
+
+### Font Sizes
+
+A scale of 11 font sizes from 12px to 72px:
+
+| Token | Value | Description | Default usage |
+|-------|---------|------|-----------------|
+| `--font-size-xs` | `12px` | Extra small | Fine print, notes |
+| `--font-size-sm` | `14px` | Small | Helper text |
+| `--font-size-base` | `16px` | Base | Body text |
+| `--font-size-md` | `18px` | Medium | Emphasized text |
+| `--font-size-lg` | `20px` | Large | Small headings (h5) |
+| `--font-size-xl` | `24px` | Extra large | h4 headings |
+| `--font-size-2xl` | `30px` | 2XL | h3 headings |
+| `--font-size-3xl` | `36px` | 3XL | h2 headings |
+| `--font-size-4xl` | `48px` | 4XL | h1 headings |
+| `--font-size-5xl` | `60px` | 5XL | Hero headings |
+| `--font-size-6xl` | `72px` | 6XL | Display headings |
+
+### Line Heights
+
+| Token | Value | Description | Usage |
+|-------|---------|------|--------|
+| `--line-height-tight` | `1.2` | Tight | Headings |
+| `--line-height-base` | `1.5` | Base | Body text |
+| `--line-height-loose` | `1.8` | Loose | Long paragraphs |
+
+### Font Weights
+
+| Token | Value | Description |
+|-------|---------|------|
+| `--font-weight-light` | `300` | Light |
+| `--font-weight-normal` | `400` | Normal/Regular |
+| `--font-weight-medium` | `500` | Medium |
+| `--font-weight-semibold` | `600` | Semibold |
+| `--font-weight-bold` | `700` | Bold |
+
+### Letter Spacing
+
+| Token | Value | Description | Usage |
+|-------|---------|------|--------|
+| `--letter-spacing-tight` | `-0.02em` | Tight | Large headings |
+| `--letter-spacing-normal` | `0` | Normal | Body text |
+| `--letter-spacing-wide` | `0.05em` | Wide | Uppercase text, labels |
+
+### Default Body Styles
+
+```css
+/* In assets/critical.css */
+body {
+  font-family: var(--font-primary--family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+```
+
+### Default Heading Styles
+
+```css
+/* In assets/critical.css */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  margin-block-end: var(--space-4);
+}
+
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-md); }
+```
+
+### Usage in Components
+
+```css
+.product-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.product-description {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-loose);
+  color: var(--color-foreground-2);
+}
+```
+
+## Other Global Variables
+
+### Primary Font
+
+| Variable | Description |
+|---------|------|
+| `--font-primary--family` | Font family with fallbacks |
+| `--font-primary--style` | Font style |
+| `--font-primary--weight` | Font weight |
+
+### Layout
+
+| Variable | Description | Default value |
+|---------|------|------------------|
+| `--page-width` | Maximum content width | `90rem` |
+| `--page-margin` | Minimum page margins | `20px` |
+
+### Styles
+
+| Variable | Description | Default value |
+|---------|------|------------------|
+| `--style-border-radius-inputs` | Border radius for inputs | `4px` |
+
+## Inline Variables (Local Variables)
+
+For section/block-specific settings, use inline styles:
+
+```liquid
+<div style="--gap: {{ block.settings.gap }}px">
+  <div class="grid">
+    <!-- Grid uses var(--gap) in CSS -->
+  </div>
+</div>
+```
+
+```css
+{% stylesheet %}
+.grid {
+  display: grid;
+  gap: var(--gap, var(--space-4)); /* Fallback to space-4 */
+}
+{% endstylesheet %}
+```
+
+## Best Practices
+
+<Warning>
+  Always use tokens instead of hardcoded values for design consistency.
+</Warning>
+
+### ✅ Good
+
+```css
+.my-component {
+  padding: var(--space-4);
+  font-size: var(--font-size-lg);
+  color: var(--color-foreground);
+}
+```
+
+### ❌ Bad
+
+```css
+.my-component {
+  padding: 16px;
+  font-size: 20px;
+  color: #121212;
+}
+```
+
+### Fallback Values
+
+Always provide a fallback for custom properties:
+
+```css
+.my-component {
+  gap: var(--custom-gap, var(--space-4));
+}
+```
+
+### Custom Property Naming
+
+For local variables in sections, use descriptive names:
+
+```liquid
+<div style="--hero-height: {{ section.settings.height }}px">
+```
+
+```css
+.hero {
+  min-height: var(--hero-height, 500px);
+}
+```

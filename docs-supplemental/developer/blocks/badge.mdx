@@ -1,0 +1,157 @@
+---
+title: "Badge Block"
+description: "Technical documentation for badge.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/badge.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Badge block wrapper for Shopify Theme Editor.
+  Delegates rendering to the badge snippet while providing merchant-friendly UI.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.badge.name",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:components.badge.info"
+    },
+    {
+      "type": "select",
+      "id": "type",
+      "label": "t:components.badge.settings.type.label",
+      "options": [
+        {
+          "value": "sale",
+          "label": "t:components.badge.options.type.sale"
+        },
+        {
+          "value": "sold-out",
+          "label": "t:components.badge.options.type.sold_out"
+        },
+        {
+          "value": "new",
+          "label": "t:components.badge.options.type.new"
+        },
+        {
+          "value": "custom",
+          "label": "t:components.badge.options.type.custom"
+        }
+      ],
+      "default": "sale",
+      "info": "t:components.badge.settings.type.info"
+    },
+    {
+      "type": "text",
+      "id": "custom_text",
+      "label": "t:components.badge.settings.custom_text.label",
+      "info": "t:components.badge.settings.custom_text.info",
+      "default": "Custom"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:components.badge.settings.size.label",
+      "options": [
+        {
+          "value": "badge--small",
+          "label": "t:components.badge.options.size.small"
+        },
+        {
+          "value": "badge--medium",
+          "label": "t:components.badge.options.size.medium"
+        }
+      ],
+      "default": "badge--small"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:components.badge.settings.position.label",
+      "options": [
+        {
+          "value": "static",
+          "label": "t:components.badge.options.position.static"
+        },
+        {
+          "value": "top-left",
+          "label": "t:components.badge.options.position.top_left"
+        },
+        {
+          "value": "top-right",
+          "label": "t:components.badge.options.position.top_right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "t:components.badge.options.position.bottom_left"
+        },
+        {
+          "value": "bottom-right",
+          "label": "t:components.badge.options.position.bottom_right"
+        }
+      ],
+      "default": "static",
+      "info": "t:components.badge.settings.position.info"
+    },
+    {
+      "type": "header",
+      "content": "t:components.badge.headers.custom_colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:components.badge.settings.background_color.label",
+      "info": "t:components.badge.settings.background_color.info"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:components.badge.settings.text_color.label",
+      "info": "t:components.badge.settings.text_color.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.badge.presets.sale",
+      "settings": {
+        "type": "sale"
+      }
+    },
+    {
+      "name": "t:components.badge.presets.new",
+      "settings": {
+        "type": "new"
+      }
+    },
+    {
+      "name": "t:components.badge.presets.custom",
+      "settings": {
+        "type": "custom",
+        "custom_text": "Custom"
+      }
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+No block-specific CSS. This block delegates all rendering and styling to the badge snippet.
+
+## Related
+
+- [Badge Snippet](/developer/snippets/badge) — Handles all rendering and styling

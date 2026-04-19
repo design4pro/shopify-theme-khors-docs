@@ -1,0 +1,131 @@
+---
+title: "Price Snippet"
+description: "Technical documentation for price.liquid snippet"
+icon: "dollar-sign"
+---
+
+## Location
+
+`snippets/price.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders product or variant pricing with support for sale prices, compare-at prices, unit pricing, and selling plans.
+  Handles all Shopify pricing scenarios including price ranges, discounts, and subscriptions.
+
+  @param {product} [product] - Product object for automatic price detection
+  @param {variant} [variant] - Variant object for specific variant pricing (overrides product)
+  @param {number} [price] - Manual price in cents (e.g., 1999 for $19.99)
+  @param {number} [compare_at_price] - Manual compare-at price in cents
+  @param {boolean} [show_unit_price] - Display unit pricing if available (default: false)
+  @param {boolean} [show_badge] - Show "Sale" badge when on sale (default: false)
+  @param {string} [size] - Size modifier: 'price--small', 'price--medium', 'price--large' (default: 'price--medium')
+  @param {string} [class] - Additional CSS classes to append
+  @param {string} [aria_label] - Custom ARIA label for accessibility
+
+  @example Product with automatic price detection
+    {% render 'price', product: product %}
+
+  @example Variant with unit price
+    {% render 'price', variant: variant, show_unit_price: true %}
+
+  @example Manual pricing
+    {% render 'price', price: 1999, compare_at_price: 2999 %}
+
+  @example Large size with sale badge
+    {% render 'price', product: product, size: 'price--large', show_badge: true %}
+
+  @example Small size for product cards
+    {% render 'price', variant: current_variant, size: 'price--small' %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Product with automatic price detection {% endcomment %}
+{% render 'price', product: product %}
+
+{% comment %} Variant with unit price {% endcomment %}
+{% render 'price', variant: variant, show_unit_price: true %}
+
+{% comment %} Manual pricing with compare-at price {% endcomment %}
+{% render 'price', price: 1999, compare_at_price: 2999 %}
+
+{% comment %} Large size with sale badge {% endcomment %}
+{% render 'price',
+  product: product,
+  size: 'price--large',
+  show_badge: true
+%}
+```
+
+## Generated Output
+
+Regular price:
+
+```html
+<div class="price price--medium" role="region" aria-label="Regular price $29.99">
+  <div class="price__container">
+    <span class="price__regular">
+      <span class="visually-hidden">Regular price</span>
+      <span class="price__regular-amount">$29.99</span>
+    </span>
+  </div>
+</div>
+```
+
+Sale price:
+
+```html
+<div class="price price--medium price--on-sale" role="region" aria-label="Sale price $19.99">
+  <div class="price__container">
+    <span class="price__compare">
+      <span class="visually-hidden">Original price</span>
+      <s class="price__compare-amount">$29.99</s>
+    </span>
+    <span class="price__sale">
+      <span class="visually-hidden">Sale price</span>
+      <span class="price__sale-amount">$19.99</span>
+    </span>
+  </div>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|---|---|
+| `.price` | Base component |
+| `.price--small` | Small size modifier |
+| `.price--medium` | Medium size modifier (default) |
+| `.price--large` | Large size modifier |
+| `.price--on-sale` | Sale state modifier |
+| `.price__badge` | Sale badge |
+| `.price__container` | Price values container |
+| `.price__range` | Price range display |
+| `.price__from` | "From" label |
+| `.price__amount` | Price amount in range |
+| `.price__compare` | Compare-at price container |
+| `.price__compare-amount` | Strikethrough price |
+| `.price__sale` | Sale price container |
+| `.price__sale-amount` | Sale price (accent color) |
+| `.price__regular` | Regular price container |
+| `.price__regular-amount` | Regular price |
+| `.price__unit` | Unit pricing container |
+| `.price__unit-amount` | Unit price |
+| `.price__unit-separator` | "/" separator |
+| `.price__unit-measure` | Unit of measure |
+
+## Accessibility
+
+- `role="region"` with `aria-label` on the price container for screen reader context
+- `.visually-hidden` labels announce the price type (regular, sale, compare) to screen readers
+- Sale badge uses `aria-hidden="true"` since price type is conveyed via visually-hidden text
+- Price type (regular, sale, compare) is announced distinctly for assistive technology
+
+## Related
+
+No blocks use this snippet directly. Used by product sections and product card components for price display.

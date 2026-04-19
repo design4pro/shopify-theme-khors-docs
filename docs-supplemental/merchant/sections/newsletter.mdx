@@ -1,0 +1,133 @@
+---
+title: "Newsletter"
+description: "Collect email subscribers with a simple, accessible signup form"
+---
+
+<Info>
+  Access: **Shopify Admin > Online Store > Themes > Customize > Add section > Newsletter**
+</Info>
+
+## Overview
+
+The Newsletter section helps you build your email list by adding a subscription form to any page. Subscribers are automatically added to your store's customer list with a "newsletter" tag for easy segmentation.
+
+## Settings
+
+### Content
+
+| Setting | Description |
+|---------|-------------|
+| **Heading** | Main title for the section (e.g., "Join our community") |
+| **Description** | Rich text explaining the benefits of subscribing. Supports bold, italic, and links. |
+
+### Style
+
+| Setting | Description |
+|---------|-------------|
+| **Color scheme** | Choose Light, Dark, or Accent to match your page design |
+
+### Spacing
+
+| Setting | Description |
+|---------|-------------|
+| **Padding top/bottom** | Adjust vertical spacing from 0 to 100px |
+
+## How It Works
+
+1. **Customer enters email** — Form validates the email address
+2. **Submission** — Email is sent to Shopify and tagged as "newsletter"
+3. **Confirmation** — Success message appears with a checkmark icon
+4. **Customer record** — Email appears in **Customers** section with "newsletter" tag
+
+<Note>
+Subscribers are stored in your Shopify customer database. You can export them or sync to email marketing apps like Klaviyo, Mailchimp, or Shopify Email.
+</Note>
+
+## Best Practices
+
+<Check>Place newsletter section in the footer or at the bottom of your homepage for maximum visibility</Check>
+
+<Check>Keep the description concise and benefit-focused (e.g., "Get 10% off your first order + exclusive updates")</Check>
+
+<Check>Use the Accent color scheme to make the section stand out from page content</Check>
+
+<Warning>
+If you're targeting customers in the EU, consult your legal team about adding a checkbox for GDPR consent. The basic section collects emails only.
+</Warning>
+
+## Common Placements
+
+<AccordionGroup>
+  <Accordion title="Homepage (Bottom)">
+    Add before the footer to capture visitors before they leave. Use Dark or Accent color scheme to create visual separation from page content.
+  </Accordion>
+
+  <Accordion title="Product Pages">
+    Add below product recommendations with messaging like "Stay updated on restocks and new arrivals." Use minimal padding (20-30px) to integrate naturally.
+  </Accordion>
+
+  <Accordion title="Blog Posts">
+    Place at the end of articles to convert engaged readers. Customize heading to match content (e.g., "Get more styling tips weekly").
+  </Accordion>
+
+  <Accordion title="About Page">
+    Use as a call-to-action after brand story. Emphasize community aspect (e.g., "Join 10,000+ happy customers").
+  </Accordion>
+</AccordionGroup>
+
+## Using Subscriber Data
+
+### In Shopify Admin
+
+Navigate to **Customers** and create a customer segment:
+- Filter: "Customer tags" contains "newsletter"
+- Save as "Newsletter Subscribers"
+
+### With Email Marketing Apps
+
+<Tabs>
+  <Tab title="Shopify Email">
+    1. Go to **Marketing > Automations**
+    2. Create customer segment with tag "newsletter"
+    3. Build email campaigns targeting this segment
+  </Tab>
+  <Tab title="Klaviyo">
+    Klaviyo automatically syncs customers with "newsletter" tag to a dedicated list. Configure in Klaviyo app settings under Shopify integration.
+  </Tab>
+  <Tab title="Mailchimp">
+    Install the Mailchimp app and enable customer sync. Map "newsletter" tag to a specific Mailchimp audience in app settings.
+  </Tab>
+</Tabs>
+
+## GDPR & Privacy
+
+For compliance with data protection regulations:
+
+1. Update your **Privacy Policy** (Settings > Policies) to mention newsletter collection
+2. Add clear unsubscribe links in all email campaigns
+3. Honor unsubscribe requests by removing the "newsletter" tag from customers
+
+<Tip>
+Shopify includes customer data management tools for GDPR compliance in **Settings > Customer privacy**.
+</Tip>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Form not appearing">
+    Check that the section is enabled in the theme customizer. Ensure padding settings aren't set to 0 on both top and bottom, which could make the section invisible.
+  </Accordion>
+
+  <Accordion title="Emails not appearing in Customers">
+    Verify submissions aren't being marked as spam. Check **Settings > Notifications > Customer notifications** to ensure emails can be collected.
+  </Accordion>
+
+  <Accordion title="Success message not showing">
+    This is a page reload issue. After submission, Shopify redirects back to the page with a success parameter. Ensure you don't have JavaScript interfering with form submission.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+- [Footer](/merchant/sections/footer) — Footer also includes newsletter signup option
+- [Announcement Bar](/merchant/sections/announcement-bar) — Promote newsletter signup sitewide

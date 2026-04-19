@@ -1,0 +1,154 @@
+---
+title: "Icon Block"
+description: "Technical documentation for icon.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/icon.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Icon block wrapper for Shopify Theme Editor.
+  Delegates rendering to the icon snippet while providing merchant-friendly UI.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.icon.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:components.icon.settings.icon.label",
+      "options": [
+        {
+          "value": "cart",
+          "label": "t:components.icon.options.icon.cart"
+        },
+        {
+          "value": "search",
+          "label": "t:components.icon.options.icon.search"
+        },
+        {
+          "value": "user",
+          "label": "t:components.icon.options.icon.user"
+        },
+        {
+          "value": "heart",
+          "label": "t:components.icon.options.icon.heart"
+        },
+        {
+          "value": "star",
+          "label": "t:components.icon.options.icon.star"
+        },
+        {
+          "value": "check",
+          "label": "t:components.icon.options.icon.check"
+        },
+        {
+          "value": "menu",
+          "label": "t:components.icon.options.icon.menu"
+        },
+        {
+          "value": "close",
+          "label": "t:components.icon.options.icon.close"
+        },
+        {
+          "value": "chevron-down",
+          "label": "t:components.icon.options.icon.chevron_down"
+        },
+        {
+          "value": "chevron-left",
+          "label": "t:components.icon.options.icon.chevron_left"
+        },
+        {
+          "value": "chevron-right",
+          "label": "t:components.icon.options.icon.chevron_right"
+        },
+        {
+          "value": "arrow-right",
+          "label": "t:components.icon.options.icon.arrow_right"
+        },
+        {
+          "value": "plus",
+          "label": "t:components.icon.options.icon.plus"
+        },
+        {
+          "value": "minus",
+          "label": "t:components.icon.options.icon.minus"
+        },
+        {
+          "value": "info",
+          "label": "t:components.icon.options.icon.info"
+        }
+      ],
+      "default": "star"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:components.icon.settings.size.label",
+      "options": [
+        {
+          "value": "icon--16",
+          "label": "t:components.icon.options.size.small"
+        },
+        {
+          "value": "icon--20",
+          "label": "t:components.icon.options.size.medium"
+        },
+        {
+          "value": "icon--24",
+          "label": "t:components.icon.options.size.large"
+        },
+        {
+          "value": "icon--32",
+          "label": "t:components.icon.options.size.xlarge"
+        },
+        {
+          "value": "icon--48",
+          "label": "t:components.icon.options.size.xxlarge"
+        }
+      ],
+      "default": "icon--20"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:components.icon.settings.url.label",
+      "info": "t:components.icon.settings.url.info"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "t:components.icon.settings.aria_label.label",
+      "info": "t:components.icon.settings.aria_label.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.icon.presets.default"
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.icon-link` - Link wrapper when URL is provided
+- `.icon-link:hover` - Reduces opacity on hover for visual feedback
+- `.icon-link:focus-visible` - Accent outline with offset for keyboard navigation
+
+## Related
+
+- [Icon Snippet](/developer/snippets/icon) — Handles SVG rendering and sizing

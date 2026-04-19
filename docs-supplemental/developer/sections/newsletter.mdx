@@ -1,0 +1,140 @@
+---
+title: "Newsletter Section"
+description: "Email subscription form with honeypot protection and success/error state handling"
+icon: "envelope"
+---
+
+## Location
+
+`sections/newsletter.liquid`
+
+## Overview
+
+The newsletter section provides email capture functionality using Shopify's native customer contact form. It includes GDPR-compliant subscription handling, honeypot bot protection, and accessible form validation with success and error states.
+
+## Architecture
+
+This section uses Shopify's `{% form 'customer' %}` tag to create contact submissions that are automatically tagged as "newsletter" for segmentation in Shopify's customer database or third-party email marketing integrations.
+
+| Component | Description |
+|-----------|-------------|
+| Form Header | Customizable heading and rich text description |
+| Email Input | Required email field with validation |
+| Submit Button | Renders via `button` snippet |
+| Honeypot Field | Hidden field to catch bot submissions |
+| Success State | Confirmation message with icon |
+| Error State | Form validation error display |
+
+## Schema Settings
+
+### Content
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `heading` | `text` | "Subscribe to our newsletter" | Section heading |
+| `description` | `richtext` | "Get the latest updates..." | Supports formatted text |
+
+### Style
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `color_scheme` | `select` | `light` | `light`, `dark`, `accent` |
+
+### Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `padding_top` | `range` | `60` | Top padding 0–100px, step 4 |
+| `padding_bottom` | `range` | `60` | Bottom padding 0–100px, step 4 |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.newsletter-section` | Root section with color scheme applied |
+| `.newsletter-section__container` | Centered container (`page-width`) |
+| `.newsletter-section__header` | Heading/description wrapper |
+| `.newsletter-section__heading` | Section heading (responsive 2xl → 3xl) |
+| `.newsletter-section__description` | Rich text content (max-width 600px) |
+| `.newsletter-section__form-wrapper` | Form container (max-width 600px, centered) |
+| `.newsletter-section__form` | Form element |
+| `.newsletter-section__honeypot` | Hidden bot trap field |
+| `.newsletter-section__field` | Input and button wrapper (column → row on tablet) |
+| `.newsletter-section__input` | Email input with focus states |
+| `.newsletter-section__submit` | Submit button (via `button` snippet) |
+| `.newsletter-section__success` | Success message with check icon |
+| `.newsletter-section__errors` | Error message container |
+
+## Form Behavior
+
+### Honeypot Protection
+
+A hidden `contact[website]` URL field is positioned off-screen with `tabindex="-1"` and `autocomplete="off"`. Legitimate users won't interact with it, but bots filling all fields will be caught by Shopify's spam filter.
+
+### Email Validation
+
+- HTML5 `required` and `type="email"` for browser validation
+- `aria-required="true"` for screen reader accessibility
+- `autocomplete="email"` enables browser autofill
+
+### State Handling
+
+- **Success**: After successful submission, `form.posted_successfully?` displays a confirmation message with `role="status"` for screen readers
+- **Error**: `form.errors` displays Shopify's default validation errors with `role="alert"`
+
+### Form Submission
+
+Submits to Shopify's `/contact` endpoint with hidden tag `newsletter`. Emails are stored as customer contacts and can be exported or synced to email marketing platforms via Shopify apps.
+
+## Responsive Layout
+
+| Viewport | Form Layout | Typography |
+|----------|-------------|-----------|
+| Mobile (<750px) | Stacked (column) | Heading: 2xl, Body: base |
+| Tablet (≥750px) | Horizontal (row) | Heading: 3xl, Body: lg |
+
+Input and button stack vertically on mobile for better thumb accessibility, switch to horizontal on tablet+ screens.
+
+## Accessibility
+
+- Visible label hidden with `.visually-hidden` class, present for screen readers
+- Email input includes `aria-required="true"`
+- Section has `role="region"` with translated `aria-label`
+- Success message uses `role="status"` for polite announcement
+- Error messages use `role="alert"` for immediate announcement
+- Focus state includes 3px outline with accent color
+- Honeypot excluded from tab order and hidden from assistive tech
+
+## GDPR Compliance
+
+This section collects email addresses via Shopify's customer contact API. For GDPR compliance:
+
+1. Ensure store's privacy policy includes newsletter subscription disclosure
+2. Consider adding checkbox for explicit consent if targeting EU customers
+3. Use Shopify's customer data export features for GDPR access requests
+4. Implement unsubscribe links in email campaigns
+
+<Note>
+Shopify automatically includes customer data in their compliance tools. Consult with legal counsel for specific regional requirements.
+</Note>
+
+## Integration
+
+Submitted emails appear in **Shopify Admin > Customers** with tag "newsletter". Common integrations:
+
+- **Klaviyo**: Sync newsletter subscribers to dedicated list
+- **Mailchimp**: Export tagged customers or use Mailchimp app
+- **Shopify Email**: Create segment for customers with "newsletter" tag
+
+## Performance
+
+- No external JavaScript required (native form submission)
+- CSS scoped to `@layer components` for cascade control
+- Total CSS: ~140 lines, <2KB gzipped
+- Form submit triggers native browser validation before server request
+
+## Related
+
+- [Button](/developer/snippets/button) — Submit button component
+- [Icon](/developer/snippets/icon) — Success state check icon
+- [Footer Newsletter](/developer/snippets/footer-newsletter) — Footer variant

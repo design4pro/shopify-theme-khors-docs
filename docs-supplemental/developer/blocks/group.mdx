@@ -1,0 +1,60 @@
+---
+title: "Group Block"
+description: "Technical documentation for group.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/group.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Container block for grouping and nesting other blocks.
+
+  @param {select} layout - Layout direction (row, column)
+  @param {range} gap - Spacing between nested blocks
+
+  @example
+  {% content_for 'block', type: 'group', id: 'group-block' %}
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:blocks.group.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        { "value": "row", "label": "t:options.row" },
+        { "value": "column", "label": "t:options.column" }
+      ],
+      "default": "row",
+      "label": "t:labels.layout"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 64,
+      "step": 8,
+      "default": 16,
+      "unit": "px",
+      "label": "t:labels.gap"
+    }
+  ],
+  "blocks": [{ "type": "@theme" }]
+}
+```
+
+## CSS Classes
+
+- `.block-group` - Main container
+- `.block-group--row` - Horizontal layout
+- `.block-group--column` - Vertical layout

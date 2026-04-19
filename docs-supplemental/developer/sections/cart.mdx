@@ -1,0 +1,82 @@
+---
+title: "Cart Section"
+description: "Technical documentation for cart.liquid"
+icon: "code"
+---
+
+## Location
+
+`sections/cart.liquid`
+
+## Preview
+
+<Frame caption="Cart Section - Desktop View">
+  <img src="/images/sections/cart-desktop.png" alt="Cart page showing cart items table with product images, quantities, and checkout button on desktop" />
+</Frame>
+
+<Frame caption="Cart Section - Mobile View">
+  <img src="/images/sections/cart-mobile.png" alt="Cart page with mobile-optimized layout for managing cart items" />
+</Frame>
+
+## Overview
+
+The cart section renders the `/cart` page with an overview of items in the customer's cart. It provides a basic cart form with product images, titles, quantity inputs, and a checkout button.
+
+This is a minimal implementation using a `<table>` layout with the Shopify `cart` object.
+
+## Schema
+
+```json
+{
+  "name": "t:general.cart",
+  "settings": []
+}
+```
+
+<Note>
+  The cart section currently has no configurable settings. It renders a standard cart table with image, title, quantity, and checkout controls.
+</Note>
+
+## Template Usage
+
+Used in `templates/cart.json`:
+
+```json
+{
+  "sections": {
+    "main": {
+      "type": "cart"
+    }
+  }
+}
+```
+
+## Rendered Structure
+
+```html
+<h1>Your cart</h1>
+<form action="/cart" method="post">
+  <table>
+    <tr>
+      <td><!-- product image via image snippet --></td>
+      <td>
+        <p>Product Title</p>
+        <a href="/cart/change?...">Remove</a>
+      </td>
+      <td>
+        <input type="text" name="updates[]" value="1">
+        <input type="submit" value="Update">
+      </td>
+    </tr>
+  </table>
+  <input type="submit" name="checkout" value="Check out">
+</form>
+```
+
+## Snippets Used
+
+- [Image Snippet](/developer/snippets/image) — Renders product images in cart rows
+
+## Related
+
+- [Cart (Merchant Guide)](/merchant/sections/cart) — Merchant configuration documentation

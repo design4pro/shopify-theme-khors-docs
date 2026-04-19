@@ -1,0 +1,81 @@
+---
+title: "Header Cart Icon"
+description: "Cart icon with dynamic count badge and live update via custom events"
+icon: "shopping-cart"
+---
+
+## Location
+
+`snippets/header-cart-icon.liquid` (145 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders the header cart icon with a dynamic item count badge.
+  Updates via khors:cart:updated custom event without page reload.
+
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'header-cart-icon' %}
+
+{% comment %} With additional class {% endcomment %}
+{% render 'header-cart-icon', class: 'header__icon' %}
+```
+
+## Generated Output
+
+```html
+<a href="/cart" class="header-cart-icon header__icon"
+  aria-label="Open cart" data-header-cart-icon>
+  <!-- cart SVG icon -->
+  <span class="header-cart-icon__badge" data-header-cart-count
+    aria-live="polite" aria-atomic="true">
+    3
+  </span>
+</a>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header-cart-icon` | Root anchor (44×44px min, relative position) |
+| `.header-cart-icon__badge` | Count badge (absolute top-right, 18px, accent bg) |
+| `.header-cart-icon__badge--hidden` | Badge hidden when count is 0 |
+| `.header-cart-icon__badge--bounce` | Bounce animation on item added (0.4s scale) |
+
+## JavaScript
+
+The `CartIcon` class (inline via `{% javascript %}`) listens for two custom events:
+
+### Events
+
+| Event | Action |
+|-------|--------|
+| `khors:cart:updated` | Updates badge count, toggles `--hidden` class |
+| `khors:cart:item-added` | Updates count + triggers bounce animation |
+
+The `CartCount` class in `assets/header.js` dispatches `khors:cart:updated` after fetching `/cart.json`. Third-party scripts can dispatch `khors:cart:item-added` with `{ count }` detail for the bounce effect.
+
+### Animation
+
+The bounce uses `requestAnimationFrame` to remove and re-add the `--bounce` class, triggering a CSS `scale(1.3)` keyframe animation.
+
+## Accessibility
+
+- `aria-label` with `accessibility.open_cart` translation
+- `aria-live="polite"` + `aria-atomic="true"` on badge for screen reader announcements
+- Badge hidden via class (not removed from DOM) for persistent live region
+- `focus-visible` outline
+- `prefers-reduced-motion` disables transition and bounce animation
+
+## Related
+
+- [Header Section](/developer/sections/header) — Parent section
+- [Icon Snippet](/developer/snippets/icon) — Cart SVG icon

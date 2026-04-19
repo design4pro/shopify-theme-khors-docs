@@ -1,0 +1,98 @@
+---
+title: "Header Drawer"
+description: "Mobile navigation drawer with dialog API, accordion menu, and swipe-to-close"
+icon: "panel-left"
+---
+
+## Location
+
+`snippets/header-drawer.liquid` (469 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a mobile navigation drawer with 3-level accordion menu, overlay backdrop,
+  and utility links. Uses native <dialog> with .showModal() for focus trap and scroll lock.
+  Visible only below 750px; hidden on desktop. Slide-in from left with swipe-to-close support.
+
+  @param {object} menu - Shopify menu object (linklist from section settings)
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'header-drawer', menu: section.settings.menu %}
+```
+
+## Generated Output
+
+```html
+<dialog class="header-drawer" data-header-drawer scroll-lock aria-label="Navigation">
+  <div class="header-drawer__overlay" data-header-drawer-overlay></div>
+  <div class="header-drawer__panel">
+    <div class="header-drawer__header">
+      <button class="header-drawer__close" data-header-drawer-close><!-- close icon --></button>
+    </div>
+    <nav class="header-drawer__nav" aria-label="Navigation">
+      <!-- 3-level accordion menu -->
+    </nav>
+    <div class="header-drawer__utilities">
+      <!-- Account + Cart links -->
+    </div>
+  </div>
+</dialog>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header-drawer` | Native `<dialog>` (fixed, full viewport, z-index 100) |
+| `.header-drawer__overlay` | Semi-transparent backdrop (opacity transition) |
+| `.header-drawer__panel` | Slide-in panel (min 85vw/360px, 100vw on ≤425px) |
+| `.header-drawer__header` | Close button row with border |
+| `.header-drawer__close` | Close button (44×44px touch target) |
+| `.header-drawer__nav` | Scrollable nav area (`overscroll-behavior: contain`) |
+| `.header-drawer__list` | Unstyled list container |
+| `.header-drawer__item` | List item with bottom border |
+| `.header-drawer__details` | Accordion `<details>` element |
+| `.header-drawer__summary` | Accordion trigger |
+| `.header-drawer__chevron` | Rotation icon (180° on open) |
+| `.header-drawer__content-wrapper` | Grid animation (`0fr` → `1fr`) |
+| `.header-drawer__link--level-1` | Level 1 link (base size, bold) |
+| `.header-drawer__link--level-2` | Level 2 link (indented, smaller) |
+| `.header-drawer__link--level-3` | Level 3 link (further indented) |
+| `.header-drawer__link--active` | Active page highlight |
+| `.header-drawer__utilities` | Bottom utility links (account, cart) |
+| `.header-drawer__utility-link` | Utility link with icon |
+
+## JavaScript
+
+The `HeaderDrawer` class (inline via `{% javascript %}`) provides:
+
+- **Open/close**: Uses native `dialog.showModal()` / `dialog.close()` for built-in focus trap
+- **Trigger**: Listens to `[data-header-drawer-open]` button in header
+- **Close methods**: Close button, overlay click, Escape key (via `cancel` event)
+- **Swipe to close**: Touch events detect left-swipe > 80px on panel
+- **Resize handler**: Auto-closes drawer if viewport expands past 750px
+- **Focus restoration**: Returns focus to trigger button on close
+- **Private fields**: `#dialog`, `#panel`, `#overlay`, `#closeBtn`, `#triggerBtn`
+
+## Accessibility
+
+- Native `<dialog>` provides built-in focus trap and `Escape` handling
+- `aria-label` on dialog element with translation key
+- Close button has `aria-label` for screen readers
+- `aria-current="page"` on current page links
+- Active page highlighting via Liquid link states
+- All touch targets meet 44×44px minimum
+- `prefers-reduced-motion` disables all slide/fade transitions
+- Hidden on desktop (≥750px) via `display: none`
+
+## Related
+
+- [Header Section](/developer/sections/header) — Parent section
+- [Header Nav](/developer/snippets/header-nav) — Desktop navigation counterpart

@@ -1,0 +1,86 @@
+---
+title: "Footer Newsletter"
+description: "Email subscription form with honeypot spam protection"
+icon: "mail"
+---
+
+## Location
+
+`snippets/footer-newsletter.liquid` (140 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a newsletter subscription form using Shopify's customer form.
+  Includes honeypot spam protection, success/error messaging, and progressive enhancement.
+
+  @param {string} [heading] - Optional heading text above the form
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'footer-newsletter', heading: 'Stay in touch' %}
+```
+
+## Generated Output
+
+```html
+<div class="footer-newsletter">
+  <h3 class="footer-newsletter__heading">Stay in touch</h3>
+  <form method="post" action="/contact#contact_form" class="footer-newsletter__form">
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <!-- Honeypot (hidden from users) -->
+    <div class="footer-newsletter__honeypot" aria-hidden="true">
+      <input type="text" name="contact[first_name]" tabindex="-1" autocomplete="off">
+    </div>
+    <div class="footer-newsletter__field">
+      <input type="email" name="contact[email]" required aria-required="true"
+        class="footer-newsletter__input" placeholder="Your email">
+      <button type="submit" class="button button--primary button--medium">Subscribe</button>
+    </div>
+  </form>
+</div>
+```
+
+### Success State
+
+After successful submission, the form is replaced with:
+
+```html
+<p class="footer-newsletter__success" role="status">
+  <!-- check-circle icon --> Thank you for subscribing!
+</p>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.footer-newsletter` | Root container |
+| `.footer-newsletter__heading` | Heading (lg, semibold) |
+| `.footer-newsletter__form` | Full-width form |
+| `.footer-newsletter__honeypot` | Visually hidden spam trap |
+| `.footer-newsletter__field` | Flex row (stacks on mobile) |
+| `.footer-newsletter__input` | Email input with focus ring |
+| `.footer-newsletter__submit` | Submit button (flex-shrink: 0) |
+| `.footer-newsletter__success` | Success message with icon |
+| `.footer-newsletter__errors` | Error messages (alert role) |
+
+## Accessibility
+
+- Visually hidden label linked to input via `for` attribute
+- Honeypot field: `aria-hidden="true"`, `tabindex="-1"`, `autocomplete="off"`
+- `required` and `aria-required="true"` on email input
+- Success: `role="status"` for screen reader announcement
+- Errors: `role="alert"` for immediate announcement
+- Focus ring on input with accent color
+- `prefers-reduced-motion` disables input transition
+
+## Related
+
+- [Footer Section](/developer/sections/footer) — Parent section
+- [Button Snippet](/developer/snippets/button) — Used for submit button

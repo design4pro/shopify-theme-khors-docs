@@ -1,0 +1,144 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Khors Theme",
+  "colors": {
+    "primary": "#1A1A1A",
+    "light": "#F5A623",
+    "dark": "#0D0D0D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Merchant Guide",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["merchant/index", "merchant/installation", "merchant/presets"]
+          },
+          {
+            "group": "Theme Settings",
+            "pages": ["merchant/settings/typography", "merchant/settings/colors", "merchant/settings/layout"]
+          },
+          {
+            "group": "Sections",
+            "pages": [
+              "merchant/sections/announcement-bar",
+              "merchant/sections/cart",
+              "merchant/sections/collection",
+              "merchant/sections/custom-section",
+              "merchant/sections/featured-collection",
+              "merchant/sections/footer",
+              "merchant/sections/header",
+              "merchant/sections/newsletter",
+              "merchant/sections/product",
+              "merchant/sections/rich-text"
+            ]
+          },
+          {
+            "group": "Industry Presets",
+            "pages": ["merchant/presets/fashion", "merchant/presets/beauty", "merchant/presets/electro"]
+          },
+          {
+            "group": "Help",
+            "pages": ["merchant/faq", "merchant/support"]
+          }
+        ]
+      },
+      {
+        "tab": "Developer Guide",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["developer/index", "developer/setup", "developer/architecture"]
+          },
+          {
+            "group": "Development",
+            "pages": ["developer/conventions", "developer/theme-check", "developer/accessibility"]
+          },
+          {
+            "group": "Sections",
+            "pages": [
+              "developer/sections/overview",
+              "developer/sections/announcement-bar",
+              "developer/sections/cart",
+              "developer/sections/collection",
+              "developer/sections/custom-section",
+              "developer/sections/featured-collection",
+              "developer/sections/footer",
+              "developer/sections/header",
+              "developer/sections/newsletter",
+              "developer/sections/product",
+              "developer/sections/rich-text"
+            ]
+          },
+          {
+            "group": "Blocks",
+            "pages": [
+              "developer/blocks/overview",
+              "developer/blocks/heading",
+              "developer/blocks/text",
+              "developer/blocks/button",
+              "developer/blocks/image-block",
+              "developer/blocks/badge",
+              "developer/blocks/icon",
+              "developer/blocks/rating",
+              "developer/blocks/group",
+              "developer/blocks/accordion",
+              "developer/blocks/tabs"
+            ]
+          },
+          {
+            "group": "Snippets",
+            "pages": [
+              "developer/snippets/overview",
+              "developer/snippets/button",
+              "developer/snippets/icon",
+              "developer/snippets/image",
+              "developer/snippets/badge",
+              "developer/snippets/rating",
+              "developer/snippets/price",
+              "developer/snippets/breadcrumb",
+              "developer/snippets/form-field",
+              "developer/snippets/pagination",
+              "developer/snippets/placeholder",
+              "developer/snippets/social-links",
+              "developer/snippets/css-variables",
+              "developer/snippets/header-logo",
+              "developer/snippets/header-nav",
+              "developer/snippets/header-nav-dropdown",
+              "developer/snippets/header-mega-menu",
+              "developer/snippets/header-drawer",
+              "developer/snippets/header-search",
+              "developer/snippets/header-cart-icon",
+              "developer/snippets/footer-newsletter",
+              "developer/snippets/footer-social",
+              "developer/snippets/footer-payment"
+            ]
+          },
+          {
+            "group": "CSS & Styling",
+            "pages": ["developer/styling/css-architecture", "developer/styling/css-variables", "developer/styling/bem-naming"]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {"anchor": "GitHub", "href": "https://github.com/design4pro/shopify-theme-khors", "icon": "github"}
+      ]
+    }
+  },
+  "logo": {"light": "/logo/light.svg", "dark": "/logo/dark.svg"},
+  "navbar": {
+    "links": [{"label": "Support", "href": "mailto:support@design4.pro"}],
+    "primary": {"type": "button", "label": "Demo Store", "href": "https://khors-theme-design4pro.myshopify.com"}
+  },
+  "footer": {
+    "socials": {"github": "https://github.com/design4pro/shopify-theme-khors"}
+  },
+  "hosting": {
+    "customDomain": "khors-docs.design4.pro"
+  }
+}

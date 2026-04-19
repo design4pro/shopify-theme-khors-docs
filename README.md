@@ -1,43 +1,80 @@
-# Astro Starter Kit: Minimal
+# Shopify Theme Khors - Documentation
 
-```sh
-pnpm create astro@latest -- --template minimal
+Documentation site for Khors Shopify theme, built with **Astro 6** + **Tailwind CSS v4** + **shadcn/ui v4** + **Cloudflare Workers**.
+
+**Live:** [khors.design4.pro](https://khors.design4.pro)
+
+## Tech Stack
+
+| Component | Technology |
+|-----------|-------------|
+| Framework | Astro 6.x |
+| Styling | Tailwind CSS v4 |
+| UI Components | shadcn/ui v4 (Base UI) |
+| Deployment | Cloudflare Workers |
+| Domain | khors.design4.pro |
+
+## Quick Start
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start dev server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deployment
 
-## 🚀 Project Structure
+### CI/CD (GitHub Actions)
 
-Inside of your Astro project, you'll see the following folders and files:
+Push to `main` branch triggers automatic deployment to Cloudflare Workers.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+Required Secrets in GitHub:
+- `CLOUDFLARE_API_TOKEN` - Cloudflare API token
+- `CLOUDFLARE_ACCOUNT_ID` - Cloudflare account ID
+
+### Manual Deploy
+
+```bash
+pnpm build
+wrangler deploy
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Adding Components
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+# Add a component
+npx shadcn@latest add button
 
-Any static assets, like images, can be placed in the `public/` directory.
+# Add multiple components
+npx shadcn@latest add card badge
+```
 
-## 🧞 Commands
+## Project Structure
 
-All commands are run from the root of the project, from a terminal:
+```
+src/
+├── components/
+│   └── ui/           # shadcn/ui components
+├── layouts/          # Astro layouts
+├── lib/              # Utilities
+├── pages/            # Astro pages
+└── styles/
+    └── global.css    # Tailwind + shadcn styles
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Scripts
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm preview` | Preview production build |
+| `pnpm generate-types` | Generate Wrangler types |

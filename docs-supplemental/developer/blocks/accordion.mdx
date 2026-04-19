@@ -1,0 +1,275 @@
+---
+title: "Accordion Block"
+description: "Technical documentation for accordion.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/accordion.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Accordion container block for Shopify Theme Editor.
+  Uses nested _accordion-item blocks for dynamic item management.
+  Supports configurable borders, icon styles, and single-open mode.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.accordion.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:components.accordion.headers.behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "t:components.accordion.settings.single_open.label",
+      "info": "t:components.accordion.settings.single_open.info",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:components.accordion.headers.style"
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "t:components.accordion.settings.icon_style.label",
+      "options": [
+        {
+          "value": "chevron",
+          "label": "t:components.accordion.options.icon_style.chevron"
+        },
+        {
+          "value": "plus-minus",
+          "label": "t:components.accordion.options.icon_style.plus_minus"
+        }
+      ],
+      "default": "chevron"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:components.accordion.settings.heading_size.label",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:components.accordion.options.heading_size.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:components.accordion.options.heading_size.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:components.accordion.options.heading_size.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "content_size",
+      "label": "t:components.accordion.settings.content_size.label",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:components.accordion.options.content_size.small"
+        },
+        {
+          "value": "base",
+          "label": "t:components.accordion.options.content_size.base"
+        },
+        {
+          "value": "medium",
+          "label": "t:components.accordion.options.content_size.medium"
+        }
+      ],
+      "default": "base"
+    },
+    {
+      "type": "header",
+      "content": "t:components.accordion.headers.borders"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_borders",
+      "label": "t:components.accordion.settings.show_borders.label",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:components.accordion.settings.border_color.label",
+      "info": "t:components.accordion.settings.border_color.info"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:components.accordion.settings.border_width.label",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_accordion-item"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.accordion.presets.default",
+      "blocks": [
+        {
+          "type": "_accordion-item",
+          "settings": {
+            "heading": "Accordion heading",
+            "content": "<p>Accordion content goes here. You can add any text, links, or formatting.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "t:components.accordion.presets.faq",
+      "settings": {
+        "icon_style": "plus-minus",
+        "single_open": true
+      },
+      "blocks": [
+        {
+          "type": "_accordion-item",
+          "settings": {
+            "heading": "What is your return policy?",
+            "content": "<p>We offer a 30-day return policy for all unused items in their original packaging.</p>"
+          }
+        },
+        {
+          "type": "_accordion-item",
+          "settings": {
+            "heading": "How long does shipping take?",
+            "content": "<p>Standard shipping takes 3-5 business days. Express shipping is available at checkout.</p>"
+          }
+        },
+        {
+          "type": "_accordion-item",
+          "settings": {
+            "heading": "Do you ship internationally?",
+            "content": "<p>Yes, we ship to most countries worldwide. Shipping rates are calculated at checkout.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### \_accordion-item Block
+
+`blocks/_accordion-item.liquid`
+
+This is a private block (prefixed with `_`), meaning it cannot be added independently by merchants. It is only available as a child of the accordion block.
+
+#### LiquidDoc
+
+```liquid
+{% doc %}
+  Private accordion item block, used as a nested child of the accordion block.
+  Renders a details/summary element with heading, content, and toggle icon.
+  Inherits icon style, heading size, and content size from the parent accordion via CSS.
+
+  @example
+  Used automatically via {% content_for 'blocks' %} inside accordion.liquid
+{% enddoc %}
+```
+
+#### Schema
+
+```json
+{
+  "name": "t:components.accordion_item.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:components.accordion_item.settings.heading.label",
+      "default": "Accordion heading"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:components.accordion_item.settings.content.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "open",
+      "label": "t:components.accordion_item.settings.open.label",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.accordion_item.presets.default"
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.accordion` - Main container
+- `.accordion--chevron` - Chevron icon style modifier
+- `.accordion--plus-minus` - Plus/minus icon style modifier
+- `.accordion--bordered` - Bordered variant with top/bottom borders
+- `.accordion__item` - Item container (`details` element)
+- `.accordion__header` - Summary/trigger element
+- `.accordion__title` - Heading text
+- `.accordion__icon` - Icon container with rotation transition
+- `.accordion__icon-chevron` - Chevron icon variant
+- `.accordion__icon-plus` - Plus icon variant
+- `.accordion__icon-minus` - Minus icon variant
+- `.accordion__content-wrapper` - Animated content wrapper (CSS grid trick for smooth expand/collapse)
+- `.accordion__content` - Content area
+- `.accordion__empty` - Empty state message
+
+## JavaScript
+
+The `AccordionSingleOpen` class handles single-open mode. When enabled via the `data-accordion-single-open` attribute, opening one accordion item automatically closes all others.
+
+```javascript
+class AccordionSingleOpen {
+  constructor(container) {
+    this.container = container;
+    this.details = container.querySelectorAll('details');
+
+    for (const detail of this.details) {
+      detail.addEventListener('toggle', (event) => {
+        if (event.target.open) {
+          this.#closeOthers(event.target);
+        }
+      });
+    }
+  }
+
+  #closeOthers(openDetail) {
+    for (const detail of this.details) {
+      if (detail !== openDetail && detail.open) {
+        detail.open = false;
+      }
+    }
+  }
+}
+```

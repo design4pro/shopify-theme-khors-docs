@@ -1,0 +1,163 @@
+---
+title: "Featured Collection Section"
+description: "Display products from a selected collection with optional banner image and customizable grid layout"
+icon: "grid"
+---
+
+## Location
+
+`sections/featured-collection.liquid`
+
+## Preview
+
+<Frame caption="Featured Collection - Desktop View">
+  <img src="/images/sections/featured-collection-desktop.png" alt="Featured collection section showing product grid with multiple items on desktop viewport" />
+</Frame>
+
+<Frame caption="Featured Collection - Mobile View">
+  <img src="/images/sections/featured-collection-mobile.png" alt="Featured collection section with mobile-optimized grid layout" />
+</Frame>
+
+## Overview
+
+The featured collection section showcases products from a chosen Shopify collection in a responsive grid layout. It supports an optional banner header with overlay text, configurable product display settings, and a "View All" button linking to the full collection page.
+
+## Architecture
+
+This section renders products using the `product-card` snippet and provides two distinct visual areas:
+
+| Component | Description |
+|-----------|-------------|
+| Banner (optional) | Collection featured image with optional overlay and title |
+| Product Grid | Responsive grid of product cards with customizable columns |
+| View All Button | Optional link to full collection page |
+
+The section integrates with Shopify's collection object to access products, title, description, and featured image.
+
+## Schema Settings
+
+### Collection Selection
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `collection` | `collection` | — | Shopify collection to feature |
+
+### Banner Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `show_banner` | `checkbox` | `true` | Display collection featured image as banner |
+| `banner_aspect_ratio` | `select` | `landscape` | `square`, `portrait`, `landscape`, `wide` |
+| `show_banner_overlay` | `checkbox` | `true` | Show text overlay on banner |
+| `banner_overlay_opacity` | `select` | `medium` | `light` (30%), `medium` (50%), `dark` (70%) |
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `heading` | `text` | "Featured collection" | Custom section heading |
+| `heading_size` | `select` | `h2` | `h2`, `h3`, `h4` |
+| `description` | `textarea` | — | Optional description text (truncated to 200 characters) |
+| `text_alignment` | `select` | `center` | `left`, `center`, `right` |
+
+### Product Display
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `products_count` | `range` | `8` | Number of products to display (4–12) |
+| `columns_desktop` | `range` | `4` | Desktop grid columns (2–4) |
+| `columns_mobile` | `select` | `2` | Mobile grid columns (1 or 2) |
+| `image_ratio` | `select` | `square` | Product image ratio: `square`, `portrait`, `landscape` |
+| `show_secondary_image` | `checkbox` | `true` | Show hover image on product cards |
+| `show_badges` | `checkbox` | `true` | Display product badges (Sale, New, etc.) |
+| `show_rating` | `checkbox` | `false` | Show product rating stars |
+| `show_swatches` | `checkbox` | `false` | Display color/variant swatches |
+| `quick_add_enabled` | `checkbox` | `false` | Enable quick add to cart button |
+| `card_style` | `select` | `default` | `default` or `minimal` card style |
+
+### View All Button
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `show_view_all` | `checkbox` | `true` | Display "View all" button |
+| `view_all_text` | `text` | "View all" | Custom button text |
+
+### Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `padding_top` | `range` | `60` | Top padding 0–100px, step 4 |
+| `padding_bottom` | `range` | `60` | Bottom padding 0–100px, step 4 |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.featured-collection` | Root section element |
+| `.featured-collection__banner` | Banner container |
+| `.featured-collection__banner--{ratio}` | Banner aspect ratio modifier |
+| `.featured-collection__banner-image` | Banner image element |
+| `.featured-collection__banner-overlay` | Banner overlay container |
+| `.featured-collection__banner-overlay--{opacity}` | Overlay opacity modifier |
+| `.featured-collection__banner-content` | Overlay text content wrapper |
+| `.featured-collection__banner-title` | Collection title in overlay |
+| `.featured-collection__banner-description` | Collection description in overlay (truncated to 30 words) |
+| `.featured-collection__container` | Main content container (`page-width`) |
+| `.featured-collection__header` | Section heading/description area |
+| `.featured-collection__header--{alignment}` | Text alignment modifier |
+| `.featured-collection__heading` | Section heading |
+| `.featured-collection__description` | Section description (max-width 600px) |
+| `.featured-collection__grid` | Product grid container |
+| `.featured-collection__item` | Individual product card wrapper |
+| `.featured-collection__view-all` | View all button container |
+| `.featured-collection__empty` | Empty state placeholder |
+
+## Image Loading Strategy
+
+The section implements progressive image loading for optimal performance:
+
+- Banner image: `loading="eager"` with `fetchpriority="high"` (above the fold)
+- First 4 product images: `loading="eager"` (likely visible on initial load)
+- Remaining product images: `loading="lazy"` (deferred loading)
+
+Banner uses responsive `srcset` at widths: 600w, 1200w, 1800w, 2400w.
+
+## Responsive Behavior
+
+Grid columns adapt based on viewport:
+
+| Viewport | Columns | Gap |
+|----------|---------|-----|
+| Mobile (<48em) | `columns_mobile` (1–2) | 16px (`--space-4`) |
+| Tablet/Desktop (≥48em) | `columns_desktop` (2–4) | 24px (`--space-6`) |
+
+Typography scales across breakpoints:
+- Banner title: `2xl` → `3xl` → `4xl`
+- Section heading: Responsive based on `heading_size` setting
+
+## Empty State
+
+If the collection has no products or no collection is selected, displays a placeholder message using the `placeholder` snippet with icon and translated message.
+
+## Accessibility
+
+- Banner overlay text uses high-contrast white text on semi-transparent black background
+- All images include proper `alt` attributes (collection title for banner)
+- Focus states applied to all interactive elements
+- Grid uses CSS Grid for automatic reflow on smaller viewports
+- `prefers-reduced-motion` respected for transitions
+
+## Performance Considerations
+
+- CSS is scoped to `@layer sections` for cascade control
+- Inline styles use CSS custom properties for dynamic values
+- First 4 products load eagerly for LCP optimization
+- Banner image optimized with modern `srcset` and `sizes`
+- No external JavaScript dependencies
+
+## Related
+
+- [Product Card](/developer/snippets/product-card) — Product display component
+- [Button](/developer/snippets/button) — View all button component
+- [Placeholder](/developer/snippets/placeholder) — Empty state component
+- [Collection Section](/developer/sections/collection) — Full collection page template

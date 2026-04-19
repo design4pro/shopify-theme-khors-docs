@@ -1,0 +1,333 @@
+---
+title: "Tabs Block"
+description: "Technical documentation for tabs.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/tabs.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Tabs container block for Shopify Theme Editor.
+  Uses nested _tab-item blocks for dynamic tab management.
+  Supports horizontal/vertical layout, configurable styling, and full ARIA tabs pattern.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.tabs.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:components.tabs.headers.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:components.tabs.settings.layout.label",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:components.tabs.options.layout.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:components.tabs.options.layout.vertical"
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "select",
+      "id": "tab_style",
+      "label": "t:components.tabs.settings.tab_style.label",
+      "options": [
+        {
+          "value": "underline",
+          "label": "t:components.tabs.options.tab_style.underline"
+        },
+        {
+          "value": "pill",
+          "label": "t:components.tabs.options.tab_style.pill"
+        }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "header",
+      "content": "t:components.tabs.headers.typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:components.tabs.settings.heading_size.label",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:components.tabs.options.heading_size.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:components.tabs.options.heading_size.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:components.tabs.options.heading_size.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "content_size",
+      "label": "t:components.tabs.settings.content_size.label",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:components.tabs.options.content_size.small"
+        },
+        {
+          "value": "base",
+          "label": "t:components.tabs.options.content_size.base"
+        },
+        {
+          "value": "medium",
+          "label": "t:components.tabs.options.content_size.medium"
+        }
+      ],
+      "default": "base"
+    },
+    {
+      "type": "header",
+      "content": "t:components.tabs.headers.borders"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_borders",
+      "label": "t:components.tabs.settings.show_borders.label",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:components.tabs.settings.border_color.label",
+      "info": "t:components.tabs.settings.border_color.info"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_tab-item"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.tabs.presets.default",
+      "blocks": [
+        {
+          "type": "_tab-item",
+          "settings": {
+            "heading": "Tab 1",
+            "content": "<p>Content for the first tab panel.</p>"
+          }
+        },
+        {
+          "type": "_tab-item",
+          "settings": {
+            "heading": "Tab 2",
+            "content": "<p>Content for the second tab panel.</p>"
+          }
+        },
+        {
+          "type": "_tab-item",
+          "settings": {
+            "heading": "Tab 3",
+            "content": "<p>Content for the third tab panel.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "t:components.tabs.presets.product_details",
+      "settings": {
+        "show_borders": true
+      },
+      "blocks": [
+        {
+          "type": "_tab-item",
+          "settings": {
+            "heading": "Description",
+            "content": "<p>Product description goes here.</p>"
+          }
+        },
+        {
+          "type": "_tab-item",
+          "settings": {
+            "heading": "Specifications",
+            "content": "<p>Product specifications and details.</p>"
+          }
+        },
+        {
+          "type": "_tab-item",
+          "settings": {
+            "heading": "Reviews",
+            "content": "<p>Customer reviews will appear here.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### \_tab-item Block
+
+`blocks/_tab-item.liquid`
+
+This is a private block (prefixed with `_`), meaning it cannot be added independently by merchants. It is only available as a child of the tabs block.
+
+#### LiquidDoc
+
+```liquid
+{% doc %}
+  Private tab item block, used as a nested child of the tabs block.
+  Provides heading and content settings for individual tab panels.
+  Tab navigation and panel visibility are managed by the parent tabs block.
+
+  @example
+  Used automatically via block.blocks inside tabs.liquid
+{% enddoc %}
+```
+
+#### Schema
+
+```json
+{
+  "name": "t:components.tab_item.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:components.tab_item.settings.heading.label",
+      "default": "Tab"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:components.tab_item.settings.content.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.tab_item.presets.default"
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.tabs` - Main container
+- `.tabs--horizontal` - Horizontal layout modifier
+- `.tabs--vertical` - Vertical layout modifier (stacks horizontally on mobile, side-by-side on desktop)
+- `.tabs--underline` - Underline tab style with accent-colored bottom border
+- `.tabs--pill` - Pill tab style with filled background on active tab
+- `.tabs--bordered` - Border variant adding borders around tab panels
+- `.tabs__list` - Tab list container (`role="tablist"`)
+- `.tabs__tab` - Tab button (`role="tab"`)
+- `.tabs__panel` - Panel container (`role="tabpanel"`)
+- `.tabs__content` - Panel content area
+- `.tabs__empty` - Empty state message
+
+## JavaScript
+
+The `TabsComponent` class implements the full ARIA tabs pattern with keyboard navigation.
+
+```javascript
+class TabsComponent {
+  constructor(container) {
+    this.container = container;
+    this.tablist = container.querySelector('[role="tablist"]');
+    if (!this.tablist) return;
+
+    this.tabs = [...this.tablist.querySelectorAll('[role="tab"]')];
+    this.panels = [...container.querySelectorAll('[role="tabpanel"]')];
+    this.orientation = this.tablist.getAttribute('aria-orientation') || 'horizontal';
+
+    this.tablist.addEventListener('keydown', (event) => this.#handleKeydown(event));
+
+    for (const tab of this.tabs) {
+      tab.addEventListener('click', () => this.#activateTab(tab));
+    }
+  }
+
+  #handleKeydown(event) {
+    const isHorizontal = this.orientation === 'horizontal';
+    const prevKey = isHorizontal ? 'ArrowLeft' : 'ArrowUp';
+    const nextKey = isHorizontal ? 'ArrowRight' : 'ArrowDown';
+
+    if (event.key === prevKey) {
+      event.preventDefault();
+      this.#moveFocus(-1);
+    } else if (event.key === nextKey) {
+      event.preventDefault();
+      this.#moveFocus(1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      this.#activateTab(this.tabs[0]);
+      this.tabs[0].focus();
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      const lastTab = this.tabs[this.tabs.length - 1];
+      this.#activateTab(lastTab);
+      lastTab.focus();
+    }
+  }
+
+  #moveFocus(direction) {
+    const currentIndex = this.tabs.indexOf(document.activeElement);
+    if (currentIndex === -1) return;
+
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = this.tabs.length - 1;
+    if (newIndex >= this.tabs.length) newIndex = 0;
+
+    this.#activateTab(this.tabs[newIndex]);
+    this.tabs[newIndex].focus();
+  }
+
+  #activateTab(selectedTab) {
+    for (const tab of this.tabs) {
+      tab.setAttribute('aria-selected', 'false');
+      tab.setAttribute('tabindex', '-1');
+    }
+
+    selectedTab.setAttribute('aria-selected', 'true');
+    selectedTab.setAttribute('tabindex', '0');
+
+    const panelId = selectedTab.getAttribute('aria-controls');
+    for (const panel of this.panels) {
+      panel.hidden = panel.id !== panelId;
+    }
+  }
+}
+```
+
+## Accessibility
+
+Full ARIA tabs pattern implementation:
+
+- `role="tablist"`, `role="tab"`, `role="tabpanel"` for semantic structure
+- `aria-selected`, `aria-controls`, `aria-labelledby` for state and relationships
+- `aria-orientation` set to match layout direction
+- Keyboard navigation: Arrow Left/Right (horizontal), Arrow Up/Down (vertical), Home, End
+- Roving `tabindex` pattern for focus management within the tab list

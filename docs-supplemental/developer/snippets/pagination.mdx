@@ -1,0 +1,161 @@
+---
+title: "Pagination Snippet"
+description: "Technical documentation for pagination.liquid snippet"
+icon: "arrow-left-right"
+---
+
+## Location
+
+`snippets/pagination.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a pagination navigation component with numbered pages, previous/next arrows, and smart truncation.
+  Uses Shopify's native paginate object to display page links with accessibility support.
+
+  @param {object} paginate - Shopify paginate object (required)
+  @param {string} [class] - Additional CSS classes to append
+  @param {boolean} [show_page_numbers] - Display numbered page links (default: true)
+  @param {boolean} [show_arrows] - Display previous/next arrow buttons (default: true)
+
+  @example Basic pagination
+    {% paginate collection.products by 12 %}
+      {% render 'pagination', paginate: paginate %}
+    {% endpaginate %}
+
+  @example Pagination without page numbers
+    {% paginate collection.products by 12 %}
+      {% render 'pagination', paginate: paginate, show_page_numbers: false %}
+    {% endpaginate %}
+
+  @example Pagination with custom class
+    {% paginate collection.products by 12 %}
+      {% render 'pagination', paginate: paginate, class: 'pagination--compact' %}
+    {% endpaginate %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic pagination for collection products {% endcomment %}
+{% paginate collection.products by 12 %}
+  {% render 'pagination', paginate: paginate %}
+{% endpaginate %}
+
+{% comment %} Arrows only (no page numbers) {% endcomment %}
+{% paginate collection.products by 12 %}
+  {% render 'pagination',
+    paginate: paginate,
+    show_page_numbers: false
+  %}
+{% endpaginate %}
+
+{% comment %} With custom class for styling overrides {% endcomment %}
+{% paginate collection.products by 12 %}
+  {% render 'pagination',
+    paginate: paginate,
+    class: 'pagination--compact'
+  %}
+{% endpaginate %}
+```
+
+## Generated Output
+
+```html
+<nav class="pagination" aria-label="Pagination">
+  <ul class="pagination__list">
+    <li class="pagination__item pagination__item--arrow">
+      <a href="?page=1" class="pagination__link pagination__link--previous" aria-label="Previous page">
+        <!-- chevron-left SVG -->
+      </a>
+    </li>
+    <li class="pagination__item">
+      <a href="?page=1" class="pagination__link" aria-label="Page 1">1</a>
+    </li>
+    <li class="pagination__item">
+      <span class="pagination__link pagination__link--current" aria-current="page" aria-label="Page 2">2</span>
+    </li>
+    <li class="pagination__item">
+      <a href="?page=3" class="pagination__link" aria-label="Page 3">3</a>
+    </li>
+    <li class="pagination__item pagination__item--arrow">
+      <a href="?page=3" class="pagination__link pagination__link--next" aria-label="Next page">
+        <!-- chevron-right SVG -->
+      </a>
+    </li>
+  </ul>
+</nav>
+```
+
+With smart truncation (6+ pages, current page 4):
+
+```html
+<nav class="pagination" aria-label="Pagination">
+  <ul class="pagination__list">
+    <li class="pagination__item pagination__item--arrow">
+      <a href="?page=3" class="pagination__link pagination__link--previous" aria-label="Previous page">
+        <!-- chevron-left SVG -->
+      </a>
+    </li>
+    <li class="pagination__item">
+      <a href="?page=1" class="pagination__link" aria-label="Page 1">1</a>
+    </li>
+    <li class="pagination__item pagination__item--ellipsis">
+      <span class="pagination__ellipsis" aria-hidden="true">...</span>
+    </li>
+    <li class="pagination__item">
+      <a href="?page=3" class="pagination__link" aria-label="Page 3">3</a>
+    </li>
+    <li class="pagination__item">
+      <span class="pagination__link pagination__link--current" aria-current="page" aria-label="Page 4">4</span>
+    </li>
+    <li class="pagination__item">
+      <a href="?page=5" class="pagination__link" aria-label="Page 5">5</a>
+    </li>
+    <li class="pagination__item pagination__item--ellipsis">
+      <span class="pagination__ellipsis" aria-hidden="true">...</span>
+    </li>
+    <li class="pagination__item">
+      <a href="?page=8" class="pagination__link" aria-label="Page 8">8</a>
+    </li>
+    <li class="pagination__item pagination__item--arrow">
+      <a href="?page=5" class="pagination__link pagination__link--next" aria-label="Next page">
+        <!-- chevron-right SVG -->
+      </a>
+    </li>
+  </ul>
+</nav>
+```
+
+## CSS Classes
+
+| Class | Description |
+|---|---|
+| `.pagination` | Main nav container |
+| `.pagination__list` | UL list |
+| `.pagination__item` | List item |
+| `.pagination__item--arrow` | Arrow item |
+| `.pagination__item--ellipsis` | Ellipsis item |
+| `.pagination__link` | Link/button element |
+| `.pagination__link--current` | Active page |
+| `.pagination__link--disabled` | Disabled state |
+| `.pagination__link--previous` | Previous arrow |
+| `.pagination__link--next` | Next arrow |
+| `.pagination__ellipsis` | Truncation dots |
+
+## Accessibility
+
+- `<nav>` with `aria-label` identifies the navigation landmark for screen readers
+- `aria-current="page"` on the current page link communicates active state
+- `aria-label` on all page links and arrows provides descriptive text (e.g., "Page 2", "Previous page")
+- `aria-disabled="true"` on disabled arrows prevents interaction and announces disabled state
+- `aria-hidden="true"` on ellipsis dots hides decorative truncation indicators from screen readers
+- Smart truncation pattern (1 ... prev current next ... last) activates for 5+ pages to keep navigation manageable
+- Focus-visible outlines on all interactive elements for keyboard navigation
+
+## Related
+
+No blocks use this snippet directly. Used by collection and search sections for paginated result navigation.

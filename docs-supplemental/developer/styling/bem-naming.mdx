@@ -1,0 +1,67 @@
+---
+title: "BEM Naming"
+description: "Block-Element-Modifier CSS naming convention"
+---
+
+## BEM Overview
+
+Khors Theme uses BEM (Block-Element-Modifier) naming:
+
+```
+.block__element--modifier
+```
+
+## Examples
+
+### Block
+The standalone component:
+
+```css
+.product-card { }
+.header { }
+.footer { }
+```
+
+### Element
+Part of a block, denoted by `__`:
+
+```css
+.product-card__image { }
+.product-card__title { }
+.product-card__price { }
+```
+
+### Modifier
+Variation of block or element, denoted by `--`:
+
+```css
+.product-card--featured { }
+.product-card__title--large { }
+.button--primary { }
+.button--secondary { }
+```
+
+## Rules
+
+<Warning>
+  Follow these rules strictly for maintainable CSS.
+</Warning>
+
+1. **Never use IDs** as selectors
+2. **Avoid `!important`** - fix specificity instead
+3. **Max 1 level nesting** (except media queries)
+4. **No `&` nesting operator** in stylesheets
+5. **Mobile-first** media queries (`min-width`)
+
+## Good vs Bad
+
+```css
+/* Good */
+.product-card__title { }
+
+/* Bad - too much nesting */
+.product-card .title .text { }
+
+/* Bad - using ID */
+#product-title { }
+```

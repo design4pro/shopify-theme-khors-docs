@@ -1,0 +1,58 @@
+---
+title: "Product Section"
+description: "Technical documentation for main-product.liquid"
+icon: "code"
+---
+
+## Location
+
+`sections/main-product.liquid`
+
+## Preview
+
+<Frame caption="Product Page - Desktop View">
+  <img src="/images/sections/product-page-desktop.png" alt="Product page showing product images, details, and add to cart button on desktop" />
+</Frame>
+
+<Frame caption="Product Page - Tablet View">
+  <img src="/images/sections/product-page-tablet.png" alt="Product page with tablet-optimized layout" />
+</Frame>
+
+<Frame caption="Product Page - Mobile View">
+  <img src="/images/sections/product-page-mobile.png" alt="Product page with mobile-optimized layout for product viewing and purchasing" />
+</Frame>
+
+## Schema
+
+```json
+{
+  "name": "t:sections.product.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_zoom",
+      "default": true,
+      "label": "t:labels.enable_zoom"
+    },
+    {
+      "type": "select",
+      "id": "variant_style",
+      "options": [
+        { "value": "dropdown", "label": "t:options.dropdown" },
+        { "value": "buttons", "label": "t:options.buttons" }
+      ],
+      "default": "buttons",
+      "label": "t:labels.variant_style"
+    }
+  ],
+  "blocks": [{ "type": "@theme" }]
+}
+```
+
+## Dependencies
+
+| Type | File |
+|------|------|
+| Snippet | `image.liquid` |
+| Snippet | `price.liquid` |
+| Asset | `product.js` |

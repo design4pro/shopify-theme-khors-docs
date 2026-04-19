@@ -1,0 +1,125 @@
+---
+title: "Button Snippet"
+description: "Technical documentation for button.liquid snippet"
+icon: "square-mouse-pointer"
+---
+
+## Location
+
+`snippets/button.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a versatile button component supporting multiple variants, sizes, states, and icon positions.
+  Can render as either a button element (for actions) or an anchor element (for navigation).
+
+  @param {string} text - Button text content (required)
+  @param {string} [url] - Optional URL (if provided, renders as <a> instead of <button>)
+  @param {string} [variant] - Visual style: 'button--primary', 'button--secondary', 'button--outline', 'button--ghost' (default: 'button--primary')
+  @param {string} [size] - Size modifier: 'button--small', 'button--medium', 'button--large' (default: 'button--medium')
+  @param {boolean} [full_width] - Makes button stretch to full container width (default: false)
+  @param {boolean} [disabled] - Disables button interaction (default: false)
+  @param {boolean} [loading] - Shows CSS spinner animation (default: false)
+  @param {string} [icon] - Icon type to display: 'loading', 'cart', 'arrow-right', 'heart', 'search', 'user', 'check', or any icon from the icon system
+  @param {string} [icon_position] - Icon placement: 'left' or 'right' (default: 'left')
+  @param {string} [class] - Additional CSS classes to append
+  @param {string} [aria_label] - Custom ARIA label for accessibility
+  @param {string} [id] - Optional element ID attribute
+  @param {string} [data_attributes] - Additional data-* attributes as string
+
+  @example Basic button
+    {% render 'button', text: 'Click me' %}
+
+  @example Link button (renders as <a>)
+    {% render 'button', text: 'Shop now', url: '/collections/all' %}
+
+  @example Secondary variant
+    {% render 'button', text: 'Learn more', variant: 'button--secondary' %}
+
+  @example Small outline button
+    {% render 'button', text: 'Cancel', variant: 'button--outline', size: 'button--small' %}
+
+  @example Loading state
+    {% render 'button', text: 'Processing', loading: true %}
+
+  @example Full width primary button
+    {% render 'button', text: 'Add to cart', full_width: true %}
+
+  @example With icon position
+    {% render 'button', text: 'Loading', icon: 'loading', icon_position: 'right', loading: true %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic button {% endcomment %}
+{% render 'button', text: 'Click me' %}
+
+{% comment %} Link button with URL {% endcomment %}
+{% render 'button', text: 'Shop now', url: '/collections/all' %}
+
+{% comment %} Loading state {% endcomment %}
+{% render 'button', text: 'Processing', loading: true %}
+
+{% comment %} Full width with icon {% endcomment %}
+{% render 'button',
+  text: 'Add to cart',
+  full_width: true,
+  icon: 'cart',
+  icon_position: 'left'
+%}
+```
+
+## Generated Output
+
+```html
+<button class="button button--primary button--medium" type="button">
+  <span class="button__text">Click me</span>
+</button>
+```
+
+Link variant:
+
+```html
+<a class="button button--secondary button--large" href="/collections/all">
+  <span class="button__text">Shop now</span>
+</a>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.button` | Base component |
+| `.button--primary` | Primary accent background variant |
+| `.button--secondary` | Foreground background variant |
+| `.button--outline` | Transparent background with border variant |
+| `.button--ghost` | Transparent background, no border variant |
+| `.button--small` | Small size (32px min-height) |
+| `.button--medium` | Medium size (44px min-height, default) |
+| `.button--large` | Large size (52px min-height) |
+| `.button--full-width` | Full width modifier |
+| `.button--disabled`, `.button[disabled]` | Disabled states (opacity 0.5, no pointer events) |
+| `.button--loading` | Loading state (opacity 0.7, cursor wait) |
+| `.button__text` | Text content wrapper |
+| `.button__icon` | Icon container |
+| `.button__icon--left` | Left-positioned icon |
+| `.button__icon--right` | Right-positioned icon |
+| `.button__spinner` | CSS-only loading spinner animation |
+| `a.button` | Link-specific styles (text-align center) |
+
+## Accessibility
+
+- Uses `<button>` element for actions, `<a>` element for navigation based on `url` parameter
+- `disabled` attribute applied on `<button>` elements; `aria-disabled="true"` on `<a>` elements
+- Custom `aria-label` support via the `aria_label` parameter
+- `focus-visible` outline styling with accent color and 2px offset
+- Icon containers marked with `aria-hidden="true"` to prevent screen reader noise
+
+## Related
+
+- [Button Block](/developer/blocks/button) -- Theme Editor wrapper
+- [Icon Snippet](/developer/snippets/icon) -- Used for button icons

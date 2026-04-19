@@ -1,0 +1,60 @@
+---
+title: "Image Snippet"
+description: "Technical documentation for image.liquid snippet"
+icon: "image"
+---
+
+## Location
+
+`snippets/image.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a responsive image with lazy loading and srcset.
+
+  @param {image} image - The image object to render
+  @param {number} [width] - Maximum width in pixels (default: 800)
+  @param {number} [height] - Optional height constraint
+  @param {boolean} [lazy] - Enable lazy loading (default: true)
+  @param {string} [class] - Additional CSS classes
+  @param {string} [alt] - Alt text override
+
+  @example
+  {% render 'image', image: product.featured_image, width: 400 %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic usage {% endcomment %}
+{% render 'image', image: product.featured_image %}
+
+{% comment %} With size constraints {% endcomment %}
+{% render 'image',
+  image: section.settings.image,
+  width: 600,
+  height: 400
+%}
+
+{% comment %} Eager loading for above-fold images {% endcomment %}
+{% render 'image',
+  image: section.settings.hero_image,
+  lazy: false
+%}
+```
+
+## Generated Output
+
+```html
+<img
+  src="image.jpg?width=800"
+  srcset="image.jpg?width=400 400w, image.jpg?width=800 800w"
+  width="800"
+  height="600"
+  loading="lazy"
+  alt="Product image"
+>
+```

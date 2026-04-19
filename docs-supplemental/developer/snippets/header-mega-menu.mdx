@@ -1,0 +1,101 @@
+---
+title: "Header Mega Menu"
+description: "Full-width dropdown panel with column layout and optional featured image"
+icon: "layout-grid"
+---
+
+## Location
+
+`snippets/header-mega-menu.liquid` (343 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a full-width mega menu panel for desktop navigation.
+  Replaces the standard narrow dropdown for Level 1 items with children.
+  Displays Level 2 items as column headings with Level 3 children beneath,
+  plus an optional featured image slot from the link's associated object.
+
+  Desktop only (hidden below 750px). Mobile navigation handled by header-drawer.
+
+  @param {object} link - Level 1 Shopify link object with nested links
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Called internally by header-nav.liquid {% endcomment %}
+{% render 'header-mega-menu', link: link %}
+```
+
+## Generated Output
+
+```html
+<div class="header-mega-menu" role="menu" data-nav-dropdown data-mega-menu hidden>
+  <div class="header-mega-menu__inner header-mega-menu__inner--has-featured">
+    <div class="header-mega-menu__columns">
+      <div class="header-mega-menu__column">
+        <a href="..." class="header-mega-menu__heading" role="menuitem">Category</a>
+        <ul class="header-mega-menu__list" role="none">
+          <li role="none">
+            <a href="..." class="header-mega-menu__link" role="menuitem">Sub-item</a>
+          </li>
+        </ul>
+        <a href="..." class="header-mega-menu__view-all" role="menuitem">View all</a>
+      </div>
+    </div>
+    <div class="header-mega-menu__featured">
+      <!-- Featured image from linked object -->
+    </div>
+  </div>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header-mega-menu` | Full-width panel (absolute, centered, z-index 100) |
+| `.header-mega-menu:not([hidden])` | Visible state with fade-in transition |
+| `.header-mega-menu__inner` | Max-width container with grid layout |
+| `.header-mega-menu__inner--has-featured` | Two-column grid (1fr + 280px) |
+| `.header-mega-menu__columns` | Auto-fill grid (min 180px columns) |
+| `.header-mega-menu__column` | Flex column with gap |
+| `.header-mega-menu__heading` | L2 heading (uppercase, semibold, border-bottom) |
+| `.header-mega-menu__heading--standalone` | L2 without children (no border) |
+| `.header-mega-menu__heading--active` | Active state (accent color) |
+| `.header-mega-menu__list` | L3 link list |
+| `.header-mega-menu__link` | L3 link (secondary color) |
+| `.header-mega-menu__link--active` | Active L3 link |
+| `.header-mega-menu__view-all` | "View all" link (accent, underline) |
+| `.header-mega-menu__featured` | Featured image slot |
+| `.header-mega-menu__featured-image` | Image element |
+| `.header-mega-menu__featured-label` | Image caption (centered, bg) |
+
+## JavaScript
+
+The `MegaMenuNavigation` class (inline via `{% javascript %}`) provides keyboard navigation within the mega menu:
+
+- Arrow Up/Down to move between menu items
+- Arrow Up from first item returns focus to L1 button
+- Home/End to jump to first/last item
+
+The open/close behavior is handled by the parent `HeaderNavigation` class in `header-nav.liquid`.
+
+## Accessibility
+
+- `role="menu"` on container, `role="menuitem"` on all links
+- `aria-current="page"` on current page links
+- Active state highlighting
+- Featured image link is `aria-hidden="true"` with `tabindex="-1"` (decorative)
+- `focus-visible` outlines on all interactive elements
+- Hidden on mobile (≤749px)
+- `prefers-reduced-motion` disables fade transition
+
+## Related
+
+- [Header Nav](/developer/snippets/header-nav) — Parent component that renders mega menus
+- [Header Section](/developer/sections/header) — Top-level section
+- [Dropdown](/developer/snippets/header-nav-dropdown) — Alternative narrow dropdown

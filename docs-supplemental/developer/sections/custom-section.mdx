@@ -1,0 +1,82 @@
+---
+title: "Custom Section"
+description: "Technical documentation for custom-section.liquid"
+icon: "code"
+---
+
+## Location
+
+`sections/custom-section.liquid`
+
+## Overview
+
+The custom section is a flexible, freeform container that accepts any `@theme` blocks. It provides a blank canvas for merchants to build custom page layouts by combining heading, text, button, image, and other blocks.
+
+Key features:
+- Accepts all `@theme` blocks without restrictions
+- Optional background image with full-width coverage
+- Content grid layout matching the theme's content grid system
+- Available as a preset in the Theme Editor
+
+## Schema
+
+```json
+{
+  "name": "t:general.custom_section",
+  "blocks": [{ "type": "@theme" }],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.custom_section"
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.custom-section` - Main container (relative positioned, overflow hidden)
+- `.custom-section__background` - Background image wrapper (absolute positioned, z-index -1)
+- `.custom-section__content` - Content area (CSS grid using `--content-grid`)
+- `.full-width` - Utility class for edge-to-edge display
+
+## Rendered Structure
+
+```html
+<div class="custom-section full-width">
+  <!-- Optional background image -->
+  <div class="custom-section__background">
+    <img src="image.jpg?width=2000" alt="">
+  </div>
+
+  <!-- Theme blocks rendered here -->
+  <div class="custom-section__content">
+    <!-- @theme blocks: heading, text, button, image, etc. -->
+  </div>
+</div>
+```
+
+## Block Composition
+
+Since this section accepts `@theme` blocks, merchants can add any combination of:
+
+| Block | Use Case |
+|-------|----------|
+| [Heading](/developer/blocks/heading) | Section titles |
+| [Text](/developer/blocks/text) | Rich text content |
+| [Button](/developer/blocks/button) | Call-to-action links |
+| [Image](/developer/blocks/image-block) | Inline images |
+| [Icon](/developer/blocks/icon) | Decorative or functional icons |
+| [Badge](/developer/blocks/badge) | Status indicators |
+| [Accordion](/developer/blocks/accordion) | FAQ or collapsible content |
+| [Tabs](/developer/blocks/tabs) | Tabbed content panels |
+
+## Related
+
+- [Custom Section (Merchant Guide)](/merchant/sections/custom-section) — Merchant configuration documentation

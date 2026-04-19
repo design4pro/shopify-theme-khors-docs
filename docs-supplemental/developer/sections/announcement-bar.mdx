@@ -1,0 +1,85 @@
+---
+title: "Announcement Bar"
+description: "Dismissible banner for promotional messages above the header"
+icon: "megaphone"
+---
+
+## Location
+
+`sections/announcement-bar.liquid`
+
+## Preview
+
+<Frame caption="Announcement Bar - Desktop View">
+  <img src="/images/sections/announcement-bar-desktop.png" alt="Announcement bar showing promotional message with dismiss button on desktop" />
+</Frame>
+
+<Frame caption="Announcement Bar - Mobile View">
+  <img src="/images/sections/announcement-bar-mobile.png" alt="Announcement bar with mobile-optimized layout and dismiss functionality" />
+</Frame>
+
+## Architecture
+
+A simple, self-contained section with inline JavaScript. Part of `sections/header-group.json` and renders above the header.
+
+- Rich text content with optional link
+- Dismissible via localStorage persistence
+- Color scheme support
+- No external dependencies
+
+## Schema Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `text` | `richtext` | Welcome message | Announcement text content |
+| `link` | `url` | — | Optional link URL |
+| `link_new_window` | `checkbox` | `false` | Open link in new tab |
+| `dismissible` | `checkbox` | `true` | Allow visitors to dismiss |
+| `color_scheme` | `select` | `accent` | `light`, `dark`, `accent` |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.announcement-bar` | Root element |
+| `.announcement-bar[hidden]` | Dismissed state |
+| `.announcement-bar__inner` | Flex container (centered, `page-width`) |
+| `.announcement-bar__content` | Text/link wrapper |
+| `.announcement-bar__link` | Linked variant (underline) |
+| `.announcement-bar__text` | Plain text variant |
+| `.announcement-bar__dismiss` | Close button (32×32px, circular) |
+
+## JavaScript
+
+The `AnnouncementBar` class (inline via `{% javascript %}`) handles dismissal:
+
+```js
+// Storage key format
+`khors:announcement-dismissed:${sectionId}`
+```
+
+- Checks `localStorage` on init — hides if previously dismissed
+- On dismiss click: sets `hidden` attribute and stores to `localStorage`
+- Gracefully handles private browsing (session-only dismiss on `catch`)
+- Uses ES6 private methods (`#isDismissed`, `#dismiss`)
+
+## Accessibility
+
+- `role="region"` with `aria-label` on root
+- Dismiss button has `aria-label` translation key
+- `focus-visible` outline on dismiss button
+- `prefers-reduced-motion` disables transition on dismiss button
+
+## Presets
+
+```json
+{
+  "name": "t:sections.announcement_bar.presets.name"
+}
+```
+
+Available as a standalone preset in the Theme Editor, but also included by default in `header-group.json`.
+
+## Related
+
+- [Header](/developer/sections/header) — Main header section (sibling in header-group)

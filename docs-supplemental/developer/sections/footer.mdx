@@ -1,0 +1,99 @@
+---
+title: "Footer Section"
+description: "Site footer with configurable columns, newsletter, social links, and payment icons"
+icon: "panel-bottom"
+---
+
+## Location
+
+`sections/footer.liquid`
+
+## Preview
+
+<Frame caption="Footer Section - Desktop View">
+  <img src="/images/sections/footer-desktop.png" alt="Footer section with content columns, newsletter signup, and bottom bar on desktop" />
+</Frame>
+
+<Frame caption="Footer Section - Mobile View">
+  <img src="/images/sections/footer-mobile.png" alt="Footer section with stacked layout optimized for mobile devices" />
+</Frame>
+
+## Architecture
+
+The footer uses a two-zone layout:
+
+- **Top zone** — Grid of content columns (menu/text blocks) plus optional newsletter
+- **Bottom bar** — Social links, copyright, and payment icons
+
+| Component | File | Role |
+|-----------|------|------|
+| [Newsletter](/developer/snippets/footer-newsletter) | `footer-newsletter.liquid` | Email signup with honeypot |
+| [Social Links](/developer/snippets/footer-social) | `footer-social.liquid` | Platform icons from global settings |
+| [Payment Icons](/developer/snippets/footer-payment) | `footer-payment.liquid` | Enabled payment type SVGs |
+
+Included in `sections/footer-group.json` as the sole section.
+
+## Blocks
+
+### Menu Block (`menu`)
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `heading` | `text` | Column heading |
+| `menu` | `link_list` | Navigation menu to display |
+
+### Text Block (`text`)
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `heading` | `text` | Column heading |
+| `content` | `richtext` | Rich text content |
+
+## Schema Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `show_newsletter` | `checkbox` | `true` | Show newsletter signup |
+| `newsletter_heading` | `text` | `"Stay in touch"` | Newsletter section heading |
+| `show_social` | `checkbox` | `true` | Show social media icons |
+| `show_payment_icons` | `checkbox` | `true` | Show payment method badges |
+| `show_copyright` | `checkbox` | `true` | Show copyright line |
+| `show_border` | `checkbox` | `true` | Top border line |
+| `color_scheme` | `select` | `light` | `light`, `dark`, `accent` |
+| `padding_top` | `range` | `40` | Top padding 0–80px, step 4 |
+| `padding_bottom` | `range` | `40` | Bottom padding 0–80px, step 4 |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.footer` | Root element |
+| `.footer--border` | Top border modifier |
+| `.footer__top` | Columns zone (`page-width`) |
+| `.footer__columns` | CSS Grid auto-fit layout (min 200px) |
+| `.footer__column` | Individual column |
+| `.footer__column--newsletter` | Newsletter column (min-width 280px) |
+| `.footer__column-heading` | Column heading (uppercase, semibold) |
+| `.footer__menu` | Menu link list |
+| `.footer__link` | Individual menu link |
+| `.footer__text` | Rich text content |
+| `.footer__bottom` | Bottom bar with border-top |
+| `.footer__bottom-inner` | Flex container (space-between) |
+| `.footer__bottom-copyright` | Copyright text |
+| `.footer__bottom-social` | Social links wrapper |
+| `.footer__bottom-payment` | Payment icons wrapper |
+
+## Accessibility
+
+- Menu links use `role="list"` for screen reader announcement
+- Links have `focus-visible` outlines
+- Copyright contains shop name as a link to root
+- `prefers-reduced-motion` disables transitions
+- Mobile: columns stack to single column, bottom bar centers
+
+## Related
+
+- [Header](/developer/sections/header) — Site header section
+- [Footer Newsletter](/developer/snippets/footer-newsletter) — Newsletter sub-component
+- [Footer Social](/developer/snippets/footer-social) — Social links sub-component
+- [Footer Payment](/developer/snippets/footer-payment) — Payment icons sub-component

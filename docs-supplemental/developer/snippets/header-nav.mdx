@@ -1,0 +1,98 @@
+---
+title: "Header Navigation"
+description: "3-level navigation with ARIA menubar (desktop) and accordion (mobile)"
+icon: "navigation"
+---
+
+## Location
+
+`snippets/header-nav.liquid` (725 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a 3-level navigation menu with ARIA menubar pattern for desktop
+  and accordion for mobile. Supports keyboard navigation, active page
+  highlighting, and responsive behavior at 750px breakpoint.
+
+  @param {object} menu - Shopify menu object (required)
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'header-nav', menu: section.settings.menu %}
+```
+
+## Architecture
+
+The component renders **two separate DOM trees** for responsive behavior:
+
+| Viewport | Pattern | Element |
+|----------|---------|---------|
+| Desktop (≥750px) | ARIA menubar | `<ul role="menubar">` with `role="menuitem"` |
+| Mobile (<750px) | Native accordion | `<details>/<summary>` elements |
+
+### Desktop: ARIA Menubar
+
+- **Level 1 → Level 2**: Hover opens mega menu or dropdown
+- **Level 2 → Level 3**: Click to toggle submenu
+- Keyboard: Arrow keys, Home/End, Escape, Tab
+- Focus management and proper `aria-expanded` states
+- Outside click closes all dropdowns
+
+### Mobile: Accordion
+
+- Native `<details>` elements with CSS grid animation
+- Chevron icons rotate 180° on open
+- 3 levels of nesting with progressive indentation
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header-nav` | Root container |
+| `.header-nav__list--desktop` | Desktop menubar (hidden on mobile) |
+| `.header-nav__list--mobile` | Mobile accordion (hidden on desktop) |
+| `.header-nav__item--level-1` | Level 1 list item |
+| `.header-nav__link` | Navigation link/button |
+| `.header-nav__link--active` | Active page highlight (accent color) |
+| `.header-nav__link[aria-current="page"]` | Current page with underline indicator |
+| `.header-nav__label` | Text with ellipsis truncation (max 200px) |
+| `.header-nav__icon` | Chevron icon with rotation transition |
+| `.header-nav__details` | Mobile accordion `<details>` |
+| `.header-nav__summary` | Mobile accordion trigger |
+| `.header-nav__content-wrapper` | Grid animation container (`0fr` → `1fr`) |
+| `.header-nav__content--level-1` | Level 2 content (left padding) |
+| `.header-nav__content--level-2` | Level 3 content (left padding) |
+
+## JavaScript
+
+The `HeaderNavigation` class (inline via `{% javascript %}`) provides:
+
+- **Hover interaction**: Level 1 hover opens Level 2 with 200ms close delay
+- **Click interaction**: Level 2 items toggle Level 3 submenus
+- **Keyboard navigation**: Full arrow key support across all levels
+- **Escape handling**: Closes dropdowns and returns focus to parent
+- **Outside click**: Closes all open dropdowns
+- **Resize handler**: Debounced (150ms) — closes dropdowns on breakpoint change
+- **Private methods**: `#init`, `#handleKeydown`, `#openLevel2`, `#closeAll`, etc.
+
+## Accessibility
+
+- Desktop: Full ARIA menubar pattern (`role="menubar"`, `role="menu"`, `role="menuitem"`)
+- `aria-haspopup="true"` and `aria-expanded` on toggle buttons
+- `aria-current="page"` on current page links
+- Active page highlighting via `link.active`, `link.child_active`, `link.current`
+- `focus-visible` outlines on all interactive elements
+- `prefers-reduced-motion` disables all transitions and animations
+
+## Related
+
+- [Header Section](/developer/sections/header) — Parent section
+- [Mega Menu](/developer/snippets/header-mega-menu) — Full-width dropdown (rendered by nav)
+- [Dropdown](/developer/snippets/header-nav-dropdown) — Narrow recursive dropdown
+- [Drawer](/developer/snippets/header-drawer) — Mobile navigation alternative

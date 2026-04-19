@@ -1,0 +1,266 @@
+---
+title: "Industry Presets"
+description: "Choose a preset optimized for your industry"
+---
+
+Khors theme includes three industry presets, each with optimized settings, typography, and color schemes tailored to specific industry needs.
+
+<CardGroup cols={3}>
+  <Card title="Fashion" icon="shirt" href="/merchant/presets/fashion">
+    **Aura Preset** - Elegant design for clothing stores
+  </Card>
+  <Card title="Beauty" icon="sparkles" href="/merchant/presets/beauty">
+    **Apex Preset** - Refined aesthetic for cosmetics and skincare
+  </Card>
+  <Card title="Electro" icon="bolt" href="/merchant/presets/electro">
+    **Nexus Preset** - Modern look for electronics and tech products
+  </Card>
+</CardGroup>
+
+## Available Presets
+
+### Aura (Fashion / Clothing)
+
+**Industry:** Clothing, Apparel, Fashion
+
+The **Aura** preset is designed for clothing and fashion stores, offering an elegant, minimalist design that lets products shine.
+
+**Key features:**
+- Neutral color palette with bold accents
+- Elegant serif or sophisticated sans-serif typography
+- Large, high-quality product images
+- Generous whitespace for premium feel
+- Subtle animations and transitions
+
+**Ideal for:**
+- Clothing stores
+- Fashion boutiques
+- Streetwear brands
+- Fashion accessories
+- Sustainable fashion
+
+**Shopify Industry Tag:** `Clothing`
+
+---
+
+### Apex (Beauty / Health & Beauty)
+
+**Industry:** Beauty, Cosmetics, Skincare
+
+The **Apex** preset is created for the beauty industry, combining soft, feminine aesthetics with a professional look that builds trust.
+
+**Key features:**
+- Pastels and rose gold accents
+- Light, airy typography with generous line heights
+- Soft edges and rounded corners
+- Focus on product ingredients and benefits
+- Trust badges and certifications
+
+**Ideal for:**
+- Cosmetics and makeup
+- Skincare
+- Perfumes and fragrances
+- Hair care products
+- Wellness and supplements
+
+**Shopify Industry Tag:** `Beauty`
+
+---
+
+### Nexus (Electro / Electronics)
+
+**Industry:** Electronics, Tech, Gadgets
+
+The **Nexus** preset is designed for electronics and tech stores, offering a bold, modern design that communicates innovation and reliability.
+
+**Key features:**
+- Dark mode as default (optional)
+- Bold typography with tight letter-spacing
+- Vibrant tech accents (blue, cyan, neon)
+- Product specifications in tech sheet format
+- Sharp edges and geometric layouts
+
+**Ideal for:**
+- Consumer electronics
+- Computers and components
+- Smart home devices
+- Audio and video
+- Gaming gear
+
+**Shopify Industry Tag:** `Electronics`
+
+## Preset Structure
+
+Each preset is defined in the `listings/` directory as a `listing.json` file:
+
+```
+listings/
+├── aura/
+│   └── listing.json    → Industry: "Clothing"
+├── apex/
+│   └── listing.json    → Industry: "Beauty"
+└── nexus/
+    └── listing.json    → Industry: "Electronics"
+```
+
+### Preset File Format
+
+```json
+{
+  "industry": "Clothing"
+}
+```
+
+The `industry` field must be one of the [allowed Shopify values](https://shopify.dev/docs/api/admin-graphql/latest/enums/AppSubscriptionLineItemType#field-shopifyappsubscriptionlineitemtype-industry).
+
+## How to Apply a Preset
+
+<Info>
+  **Presets are set during theme installation.** You cannot change the preset after installation without reinstalling the theme.
+</Info>
+
+### During Theme Installation
+
+1. Download Khors theme from the Shopify Theme Store
+2. During the installation process, select the preset appropriate for your industry:
+   - **Aura** for Fashion/Clothing
+   - **Apex** for Beauty/Cosmetics
+   - **Nexus** for Electronics/Tech
+3. The theme will install with pre-configured settings for the selected industry
+
+### After Installation
+
+After installing a preset, you can customize all settings in the Theme Customizer:
+
+- **Colors** - Change color schemes
+- **Typography** - Select different fonts
+- **Layout** - Adjust widths and margins
+- **Sections** - Add, remove, reorganize sections
+
+<Warning>
+  Changing settings after installation does not change the assigned industry tag in `listing.json`. The industry tag only affects marketplace categorization.
+</Warning>
+
+## Preset → Industry Mapping
+
+| Preset Name | Industry Tag | Shopify Category |
+|-------------|--------------|------------------|
+| **Aura** | `Clothing` | Fashion & Apparel |
+| **Apex** | `Beauty` | Health & Beauty |
+| **Nexus** | `Electronics` | Electronics & Tech |
+
+## Customizing Presets
+
+### Colors
+
+Each preset has default color schemes that you can fully customize:
+
+```
+Aura (Fashion):
+  Light: Off-white backgrounds, dark text, gold accents
+  Dark: Black backgrounds, white text, gold accents
+
+Apex (Beauty):
+  Light: Cream/pink backgrounds, brown text, rose accents
+  Dark: Deep plum backgrounds, cream text, rose gold accents
+
+Nexus (Electro):
+  Light: Light gray backgrounds, almost-black text, blue accents
+  Dark: Almost-black backgrounds, white text, cyan accents
+```
+
+### Typography
+
+Recommended fonts for each preset:
+
+**Aura (Fashion):**
+- Montserrat, Raleway (sans-serif)
+- Playfair Display, Lora (serif)
+
+**Apex (Beauty):**
+- Inter, Nunito Sans (sans-serif)
+- Cormorant Garamond (serif accent)
+
+**Nexus (Electro):**
+- Inter, Roboto, Space Grotesk (sans-serif)
+- JetBrains Mono (monospace for specs)
+
+### Layout
+
+**Aura:** Generous whitespace, max-width 1200px
+**Apex:** Soft, flowing layouts, max-width 1100px
+**Nexus:** Tight, grid-based, max-width 1400px
+
+## Preset Comparison
+
+| Feature | Aura (Fashion) | Apex (Beauty) | Nexus (Electro) |
+|---------|----------------|---------------|-----------------|
+| **Dominant Style** | Minimalist, Elegant | Soft, Feminine | Bold, Technical |
+| **Color Palette** | Neutral + Bold accents | Pastels + Rose gold | Dark + Vibrant accents |
+| **Typography** | Sophisticated | Light, Airy | Bold, Modern |
+| **Imagery** | Large hero images | Lifestyle + ingredients | Product specs + tech |
+| **Whitespace** | Generous | Very generous | Moderate |
+| **Animations** | Subtle | Soft, flowing | Sharp, quick |
+
+## Best Practices
+
+### Choosing the Right Preset
+
+<Warning>
+  Select the preset that **most closely** matches your primary product category. Mixing presets (e.g., fashion preset for electronics) reduces conversions.
+</Warning>
+
+**Helpful questions:**
+- What is the primary product type? (70%+ inventory)
+- What tone of voice does my brand have? (elegant vs. technical)
+- What emotions do I want to evoke? (trust vs. excitement)
+
+### Consistency After Selection
+
+After selecting a preset:
+1. **Stick to the chosen aesthetic** in product photos
+2. **Match copy** to the preset style (elegant vs. technical)
+3. **Use recommended fonts** for consistency
+4. **Maintain whitespace proportions** recommended for the preset
+
+### Cross-Category Stores
+
+If you sell products from multiple categories:
+- Choose the preset for the **dominant category** (>50% revenue)
+- Or choose **Aura** as the most universal option
+
+## FAQ
+
+### Can I change the preset after installation?
+
+Not directly. The industry tag in `listing.json` is set during installation and only affects marketplace categorization, not theme functionality. However, you can:
+- Change all settings (colors, fonts, layout) in the Customizer
+- Manually edit `listing.json` (requires developer access)
+- Reinstall the theme with a different preset
+
+### Does the preset affect theme functionality?
+
+No. All presets have **identical functions** and features. They only differ in:
+- Default colors
+- Recommended typography
+- Sample content
+- Industry tag for Shopify
+
+### Can I mix styles from different presets?
+
+Yes, you can copy settings between presets in the Theme Customizer:
+1. Note the settings from one preset (colors, fonts)
+2. Apply them manually to your theme
+3. Mix & match as needed
+
+<Info>
+  However, we recommend sticking to one consistent style for the best user experience and conversions.
+</Info>
+
+## More Information
+
+- [Fashion Preset Details](/merchant/presets/fashion) - Aura preset details
+- [Beauty Preset Details](/merchant/presets/beauty) - Apex preset details
+- [Electro Preset Details](/merchant/presets/electro) - Nexus preset details
+- [Colors Settings](/merchant/settings/colors) - Customize preset colors
+- [Typography Settings](/merchant/settings/typography) - Select fonts for preset

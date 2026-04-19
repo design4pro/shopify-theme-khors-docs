@@ -1,0 +1,77 @@
+---
+title: "Header Nav Dropdown"
+description: "Recursive narrow dropdown helper for Level 2 and Level 3 navigation"
+icon: "list-tree"
+---
+
+## Location
+
+`snippets/header-nav-dropdown.liquid` (155 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Recursive dropdown helper for header-nav.liquid.
+  Renders Level 2 and Level 3 dropdowns for desktop navigation.
+
+  @param {object} link - Shopify link object with nested links (required)
+  @param {number} level - Current nesting level: 2 or 3 (required)
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Called internally by header-nav.liquid {% endcomment %}
+{% render 'header-nav-dropdown', link: link, level: 2 %}
+```
+
+<Note>
+This snippet is an **alternative** to the mega menu. The `header-nav.liquid` component currently renders mega menus for L1 items with children. This dropdown provides the narrow dropdown UI and can be used as a replacement.
+</Note>
+
+## Generated Output
+
+```html
+<div class="header-nav__dropdown header-nav__dropdown--level-2" role="menu" data-nav-dropdown hidden>
+  <ul class="header-nav__dropdown-list" role="none">
+    <li class="header-nav__dropdown-item" role="none">
+      <a href="..." class="header-nav__dropdown-link" role="menuitem">Item</a>
+    </li>
+    <li class="header-nav__dropdown-item" role="none">
+      <button class="header-nav__dropdown-link" role="menuitem"
+        aria-haspopup="true" aria-expanded="false" data-nav-toggle>
+        Has children
+      </button>
+      <!-- Recursive Level 3 dropdown -->
+    </li>
+  </ul>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.header-nav__dropdown` | Absolute panel (min 200px, max 280px, shadow) |
+| `.header-nav__dropdown--level-2` | Positioned below parent |
+| `.header-nav__dropdown--level-3` | Positioned to right of parent |
+| `.header-nav__dropdown-list` | Flex column list |
+| `.header-nav__dropdown-item` | Relative item for L3 positioning |
+| `.header-nav__dropdown-link` | Item link/button with hover bg |
+| `.header-nav__dropdown-link--active` | Active state (accent, bold) |
+| `.header-nav__dropdown-link[aria-current="page"]` | Current page (accent, bg) |
+
+## Accessibility
+
+- ARIA menu pattern: `role="menu"`, `role="menuitem"`
+- `aria-haspopup` and `aria-expanded` on L2 items with L3 children
+- `aria-current="page"` on current page links
+- `focus-visible` outlines
+- `prefers-reduced-motion` disables transitions
+
+## Related
+
+- [Header Nav](/developer/snippets/header-nav) — Parent navigation component
+- [Mega Menu](/developer/snippets/header-mega-menu) — Full-width alternative

@@ -1,0 +1,173 @@
+---
+title: "Button Block"
+description: "Technical documentation for button.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/button.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Button block wrapper for Shopify Theme Editor.
+  Delegates rendering to the button snippet while providing merchant-friendly UI.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.button.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:components.button.settings.text.label",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:components.button.settings.url.label",
+      "info": "t:components.button.settings.url.info"
+    },
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "t:components.button.settings.variant.label",
+      "options": [
+        {
+          "value": "button--primary",
+          "label": "t:components.button.options.variant.primary"
+        },
+        {
+          "value": "button--secondary",
+          "label": "t:components.button.options.variant.secondary"
+        },
+        {
+          "value": "button--outline",
+          "label": "t:components.button.options.variant.outline"
+        },
+        {
+          "value": "button--ghost",
+          "label": "t:components.button.options.variant.ghost"
+        }
+      ],
+      "default": "button--primary"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:components.button.settings.size.label",
+      "options": [
+        {
+          "value": "button--small",
+          "label": "t:components.button.options.size.small"
+        },
+        {
+          "value": "button--medium",
+          "label": "t:components.button.options.size.medium"
+        },
+        {
+          "value": "button--large",
+          "label": "t:components.button.options.size.large"
+        }
+      ],
+      "default": "button--medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:components.button.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:components.button.settings.icon.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:components.button.options.icon.none"
+        },
+        {
+          "value": "loading",
+          "label": "t:components.button.options.icon.loading"
+        },
+        {
+          "value": "cart",
+          "label": "t:components.button.options.icon.cart"
+        },
+        {
+          "value": "arrow-right",
+          "label": "t:components.button.options.icon.arrow_right"
+        },
+        {
+          "value": "heart",
+          "label": "t:components.button.options.icon.heart"
+        },
+        {
+          "value": "search",
+          "label": "t:components.button.options.icon.search"
+        },
+        {
+          "value": "user",
+          "label": "t:components.button.options.icon.user"
+        },
+        {
+          "value": "check",
+          "label": "t:components.button.options.icon.check"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "icon_position",
+      "label": "t:components.button.settings.icon_position.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:components.button.options.icon_position.left"
+        },
+        {
+          "value": "right",
+          "label": "t:components.button.options.icon_position.right"
+        }
+      ],
+      "default": "left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.button.presets.primary",
+      "settings": {
+        "text": "Button",
+        "variant": "button--primary"
+      }
+    },
+    {
+      "name": "t:components.button.presets.secondary",
+      "settings": {
+        "text": "Button",
+        "variant": "button--secondary"
+      }
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+No block-specific CSS. This block delegates all rendering and styling to the button snippet.
+
+## Related
+
+- [Button Snippet](/developer/snippets/button) — Handles all rendering and styling

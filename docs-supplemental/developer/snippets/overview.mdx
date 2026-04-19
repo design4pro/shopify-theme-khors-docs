@@ -1,0 +1,73 @@
+---
+title: "Snippets Overview"
+description: "Technical guide to Khors Theme snippets"
+---
+
+## What are Snippets?
+
+Snippets are reusable code fragments that can be included in sections, blocks, or other snippets using the `{% render %}` tag.
+
+## LiquidDoc Requirement
+
+All snippets must include a `{% doc %}` header documenting their purpose and parameters:
+
+```liquid
+{% doc %}
+  Description of what this snippet does.
+
+  @param {type} param - Description of parameter
+  @param {type} [optional] - Optional parameter
+
+  @example
+  {% render 'snippet-name', param: value %}
+{% enddoc %}
+```
+
+## Rendering Snippets
+
+```liquid
+{% render 'image',
+  image: product.featured_image,
+  width: 400,
+  lazy: true
+%}
+```
+
+## Available Snippets
+
+### Design System Snippets
+
+| Snippet | File | Description |
+|---------|------|-------------|
+| [Button](/developer/snippets/button) | `button.liquid` | Button with variants and icons |
+| [Icon](/developer/snippets/icon) | `icon.liquid` | SVG icon library (25 icons) |
+| [Image](/developer/snippets/image) | `image.liquid` | Responsive image rendering |
+| [Badge](/developer/snippets/badge) | `badge.liquid` | Product status badges |
+| [Rating](/developer/snippets/rating) | `rating.liquid` | Star rating with partial fill |
+| [Price](/developer/snippets/price) | `price.liquid` | Product pricing display |
+| [Breadcrumb](/developer/snippets/breadcrumb) | `breadcrumb.liquid` | Navigation with Schema.org |
+| [Form Field](/developer/snippets/form-field) | `form-field.liquid` | Universal form input |
+| [Pagination](/developer/snippets/pagination) | `pagination.liquid` | Page navigation |
+| [Placeholder](/developer/snippets/placeholder) | `placeholder.liquid` | Empty state component |
+| [Social Links](/developer/snippets/social-links) | `social-links.liquid` | Social media links |
+| [CSS Variables](/developer/snippets/css-variables) | `css-variables.liquid` | CSS custom properties |
+
+### Header Snippets
+
+| Snippet | File | Description |
+|---------|------|-------------|
+| [Header Logo](/developer/snippets/header-logo) | `header-logo.liquid` | Responsive logo with retina support |
+| [Header Nav](/developer/snippets/header-nav) | `header-nav.liquid` | 3-level desktop menubar + mobile accordion |
+| [Header Nav Dropdown](/developer/snippets/header-nav-dropdown) | `header-nav-dropdown.liquid` | Recursive narrow dropdown helper |
+| [Header Mega Menu](/developer/snippets/header-mega-menu) | `header-mega-menu.liquid` | Full-width dropdown with featured image |
+| [Header Drawer](/developer/snippets/header-drawer) | `header-drawer.liquid` | Mobile slide-in navigation dialog |
+| [Header Search](/developer/snippets/header-search) | `header-search.liquid` | Predictive search overlay |
+| [Header Cart Icon](/developer/snippets/header-cart-icon) | `header-cart-icon.liquid` | Dynamic cart badge with live count |
+
+### Footer Snippets
+
+| Snippet | File | Description |
+|---------|------|-------------|
+| [Footer Newsletter](/developer/snippets/footer-newsletter) | `footer-newsletter.liquid` | Email signup with honeypot protection |
+| [Footer Social](/developer/snippets/footer-social) | `footer-social.liquid` | Social media icon links |
+| [Footer Payment](/developer/snippets/footer-payment) | `footer-payment.liquid` | Payment method SVG icons |

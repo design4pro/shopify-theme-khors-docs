@@ -1,0 +1,153 @@
+---
+title: "Rich Text Section"
+description: "Flexible content section with typography styles and alignment options"
+icon: "align-left"
+---
+
+## Location
+
+`sections/rich-text.liquid`
+
+## Overview
+
+The rich text section provides a flexible canvas for formatted content including headings, paragraphs, lists, links, bold/italic text, and more. It supports three width options and customizable text alignment for versatile page layout creation.
+
+## Architecture
+
+This is a single-field section that renders Shopify's richtext editor output with pre-styled typography hierarchy and spacing.
+
+| Feature | Description |
+|---------|-------------|
+| Content Width | Narrow (800px), Medium (1000px), or Full (page-width) |
+| Text Alignment | Left, Center, or Right |
+| Typography | Styled h2-h6, paragraphs, lists, links |
+| Color Schemes | Light, Dark, or Accent |
+
+## Schema Settings
+
+### Content
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `content` | `richtext` | — | Main content with formatting toolbar |
+
+### Layout
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `width` | `select` | `medium` | `narrow` (800px), `medium` (1000px), `full` (page-width) |
+| `text_alignment` | `select` | `left` | `left`, `center`, `right` |
+
+### Style
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `color_scheme` | `select` | `light` | `light`, `dark`, `accent` |
+
+### Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `padding_top` | `range` | `60` | Top padding 0–100px, step 4 |
+| `padding_bottom` | `range` | `60` | Bottom padding 0–100px, step 4 |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.rich-text-section` | Root section with color scheme |
+| `.rich-text-section__container` | Width-constrained container |
+| `.rich-text-section__container--{width}` | Width modifier (narrow/medium/full) |
+| `.rich-text-section__content` | Typography wrapper |
+| `.rich-text-section__content--{alignment}` | Text alignment modifier |
+| `.rich-text-section__placeholder` | Empty state message |
+
+## Typography Hierarchy
+
+All heading and text elements inside `.rich-text-section__content` are automatically styled:
+
+| Element | Mobile Size | Desktop Size | Weight | Notes |
+|---------|-------------|--------------|--------|-------|
+| `h2` | 2xl | 3xl | Semibold | Primary heading |
+| `h3` | xl | 2xl | Semibold | Subheading |
+| `h4` | lg | xl | Semibold | Tertiary heading |
+| `h5` | base | lg | Semibold | Minor heading |
+| `h6` | sm | base | Semibold | Uppercase, letterspaced |
+| `p` | base | lg | Normal | Body text |
+| `a` | base | lg | Normal | Accent color, underline on hover |
+| `ul/ol` | base | lg | Normal | Disc/decimal markers |
+
+Spacing follows a consistent vertical rhythm with CSS custom properties.
+
+## Supported Rich Text Features
+
+The Shopify richtext editor supports:
+
+- **Headings**: H2, H3, H4, H5, H6
+- **Text formatting**: Bold, italic, underline
+- **Links**: Internal and external
+- **Lists**: Ordered (numbered) and unordered (bulleted)
+- **Alignment**: Left, center, right (controlled by section setting, not editor)
+
+<Note>
+H1 is intentionally excluded to preserve semantic page hierarchy. Use H2 as the top-level heading within rich text sections.
+</Note>
+
+## Width Options
+
+| Width | Max Width | Use Case |
+|-------|-----------|----------|
+| Narrow | 800px | Long-form reading (blog-style content) |
+| Medium | 1000px | Balanced content (about pages, policies) |
+| Full | Page width (1280px) | Full-bleed content or multi-column layouts |
+
+## Responsive Behavior
+
+- Container padding: 16px (mobile) → 24px (tablet) → 32px (desktop)
+- Heading sizes scale up on tablet+ viewports
+- Link underlines appear on hover (desktop) or always visible (mobile)
+- Lists maintain comfortable padding-left for readability
+
+## Empty State
+
+If no content is provided, displays placeholder text: "Add content using the richtext editor."
+
+## Accessibility
+
+- Section includes `role="region"` with translated `aria-label`
+- Typography hierarchy uses semantic HTML (h2-h6, p, ul, ol)
+- Links have sufficient color contrast and visible focus states
+- Line height set to `--line-height-relaxed` (1.7) for readability
+- `prefers-reduced-motion` respected for link transitions
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="About Page Story">
+    Use Medium width with Left alignment for narrative content. Combine with image-with-text sections for visual interest.
+  </Accordion>
+
+  <Accordion title="Policy Pages">
+    Use Narrow width for maximum readability of long legal text. Left alignment recommended.
+  </Accordion>
+
+  <Accordion title="Landing Page Hero Text">
+    Use Full width with Center alignment for promotional messaging. Pair with custom color scheme.
+  </Accordion>
+
+  <Accordion title="Product Details">
+    Use Medium width with Left alignment for care instructions, sizing guides, or material descriptions.
+  </Accordion>
+</AccordionGroup>
+
+## Performance
+
+- Zero JavaScript required
+- CSS scoped to `@layer components`
+- Total CSS: ~250 lines, <3KB gzipped
+- No external dependencies
+
+## Related
+
+- [Image with Text](/developer/sections/image-with-text) — Combine rich text with imagery
+- [Custom Section](/developer/sections/custom-section) — Build custom layouts with blocks

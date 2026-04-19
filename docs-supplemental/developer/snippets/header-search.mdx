@@ -1,0 +1,107 @@
+---
+title: "Header Search"
+description: "Predictive search overlay with Shopify Search API and keyboard navigation"
+icon: "search"
+---
+
+## Location
+
+`snippets/header-search.liquid` (597 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a predictive search overlay with Shopify Predictive Search API integration.
+  Supports products, collections, pages, and articles with keyboard navigation.
+
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'header-search' %}
+```
+
+## Architecture
+
+The search component is a full-screen overlay with three states:
+
+1. **Hidden** — Default (`hidden` attribute)
+2. **Open with input** — Triggered by `[data-header-search-toggle]` buttons
+3. **Showing results** — After 2+ characters typed (300ms debounce)
+
+### API Integration
+
+Uses the Shopify Predictive Search API:
+
+```
+/search/suggest.json?q={query}&resources[type]=product,collection,page,article&resources[limit]=4
+```
+
+Results are cached in a `Map` per session. AbortController cancels in-flight requests on new input.
+
+### ARIA Combobox Pattern
+
+```html
+<div role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="predictive-search-results">
+  <input aria-autocomplete="list" aria-controls="predictive-search-results">
+</div>
+<div id="predictive-search-results" role="listbox">
+  <a role="option" aria-selected="false">...</a>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.predictive-search` | Full-screen overlay (fixed, z-index 100) |
+| `.predictive-search__overlay` | Semi-transparent backdrop |
+| `.predictive-search__panel` | Content panel with shadow (max 80vh) |
+| `.predictive-search__inner` | Page-width container |
+| `.predictive-search__input-wrap` | Input container with border and focus ring |
+| `.predictive-search__icon` | Search icon (secondary color) |
+| `.predictive-search__input` | Text input (no native border/outline) |
+| `.predictive-search__close` | Close button (32×32px) |
+| `.predictive-search__results` | Results container |
+| `.predictive-search__group` | Result type group |
+| `.predictive-search__group-title` | Group heading (uppercase, xs) |
+| `.predictive-search__item` | Result link with hover/selected state |
+| `.predictive-search__item-image` | Product thumbnail (48×48px) |
+| `.predictive-search__item-title` | Result title (ellipsis) |
+| `.predictive-search__item-price` | Product price |
+| `.predictive-search__view-all` | "View all results" link |
+| `.predictive-search__loading` | Spinner container |
+| `.predictive-search__spinner` | CSS-only rotating spinner |
+| `.predictive-search__no-results` | Empty state message |
+
+## JavaScript
+
+The `PredictiveSearch` class (inline via `{% javascript %}`) provides:
+
+- **Open/close**: Toggle via `[data-header-search-toggle]`, close via overlay/button/Escape
+- **Debounced search**: 300ms delay, minimum 2 characters
+- **Result caching**: `Map`-based cache prevents redundant API calls
+- **Request cancellation**: `AbortController` aborts previous request on new input
+- **Keyboard navigation**: Arrow Up/Down to navigate results, Enter to select
+- **Result rendering**: DOM creation for 4 resource types with images and prices
+- **Scroll lock**: `scroll-lock` class on body when open
+- **Focus management**: Auto-focus input on open, return to toggle on close
+- **Private fields**: `#input`, `#results`, `#cache`, `#controller`, `#selectedIndex`, etc.
+
+## Accessibility
+
+- ARIA combobox pattern with `role="combobox"`, `role="listbox"`, `role="option"`
+- `aria-expanded`, `aria-autocomplete="list"`, `aria-controls` linkage
+- `aria-selected` on active result item
+- Visually hidden label for search input
+- Escape key closes overlay
+- `focus-visible` outlines on all interactive elements
+- `prefers-reduced-motion` disables transitions and spinner animation
+
+## Related
+
+- [Header Section](/developer/sections/header) — Parent section

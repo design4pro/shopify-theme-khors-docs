@@ -1,0 +1,79 @@
+---
+title: "Footer Social Links"
+description: "Social media icon links from global theme settings"
+icon: "share-2"
+---
+
+## Location
+
+`snippets/footer-social.liquid` (91 lines)
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders social media icon links based on global theme settings.
+  Only displays platforms with non-blank URLs.
+
+  @param {string} [class] - Additional CSS classes to append
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% render 'footer-social' %}
+```
+
+## Supported Platforms
+
+The snippet checks 8 global theme settings:
+
+| Platform | Setting Key |
+|----------|------------|
+| Facebook | `settings.social_facebook_link` |
+| Twitter/X | `settings.social_twitter_link` |
+| Instagram | `settings.social_instagram_link` |
+| TikTok | `settings.social_tiktok_link` |
+| YouTube | `settings.social_youtube_link` |
+| Pinterest | `settings.social_pinterest_link` |
+| LinkedIn | `settings.social_linkedin_link` |
+| Snapchat | `settings.social_snapchat_link` |
+
+Only platforms with non-blank URLs are rendered. If no platform has a URL, the entire component is hidden.
+
+## Generated Output
+
+```html
+<ul class="footer-social" role="list" aria-label="Social media links">
+  <li class="footer-social__item">
+    <a href="https://instagram.com/..." class="footer-social__link"
+      aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+      <!-- instagram SVG icon -->
+    </a>
+  </li>
+</ul>
+```
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.footer-social` | Flex-wrap list container |
+| `.footer-social__item` | List item |
+| `.footer-social__link` | Icon link (44×44px min, circular) |
+
+## Accessibility
+
+- `role="list"` with `aria-label` translation key
+- Individual `aria-label` per platform with translation key
+- `target="_blank"` with `rel="noopener noreferrer"`
+- 44×44px minimum touch target
+- `focus-visible` outline
+- `prefers-reduced-motion` disables transitions
+
+## Related
+
+- [Footer Section](/developer/sections/footer) — Parent section
+- [Icon Snippet](/developer/snippets/icon) — Platform SVG icons
+- [Social Links Snippet](/developer/snippets/social-links) — Alternative social component

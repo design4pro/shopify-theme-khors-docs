@@ -1,0 +1,257 @@
+---
+title: "Form Field Snippet"
+description: "Technical documentation for form-field.liquid snippet"
+icon: "text-cursor-input"
+---
+
+## Location
+
+`snippets/form-field.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a universal form field wrapper supporting text inputs, textarea, and select elements
+  with built-in label, validation states, help text, and accessibility features.
+
+  @param {string} type - Field type: 'text', 'email', 'password', 'number', 'tel', 'textarea', 'select' (required)
+  @param {string} name - Field name attribute (required)
+  @param {string} id - Field id attribute (required for label association)
+  @param {string} label - Label text displayed above the field (required)
+  @param {string} [value] - Current field value (pre-fills the input)
+  @param {string} [placeholder] - Placeholder text shown when field is empty
+  @param {boolean} [required] - Marks field as required (default: false)
+  @param {boolean} [disabled] - Disables field interaction (default: false)
+  @param {string} [state] - Validation state: 'error', 'success' (default: none)
+  @param {string} [error_message] - Error message text shown when state is 'error'
+  @param {string} [help_text] - Help text shown below the field
+  @param {string} [autocomplete] - Autocomplete attribute value (e.g., 'email', 'tel', 'off')
+  @param {number} [rows] - Number of rows for textarea (default: 4)
+  @param {string} [class] - Additional CSS classes to append to wrapper
+  @param {string} [input_class] - Additional CSS classes to append to input element
+  @param {number} [min] - Minimum value for number input
+  @param {number} [max] - Maximum value for number input
+  @param {number} [step] - Step value for number input
+  @param {number} [maxlength] - Maximum character length
+  @param {string} [pattern] - Regex pattern for validation
+  @param {string} [select_options] - For select type: Pipe-separated options 'value1:Label 1|value2:Label 2'
+
+  @example Text input
+    {% render 'form-field',
+      type: 'text',
+      name: 'customer[first_name]',
+      id: 'first-name',
+      label: 'First name',
+      required: true
+    %}
+
+  @example Email with help text
+    {% render 'form-field',
+      type: 'email',
+      name: 'contact[email]',
+      id: 'contact-email',
+      label: 'Email address',
+      placeholder: 'you@example.com',
+      help_text: 'We will never share your email',
+      autocomplete: 'email',
+      required: true
+    %}
+
+  @example Textarea
+    {% render 'form-field',
+      type: 'textarea',
+      name: 'contact[message]',
+      id: 'contact-message',
+      label: 'Your message',
+      rows: 6,
+      required: true
+    %}
+
+  @example Select dropdown
+    {% render 'form-field',
+      type: 'select',
+      name: 'contact[subject]',
+      id: 'contact-subject',
+      label: 'Subject',
+      select_options: ':Choose a subject|order:Order inquiry|product:Product question',
+      required: true
+    %}
+
+  @example Error state
+    {% render 'form-field',
+      type: 'email',
+      name: 'email',
+      id: 'email-field',
+      label: 'Email',
+      value: 'invalid-email',
+      state: 'error',
+      error_message: 'Please enter a valid email address',
+      required: true
+    %}
+
+  @example Success state
+    {% render 'form-field',
+      type: 'text',
+      name: 'username',
+      id: 'username-field',
+      label: 'Username',
+      value: 'johndoe',
+      state: 'success',
+      required: true
+    %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Text input with required field {% endcomment %}
+{% render 'form-field',
+  type: 'text',
+  name: 'customer[first_name]',
+  id: 'first-name',
+  label: 'First name',
+  required: true
+%}
+
+{% comment %} Email with help text and autocomplete {% endcomment %}
+{% render 'form-field',
+  type: 'email',
+  name: 'contact[email]',
+  id: 'contact-email',
+  label: 'Email address',
+  placeholder: 'you@example.com',
+  help_text: 'We will never share your email',
+  autocomplete: 'email',
+  required: true
+%}
+
+{% comment %} Textarea for message body {% endcomment %}
+{% render 'form-field',
+  type: 'textarea',
+  name: 'contact[message]',
+  id: 'contact-message',
+  label: 'Your message',
+  rows: 6,
+  required: true
+%}
+
+{% comment %} Select dropdown with pipe-separated options {% endcomment %}
+{% render 'form-field',
+  type: 'select',
+  name: 'contact[subject]',
+  id: 'contact-subject',
+  label: 'Subject',
+  select_options: ':Choose a subject|order:Order inquiry|product:Product question',
+  required: true
+%}
+
+{% comment %} Error state with message {% endcomment %}
+{% render 'form-field',
+  type: 'email',
+  name: 'email',
+  id: 'email-field',
+  label: 'Email',
+  value: 'invalid-email',
+  state: 'error',
+  error_message: 'Please enter a valid email address',
+  required: true
+%}
+```
+
+## Generated Output
+
+Text input:
+
+```html
+<div class="form-field">
+  <label class="form-field__label" for="first-name">
+    First name
+    <span class="form-field__required" aria-label="Required">*</span>
+  </label>
+  <input type="text" class="form-field__input" id="first-name" name="customer[first_name]" required aria-required="true">
+</div>
+```
+
+Email with help text:
+
+```html
+<div class="form-field">
+  <label class="form-field__label" for="contact-email">
+    Email address
+    <span class="form-field__required" aria-label="Required">*</span>
+  </label>
+  <input
+    type="email"
+    class="form-field__input"
+    id="contact-email"
+    name="contact[email]"
+    placeholder="you@example.com"
+    required
+    aria-required="true"
+    aria-describedby="contact-email-help"
+    autocomplete="email"
+  >
+  <p class="form-field__help" id="contact-email-help">
+    We will never share your email
+  </p>
+</div>
+```
+
+Error state:
+
+```html
+<div class="form-field form-field--error">
+  <label class="form-field__label" for="email-field">
+    Email
+    <span class="form-field__required" aria-label="Required">*</span>
+  </label>
+  <input
+    type="email"
+    class="form-field__input form-field__input--error"
+    id="email-field"
+    name="email"
+    value="invalid-email"
+    required
+    aria-required="true"
+    aria-invalid="true"
+    aria-describedby="email-field-error"
+  >
+  <p class="form-field__error" id="email-field-error" role="alert">
+    <!-- alert-circle SVG -->
+    <span>Please enter a valid email address</span>
+  </p>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|---|---|
+| `.form-field` | Wrapper component |
+| `.form-field--error` | Error state modifier |
+| `.form-field--success` | Success state modifier |
+| `.form-field--disabled` | Disabled state modifier |
+| `.form-field__label` | Label element |
+| `.form-field__required` | Required asterisk |
+| `.form-field__input` | Input/textarea/select element |
+| `.form-field__input--error` | Error border |
+| `.form-field__input--success` | Success border |
+| `.form-field__help` | Help text |
+| `.form-field__error` | Error message with icon |
+| `.form-field__success` | Success message with icon |
+
+## Accessibility
+
+- `<label>` with `for` attribute links to the input `id` for click-to-focus behavior
+- `aria-required="true"` on required fields communicates required state to screen readers
+- `aria-invalid="true"` on error state fields signals validation failure
+- `aria-describedby` links help text and error messages to the input for contextual announcements
+- `role="alert"` on error messages triggers immediate screen reader announcements
+- `aria-live="polite"` on success messages for non-intrusive screen reader updates
+- Required asterisk uses `aria-label` to announce "Required" instead of the visual `*` character
+
+## Related
+
+No blocks use this snippet directly. Used by cart, contact, login, and account sections for form inputs.

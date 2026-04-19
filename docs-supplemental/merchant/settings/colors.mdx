@@ -1,0 +1,318 @@
+---
+title: "Colors"
+description: "Customize your store's color palette"
+---
+
+<Info>
+  Access: **Shopify Admin > Online Store > Themes > Customize > Theme Settings > Colors**
+</Info>
+
+## Color Schemes
+
+The Khors theme offers **three color schemes** that you can assign to different sections on the page. Each color scheme contains a complete set of colors for backgrounds, text, accents, and borders.
+
+### Available Schemes
+
+<Tabs>
+  <Tab title="Light">
+    **Light scheme** - ideal for standard sections with light backgrounds.
+
+    Most commonly used as the main store color scheme.
+
+    **Default colors:**
+
+    <Color variant="table">
+      <Color.Row title="Light Scheme Defaults">
+        <Color.Item name="Background" value="#FFFFFF" />
+        <Color.Item name="Foreground" value="#121212" />
+        <Color.Item name="Background 2" value="#F5F5F5" />
+        <Color.Item name="Foreground 2" value="#666666" />
+        <Color.Item name="Accent" value="#0066CC" />
+        <Color.Item name="Border" value="#E5E5E5" />
+      </Color.Row>
+    </Color>
+  </Tab>
+  <Tab title="Dark">
+    **Dark scheme** - perfect for sections requiring contrast.
+
+    Use for sections like banners, testimonials, or footers to create visual depth.
+
+    **Default colors:**
+
+    <Color variant="table">
+      <Color.Row title="Dark Scheme Defaults">
+        <Color.Item name="Background" value="#121212" />
+        <Color.Item name="Foreground" value="#FFFFFF" />
+        <Color.Item name="Background 2" value="#1E1E1E" />
+        <Color.Item name="Foreground 2" value="#CCCCCC" />
+        <Color.Item name="Accent" value="#4D94FF" />
+        <Color.Item name="Border" value="#333333" />
+      </Color.Row>
+    </Color>
+  </Tab>
+  <Tab title="Accent">
+    **Accent scheme** - for sections requiring special attention.
+
+    Ideal for CTA (Call-to-Action) sections, promotions, sales banners.
+
+    **Default colors:**
+
+    <Color variant="table">
+      <Color.Row title="Accent Scheme Defaults">
+        <Color.Item name="Background" value="#0066CC" />
+        <Color.Item name="Foreground" value="#FFFFFF" />
+        <Color.Item name="Background 2" value="#0052A3" />
+        <Color.Item name="Foreground 2" value="#E6F2FF" />
+        <Color.Item name="Accent" value="#FFD700" />
+        <Color.Item name="Border" value="#004080" />
+      </Color.Row>
+    </Color>
+  </Tab>
+</Tabs>
+
+### Color Variables in Schemes
+
+Each color scheme consists of **6 color variables**:
+
+| Variable | Purpose | Example usage |
+|---------|---------------|-----------------|
+| **Background** | Main section background | Section or card background |
+| **Foreground** | Main text color | Headings, primary text |
+| **Background 2** | Secondary background | Card backgrounds within sections, form fields |
+| **Foreground 2** | Secondary text | Descriptions, helper text, metadata |
+| **Accent** | Accent color | Buttons, links, highlight icons |
+| **Border** | Border color | Separators, card borders, inputs |
+
+### How to Change Scheme Colors
+
+1. Open **Shopify Admin > Online Store > Themes**
+2. Click **Customize** on your theme
+3. In the left panel, click **Theme Settings** (gear icon)
+4. Go to the **Colors** section
+5. Select the scheme you want to edit (Light, Dark, or Accent)
+6. Change colors for each variable:
+   - **Background** - main background
+   - **Foreground** - main text
+   - **Background 2** - secondary background
+   - **Foreground 2** - secondary text
+   - **Accent** - accent color
+   - **Border** - borders
+7. Click **Save** to save changes
+
+<Info>
+  Changes to the color scheme will automatically update **all sections** using that scheme.
+</Info>
+
+### Assigning a Scheme to Sections
+
+Most sections in the Khors theme allow you to choose a color scheme:
+
+1. In the Theme Customizer, click the section you want to edit
+2. Find the **"Color scheme"** setting
+3. Select one of three schemes:
+   - **Light** - light background
+   - **Dark** - dark background
+   - **Accent** - accent background
+4. The preview will change immediately
+
+## Best Practices
+
+### Contrast and Readability
+
+<Warning>
+  Ensure that the contrast between text and background is sufficient (min. 4.5:1 for normal text) to meet WCAG 2.1 accessibility standards.
+</Warning>
+
+**Contrast checking tools:**
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- Chrome DevTools - Lighthouse Accessibility Audit
+
+### Branding Consistency
+
+- Use brand colors in color schemes
+- **Light scheme** - use most frequently (80-90% of sections)
+- **Dark scheme** - use for contrast (10-15% of sections)
+- **Accent scheme** - use sparingly for key CTAs (5% of sections)
+
+### Visual Hierarchy
+
+```
+Hero Section (Light)
+  ↓
+Features (Light)
+  ↓
+Testimonial (Dark) ← Contrast
+  ↓
+Products (Light)
+  ↓
+Newsletter CTA (Accent) ← Attention!
+  ↓
+Footer (Dark)
+```
+
+## Industry Tips
+
+<Tabs>
+  <Tab title="Fashion">
+    **Palette:** Neutral tones with bold accents
+
+    **Light Scheme:**
+    - Background: Light beige or off-white (#F8F8F6)
+    - Foreground: Deep charcoal (#2B2B2B)
+    - Accent: Gold or deep burgundy (#B8860B, #8B0000)
+
+    **Dark Scheme:**
+    - Background: Black or dark navy (#0A0A0A, #1A1A2E)
+    - Accent: Metallic gold (#D4AF37)
+
+    <Color variant="compact">
+      <Color.Item name="Light BG" value="#F8F8F6" />
+      <Color.Item name="Charcoal" value="#2B2B2B" />
+      <Color.Item name="Gold" value="#B8860B" />
+      <Color.Item name="Dark BG" value="#0A0A0A" />
+      <Color.Item name="Metallic Gold" value="#D4AF37" />
+    </Color>
+
+    **When to use:** Dark scheme for hero banners and lookbooks, Accent for seasonal promotions.
+  </Tab>
+  <Tab title="Beauty">
+    **Palette:** Soft pastels and rose gold
+
+    **Light Scheme:**
+    - Background: Light pink or peach (#FFF5F7, #FFE5E8)
+    - Foreground: Warm brown (#5D4037)
+    - Accent: Rose gold or coral (#B76E79, #FF6B6B)
+
+    **Dark Scheme:**
+    - Background: Deep plum (#3E2723)
+    - Foreground: Light pink (#FFE5E8)
+    - Accent: Golden rose (#E6B8AF)
+
+    <Color variant="compact">
+      <Color.Item name="Light Pink" value="#FFF5F7" />
+      <Color.Item name="Warm Brown" value="#5D4037" />
+      <Color.Item name="Rose Gold" value="#B76E79" />
+      <Color.Item name="Deep Plum" value="#3E2723" />
+      <Color.Item name="Peach" value="#FFE5E8" />
+      <Color.Item name="Golden Rose" value="#E6B8AF" />
+    </Color>
+
+    **When to use:** Light scheme as primary, Dark for luxury collections, Accent for new products.
+  </Tab>
+  <Tab title="Electro">
+    **Palette:** Dark backgrounds with vibrant tech accents
+
+    **Light Scheme:**
+    - Background: Light gray (#F5F5F7)
+    - Foreground: Almost black (#1D1D1F)
+    - Accent: Electric blue (#007AFF)
+
+    **Dark Scheme:**
+    - Background: Deep charcoal (#1C1C1E)
+    - Foreground: White (#FFFFFF)
+    - Accent: Neon blue or cyan (#00D9FF)
+
+    <Color variant="compact">
+      <Color.Item name="Light Gray" value="#F5F5F7" />
+      <Color.Item name="Almost Black" value="#1D1D1F" />
+      <Color.Item name="Electric Blue" value="#007AFF" />
+      <Color.Item name="Deep Charcoal" value="#1C1C1E" />
+      <Color.Item name="White" value="#FFFFFF" />
+      <Color.Item name="Neon Cyan" value="#00D9FF" />
+    </Color>
+
+    **When to use:** Dark scheme as primary (tech-forward look), Light for product specs, Accent for new releases and promotions.
+  </Tab>
+</Tabs>
+
+## Example Combinations
+
+### Combination 1: Minimalist (Fashion)
+
+<Color variant="table">
+  <Color.Row title="Light Scheme">
+    <Color.Item name="Background" value="#FFFFFF" />
+    <Color.Item name="Foreground" value="#000000" />
+    <Color.Item name="Accent" value="#C4A962" />
+  </Color.Row>
+  <Color.Row title="Dark Scheme">
+    <Color.Item name="Background" value="#000000" />
+    <Color.Item name="Foreground" value="#FFFFFF" />
+    <Color.Item name="Accent" value="#C4A962" />
+  </Color.Row>
+</Color>
+
+### Combination 2: Fresh (Beauty)
+
+<Color variant="table">
+  <Color.Row title="Light Scheme">
+    <Color.Item name="Background" value="#FFF9F5" />
+    <Color.Item name="Foreground" value="#5D4037" />
+    <Color.Item name="Accent" value="#F06292" />
+  </Color.Row>
+  <Color.Row title="Dark Scheme">
+    <Color.Item name="Background" value="#4A2C2A" />
+    <Color.Item name="Foreground" value="#FFF9F5" />
+    <Color.Item name="Accent" value="#FFB6C1" />
+  </Color.Row>
+</Color>
+
+### Combination 3: Futuristic (Electro)
+
+<Color variant="table">
+  <Color.Row title="Light Scheme">
+    <Color.Item name="Background" value="#F5F5F7" />
+    <Color.Item name="Foreground" value="#1D1D1F" />
+    <Color.Item name="Accent" value="#0071E3" />
+  </Color.Row>
+  <Color.Row title="Dark Scheme">
+    <Color.Item name="Background" value="#1D1D1F" />
+    <Color.Item name="Foreground" value="#F5F5F7" />
+    <Color.Item name="Accent" value="#00D9FF" />
+  </Color.Row>
+</Color>
+
+## Advanced Tips
+
+### Accent Color for Buttons
+
+The **Accent** color in each scheme is used for:
+- "Add to Cart" buttons
+- Links in text
+- Interactive icons
+- Hover states
+
+Choose a color that is clearly visible and encourages action.
+
+### Background 2 for Depth
+
+Use **Background 2** to create subtle visual hierarchy:
+- Product cards on section backgrounds
+- Form fields
+- Quotes and testimonials
+- Sections within sections
+
+The difference between Background and Background 2 should be subtle (5-10% brightness difference).
+
+### Foreground 2 for Text Hierarchy
+
+**Foreground 2** (secondary text) should be:
+- 60-70% opacity relative to Foreground
+- Still readable (min. 4.5:1 contrast ratio)
+- Used for: prices (crossed out), dates, metadata, short descriptions
+
+## Testing Schemes
+
+Before finalizing color schemes:
+
+1. **Check on mobile devices** - colors look different on small screens
+2. **Test in different lighting** - bright sunlight vs. dark room
+3. **Check accessibility** - use Lighthouse Audit in Chrome DevTools
+4. **Compare with competitors** - ensure you stand out positively
+5. **Gather feedback** - ask your team/customers for opinions
+
+## More Information
+
+- [CSS Variables Guide](/developer/styling/css-variables) - Technical implementation details
+- [Typography Settings](/merchant/settings/typography) - Match fonts to colors
+- [Presets](/merchant/presets) - See example industry configurations

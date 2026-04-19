@@ -1,0 +1,124 @@
+---
+title: "Icon Snippet"
+description: "Technical documentation for icon.liquid snippet"
+icon: "star"
+---
+
+## Location
+
+`snippets/icon.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders an SVG icon from a predefined library of 25 icons.
+  Supports 5 sizes, accessibility attributes, and inherits color from parent context.
+
+  @param {string} name - Icon name (required): 'cart', 'search', 'user', 'heart', 'star', 'check', 'check-circle', 'menu', 'close', 'chevron-down', 'chevron-left', 'chevron-right', 'arrow-right', 'plus', 'minus', 'info', 'alert-circle', 'facebook', 'twitter', 'instagram', 'tiktok', 'youtube', 'pinterest', 'linkedin', 'snapchat'
+  @param {string} [size] - Size modifier: 'icon--16', 'icon--20', 'icon--24', 'icon--32', 'icon--48' (default: 'icon--20')
+  @param {string} [class] - Additional CSS classes to append
+  @param {string} [aria_label] - Custom ARIA label for accessible icons (if provided, sets role="img")
+  @param {boolean} [decorative] - Whether icon is decorative only (default: true, sets aria-hidden="true")
+
+  @example Basic icon
+    {% render 'icon', name: 'cart' %}
+
+  @example Large icon
+    {% render 'icon', name: 'search', size: 'icon--32' %}
+
+  @example Accessible icon with label
+    {% render 'icon', name: 'heart', aria_label: 'Add to wishlist', decorative: false %}
+
+  @example Icon with custom class
+    {% render 'icon', name: 'check', class: 'success-icon', size: 'icon--24' %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Basic icon {% endcomment %}
+{% render 'icon', name: 'cart' %}
+
+{% comment %} Large icon {% endcomment %}
+{% render 'icon', name: 'search', size: 'icon--32' %}
+
+{% comment %} Accessible icon with label {% endcomment %}
+{% render 'icon', name: 'heart', aria_label: 'Add to wishlist', decorative: false %}
+
+{% comment %} Icon with custom class {% endcomment %}
+{% render 'icon', name: 'check', class: 'success-icon', size: 'icon--24' %}
+```
+
+## Generated Output
+
+```html
+<span class="icon icon--20" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+    <!-- SVG path -->
+  </svg>
+</span>
+```
+
+Accessible icon with label:
+
+```html
+<span class="icon icon--24" role="img" aria-label="Add to wishlist">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+    <!-- SVG path -->
+  </svg>
+</span>
+```
+
+## Available Icons
+
+| Icon | Name |
+|------|------|
+| Cart | `cart` |
+| Search | `search` |
+| User | `user` |
+| Heart | `heart` |
+| Star | `star` |
+| Check | `check` |
+| Check Circle | `check-circle` |
+| Menu | `menu` |
+| Close | `close` |
+| Chevron Down | `chevron-down` |
+| Chevron Left | `chevron-left` |
+| Chevron Right | `chevron-right` |
+| Arrow Right | `arrow-right` |
+| Plus | `plus` |
+| Minus | `minus` |
+| Info | `info` |
+| Alert Circle | `alert-circle` |
+| Facebook | `facebook` |
+| Twitter/X | `twitter` |
+| Instagram | `instagram` |
+| TikTok | `tiktok` |
+| YouTube | `youtube` |
+| Pinterest | `pinterest` |
+| LinkedIn | `linkedin` |
+| Snapchat | `snapchat` |
+
+## CSS Classes
+
+| Class | Description |
+|-------|-------------|
+| `.icon` | Base component (inline-flex, inherits color) |
+| `.icon--16` | 16px size |
+| `.icon--20` | 20px size (default) |
+| `.icon--24` | 24px size |
+| `.icon--32` | 32px size |
+| `.icon--48` | 48px size |
+
+## Accessibility
+
+- Decorative icons (default): `aria-hidden="true"` hides from screen readers
+- Semantic icons: `role="img"` with `aria-label` when `aria_label` is provided
+- Inherits color from parent element via `currentColor`
+- Social icons use `fill="currentColor"` while UI icons use `stroke="currentColor"`
+
+## Related
+
+- [Icon Block](/developer/blocks/icon) -- Theme Editor wrapper

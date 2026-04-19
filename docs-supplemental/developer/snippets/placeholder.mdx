@@ -1,0 +1,140 @@
+---
+title: "Placeholder Snippet"
+description: "Technical documentation for placeholder.liquid snippet"
+icon: "square-dashed-bottom-code"
+---
+
+## Location
+
+`snippets/placeholder.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders an empty state placeholder component with configurable icon, message, and action button.
+  Supports four predefined types with default content, or fully customizable generic state.
+
+  @param {string} [type] - Placeholder type: 'empty-cart', 'no-products', 'no-results', 'generic' (default: 'generic')
+  @param {string} [icon] - Icon name from icon system (defaults based on type: cart, info, search, info)
+  @param {string} [icon_size] - Icon size modifier: 'icon--16', 'icon--20', 'icon--24', 'icon--32', 'icon--48' (default: 'icon--48')
+  @param {string} [heading] - Heading text (defaults based on type, uses translation keys)
+  @param {string} [message] - Message text (defaults based on type, uses translation keys)
+  @param {string} [button_text] - Call-to-action button text (optional)
+  @param {string} [button_url] - Call-to-action button URL (optional, required if button_text provided)
+  @param {string} [button_variant] - Button style variant (default: 'button--primary')
+  @param {string} [class] - Additional CSS classes to append
+
+  @example Empty cart with defaults
+    {% render 'placeholder', type: 'empty-cart' %}
+
+  @example No products found
+    {% render 'placeholder', type: 'no-products' %}
+
+  @example No search results with custom button
+    {% render 'placeholder',
+      type: 'no-results',
+      button_text: 'Browse collections',
+      button_url: '/collections'
+    %}
+
+  @example Generic placeholder with custom icon and message
+    {% render 'placeholder',
+      icon: 'heart',
+      heading: 'No favorites yet',
+      message: 'Start adding products to your wishlist.'
+    %}
+
+  @example Full configuration
+    {% render 'placeholder',
+      type: 'generic',
+      icon: 'star',
+      icon_size: 'icon--32',
+      heading: 'No reviews',
+      message: 'Be the first to review this product.',
+      button_text: 'Write a review',
+      button_url: '#reviews',
+      button_variant: 'button--secondary',
+      class: 'custom-placeholder'
+    %}
+{% enddoc %}
+```
+
+## Usage
+
+```liquid
+{% comment %} Empty cart with type defaults {% endcomment %}
+{% render 'placeholder', type: 'empty-cart' %}
+
+{% comment %} No search results with CTA button {% endcomment %}
+{% render 'placeholder',
+  type: 'no-results',
+  button_text: 'Browse collections',
+  button_url: '/collections'
+%}
+
+{% comment %} Custom placeholder with icon and message {% endcomment %}
+{% render 'placeholder',
+  icon: 'heart',
+  heading: 'No favorites yet',
+  message: 'Start adding products to your wishlist.'
+%}
+
+{% comment %} Full configuration with all options {% endcomment %}
+{% render 'placeholder',
+  type: 'generic',
+  icon: 'star',
+  icon_size: 'icon--32',
+  heading: 'No reviews',
+  message: 'Be the first to review this product.',
+  button_text: 'Write a review',
+  button_url: '#reviews',
+  button_variant: 'button--secondary',
+  class: 'custom-placeholder'
+%}
+```
+
+## Generated Output
+
+```html
+<div class="placeholder placeholder--empty-cart">
+  <div class="placeholder__content">
+    <div class="placeholder__icon">
+      <!-- cart icon SVG -->
+    </div>
+    <h2 class="placeholder__heading">Your cart is empty</h2>
+    <p class="placeholder__message">Looks like you haven't added anything yet.</p>
+    <div class="placeholder__button">
+      <a class="button button--primary button--medium" href="/collections/all">
+        <span class="button__text">Browse collections</span>
+      </a>
+    </div>
+  </div>
+</div>
+```
+
+## CSS Classes
+
+| Class | Description |
+|---|---|
+| `.placeholder` | Base container (centered flex, min-height 400px) |
+| `.placeholder--empty-cart` | Cart empty state (accent icon color, 0.8 opacity) |
+| `.placeholder--no-products` | No products state |
+| `.placeholder--no-results` | No results state (0.5 icon opacity) |
+| `.placeholder--generic` | Generic empty state |
+| `.placeholder__content` | Content wrapper (centered column) |
+| `.placeholder__icon` | Icon area |
+| `.placeholder__heading` | Heading text |
+| `.placeholder__message` | Description text |
+| `.placeholder__button` | CTA button container |
+
+4 predefined types: `empty-cart`, `no-products`, `no-results`, `generic`. Each type provides default icon, heading, and message values through translation keys. Custom values override type defaults.
+
+## Accessibility
+
+The placeholder component relies on semantic HTML for accessibility. The heading uses an `<h2>` element and the message uses a `<p>` element, providing a clear content hierarchy. The CTA button is rendered via the [Button Snippet](/developer/snippets/button), which handles its own accessibility attributes.
+
+## Related
+
+- Uses [Button Snippet](/developer/snippets/button) for CTA
+- Uses [Icon Snippet](/developer/snippets/icon) for state icons

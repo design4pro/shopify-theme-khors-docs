@@ -1,0 +1,61 @@
+---
+title: "Text Block"
+description: "Technical documentation for text.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/text.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Renders a rich text content block with optional heading.
+
+  @param {richtext} content - The rich text content to display
+  @param {text} [heading] - Optional heading above content
+
+  @example
+  {% content_for 'block', type: 'text', id: 'text-block' %}
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:blocks.text.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:labels.content"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "left",
+      "label": "t:labels.text_align"
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.block-text` - Main container
+- `.block-text__heading` - Heading element
+- `.block-text__content` - Content wrapper
+- `.block-text--center` - Centered alignment modifier

@@ -1,0 +1,106 @@
+---
+title: "Architecture"
+description: "Understanding the Khors Theme structure"
+---
+
+## Directory Structure
+
+```
+khors-theme/
+├── assets/         # Static CSS, JS, images
+├── blocks/         # Nestable UI components with {% schema %}
+├── config/         # settings_schema.json, settings_data.json
+├── layout/         # theme.liquid, password.liquid
+├── locales/        # Translation files
+├── sections/       # Full-width modules with {% schema %}
+├── snippets/       # Reusable fragments via {% render %}
+└── templates/      # JSON templates defining page structure
+```
+
+## Key Concepts
+
+### Sections
+Full-width page modules, customizable via `{% schema %}` tag. Located in `sections/`.
+
+### Blocks
+Nestable components within sections, also use `{% schema %}`. Located in `blocks/`.
+
+### Snippets
+Reusable code fragments with `{% doc %}` header, rendered via `{% render 'snippet-name' %}`. Located in `snippets/`.
+
+### Templates
+JSON files that compose sections for each page type. Located in `templates/`.
+
+## Listings Directory
+
+### Industry Presets
+
+Khors theme includes three industry presets in the `listings/` directory:
+
+```
+listings/
+├── aura/
+│   └── listing.json    → Industry: "Clothing" (Fashion)
+├── apex/
+│   └── listing.json    → Industry: "Beauty"
+└── nexus/
+    └── listing.json    → Industry: "Electronics"
+```
+
+### Listing File Format
+
+Each `listing.json` file defines the industry tag for the preset:
+
+```json
+{
+  "industry": "Clothing"
+}
+```
+
+### Allowed Industry Values
+
+The `industry` property must be one of the values accepted by Shopify:
+
+| Industry Value | Description |
+|----------------|-------------|
+| `Clothing` | Fashion, apparel, accessories |
+| `Beauty` | Cosmetics, skincare, wellness |
+| `Electronics` | Tech products, gadgets, components |
+| `Home` | Home goods, furniture, decor |
+| `Food` | Food, beverages, supplements |
+| `Jewelry` | Jewelry and accessories |
+| `Sports` | Sports equipment, fitness gear |
+
+**More information:** [Shopify Industry Types Documentation](https://shopify.dev/docs/api/admin-graphql/latest/enums/AppSubscriptionLineItemType#field-shopifyappsubscriptionlineitemtype-industry)
+
+### Preset → Industry Mapping
+
+| Preset | Directory | Industry Tag | Use Case |
+|--------|-----------|--------------|----------|
+| **Aura** | `listings/aura/` | `Clothing` | Fashion stores |
+| **Apex** | `listings/apex/` | `Beauty` | Beauty & cosmetics |
+| **Nexus** | `listings/nexus/` | `Electronics` | Tech stores |
+
+### When to Modify
+
+<Warning>
+  The `listing.json` file is used by Shopify Theme Store for categorization. **Do not modify** without approval from Shopify Partner support.
+</Warning>
+
+Modifying the `industry` value affects:
+- Theme Store categorization
+- Shopify search/discovery
+- Marketplace analytics
+
+**Does NOT affect:**
+- Theme functionality
+- Theme settings
+- Section behavior
+
+## Shopify OS 2.0
+
+Khors uses Shopify's Online Store 2.0 architecture:
+- JSON templates for flexible page composition
+- Dynamic sections on all page types
+- App blocks for third-party integrations
+- Listings-based presets for industry targeting

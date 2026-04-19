@@ -1,0 +1,55 @@
+---
+title: "Coding Conventions"
+description: "Standards and best practices for Khors Theme development"
+---
+
+## Liquid
+
+- Use `{% liquid %}` tag for multiline logic
+- Nest `if` conditions instead of complex `and`/`or` chains
+- No ternary operators in Liquid
+
+```liquid
+{% liquid
+  assign show_image = false
+  if product.featured_image
+    if section.settings.show_images
+      assign show_image = true
+    endif
+  endif
+%}
+```
+
+## CSS
+
+### BEM Naming
+Use Block-Element-Modifier pattern:
+
+```css
+.product-card { }
+.product-card__image { }
+.product-card__title { }
+.product-card--featured { }
+```
+
+### Rules
+- Never use IDs as selectors
+- Avoid `!important`
+- Mobile-first media queries (`min-width`)
+- No `&` nesting operator
+- Max nesting: 1 level (except media queries)
+
+## JavaScript
+
+- No external dependencies preferred
+- Use native browser features (popover, details)
+- Prefer `const` over `let`, never `var`
+- Use `for...of` over `.forEach()`
+- Private methods use `#` prefix
+
+## Translations
+
+- All user-facing text uses `{{ 'key' | t }}`
+- Keys in `locales/en.default.json`
+- Schema translations in `.schema.json` files
+- Use sentence case for all labels

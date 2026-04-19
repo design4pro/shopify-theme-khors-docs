@@ -1,0 +1,264 @@
+---
+title: "Image Block"
+description: "Technical documentation for image-block.liquid block"
+icon: "cube"
+---
+
+## Location
+
+`blocks/image-block.liquid`
+
+## LiquidDoc
+
+```liquid
+{% doc %}
+  Image block for Shopify Theme Editor.
+  Renders a responsive image with configurable aspect ratio, lazy loading,
+  overlay, caption, and optional link wrapper.
+
+  @example Default usage in Theme Editor
+    Add this block to any section that accepts @theme blocks
+{% enddoc %}
+```
+
+## Schema
+
+```json
+{
+  "name": "t:components.image_block.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:components.image_block.headers.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:components.image_block.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "t:components.image_block.settings.alt_text.label",
+      "info": "t:components.image_block.settings.alt_text.info"
+    },
+    {
+      "type": "header",
+      "content": "t:components.image_block.headers.display"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "t:components.image_block.settings.aspect_ratio.label",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:components.image_block.options.aspect_ratio.auto"
+        },
+        {
+          "value": "16-9",
+          "label": "t:components.image_block.options.aspect_ratio.16_9"
+        },
+        {
+          "value": "4-3",
+          "label": "t:components.image_block.options.aspect_ratio.4_3"
+        },
+        {
+          "value": "3-2",
+          "label": "t:components.image_block.options.aspect_ratio.3_2"
+        },
+        {
+          "value": "1-1",
+          "label": "t:components.image_block.options.aspect_ratio.1_1"
+        },
+        {
+          "value": "2-3",
+          "label": "t:components.image_block.options.aspect_ratio.2_3"
+        },
+        {
+          "value": "3-4",
+          "label": "t:components.image_block.options.aspect_ratio.3_4"
+        },
+        {
+          "value": "9-16",
+          "label": "t:components.image_block.options.aspect_ratio.9_16"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "t:components.image_block.settings.object_fit.label",
+      "info": "t:components.image_block.settings.object_fit.info",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:components.image_block.options.object_fit.cover"
+        },
+        {
+          "value": "contain",
+          "label": "t:components.image_block.options.object_fit.contain"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "loading",
+      "label": "t:components.image_block.settings.loading.label",
+      "info": "t:components.image_block.settings.loading.info",
+      "options": [
+        {
+          "value": "lazy",
+          "label": "t:components.image_block.options.loading.lazy"
+        },
+        {
+          "value": "eager",
+          "label": "t:components.image_block.options.loading.eager"
+        }
+      ],
+      "default": "lazy"
+    },
+    {
+      "type": "header",
+      "content": "t:components.image_block.headers.overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "t:components.image_block.settings.show_overlay.label",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "t:components.image_block.settings.overlay_opacity.label",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:components.image_block.settings.overlay_color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "t:components.image_block.headers.caption"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:components.image_block.settings.caption.label"
+    },
+    {
+      "type": "select",
+      "id": "caption_alignment",
+      "label": "t:components.image_block.settings.caption_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:components.image_block.headers.link"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:components.image_block.settings.url.label",
+      "info": "t:components.image_block.settings.url.info"
+    },
+    {
+      "type": "header",
+      "content": "t:components.image_block.headers.spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "t:general.spacing_unit",
+      "label": "t:general.margin_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "t:general.spacing_unit",
+      "label": "t:general.margin_bottom",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:components.image_block.presets.default",
+      "settings": {
+        "aspect_ratio": "auto",
+        "object_fit": "cover",
+        "loading": "lazy"
+      }
+    },
+    {
+      "name": "t:components.image_block.presets.hero",
+      "settings": {
+        "aspect_ratio": "16-9",
+        "object_fit": "cover",
+        "loading": "eager",
+        "show_overlay": true
+      }
+    },
+    {
+      "name": "t:components.image_block.presets.square",
+      "settings": {
+        "aspect_ratio": "1-1",
+        "object_fit": "cover",
+        "loading": "lazy"
+      }
+    }
+  ]
+}
+```
+
+## CSS Classes
+
+- `.image-block` - Main container (figure element)
+- `.image-block__media` - Media wrapper
+- `.image-block__img` - Image element
+- `.image-block__img--cover` - Cover object fit modifier
+- `.image-block__img--contain` - Contain object fit modifier
+- `.image-block--16-9` - 16:9 aspect ratio modifier
+- `.image-block--4-3` - 4:3 aspect ratio modifier
+- `.image-block--3-2` - 3:2 aspect ratio modifier
+- `.image-block--1-1` - 1:1 aspect ratio modifier
+- `.image-block--2-3` - 2:3 aspect ratio modifier
+- `.image-block--3-4` - 3:4 aspect ratio modifier
+- `.image-block--9-16` - 9:16 aspect ratio modifier
+- `.image-block__overlay` - Color overlay
+- `.image-block__link` - Optional link wrapper
+- `.image-block__caption` - Caption element
+- `.image-block__caption--left` - Left caption alignment
+- `.image-block__caption--center` - Center caption alignment
+- `.image-block__caption--right` - Right caption alignment
+- `.image-block--placeholder` - Placeholder state
+- `.image-block__placeholder-svg` - Placeholder SVG

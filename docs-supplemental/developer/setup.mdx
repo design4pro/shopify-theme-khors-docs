@@ -1,0 +1,41 @@
+---
+title: "Development Setup"
+description: "Configure your local development environment"
+---
+
+## Prerequisites
+
+- [Shopify CLI](https://shopify.dev/docs/themes/tools/cli) installed
+- Node.js 18+ (for tooling)
+- Access to a Shopify development store
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/design4pro/shopify-theme-khors.git
+cd shopify-theme-khors
+
+# Start development server
+shopify theme dev --store khors-theme-design4pro.myshopify.com
+```
+
+## Available Commands
+
+```bash
+# Preview theme locally
+shopify theme dev --store khors-theme-design4pro.myshopify.com
+
+# Run theme checks (linting)
+shopify theme check
+
+# Push to development store
+shopify theme push --store khors-theme-design4pro.myshopify.com
+
+# Pull theme from store
+shopify theme pull --store khors-theme-design4pro.myshopify.com
+```
+
+## Development Store
+
+**Store URL:** `khors-theme-design4pro.myshopify.com`
